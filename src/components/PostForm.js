@@ -1,74 +1,66 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image'
 
-function ProfileForm() {
-    const [profileData, setProfileData] = useState({
-        name: '',
+function PostForm() {
+    const [postData, setPostData] = useState({
+        title: '',
         content: '',
         image: ''
     })
-    const { name, content, image } = profileData
+    const {title, content, image} = postData
     const imageFile = useRef();
     useEffect(() => {
         handleMount()
     }, [])
 
     const handleMount = async () => {
-        try {
-            const {data} = await axios.get('/profiles/1/')
-            console.log(data)
-            const {name, content, image} = data
-            setProfileData({name, content, image})    
-        } catch(err){
-            console.log(err)
-        }
+        const {data} = await axios.get('/posts/1/')
+        console.log(data)
+        const {title, content, image} = data
+        setPostData({title, content, image})
     }
-    
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        event.prefentDefault();
         const formData = new FormData();
-        formData.append('name', name)
+        formData.append('title', title)
         formData.append('content', content)
         formData.append('image', imageFile.current.files[0])
         try {
-            const {data} = await axios.put('/profiles/1/', formData)
-            console.log(data)
+            const {data} = await axios.put('/posts/1/', formData)
         } catch(err){
             console.log(err)
         }
     }
-
     const handleChange = (event) => {
-        setProfileData({
-            ...profileData,
+        setPostData({
+            ...postData,
             [event.target.name]: event.target.value
         })
     }
-
     return (
         <Container>
-            <h1>Profile</h1>
+            <h1>Post</h1>
             <Form onSubmit={handleSubmit}>
                 <Form.Group>
-                    <Form.Label>name</Form.Label>
-                    <Form.Control type="text" value={name} onChange={handleChange} name="name" />
+                    <Form.Label>title</Form.Label>
+                    <Form.Control type="text" value={title} onChange={handleChange} />
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>content</Form.Label>
-                    <Form.Control as="textarea" value={content} onChange={handleChange} name="content" />
+                    <Form.Control as="textarea" value={content} onChange={handleChange} />
                 </Form.Group>
                 <Form.Group>
                     <Form.File label="Upload picture" ref={imageFile} accept="image/*" />
                 </Form.Group>
                 <Button type="submit">Submit</Button>
             </Form>
-            {image && <Image src={image} thumbnail /> }
+            {image && <Image src={image} thumbnail />}
         </Container>
     )
 }
 
-export default ProfileForm
+export default PostForm
