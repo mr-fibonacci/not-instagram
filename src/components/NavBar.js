@@ -1,49 +1,35 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-import Form from 'react-bootstrap/Form'
-import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios'
+import { NavLink, withRouter } from 'react-router-dom'
 
-function NavBar() {
-    const [currentUser, setCurrentUser] = useState(null)
-    useEffect(() => {
-        handleMount()
-    }, [])
-    const handleMount = async () => {
-        try {
-            const { data } = await axios.get('dj-rest-auth/user/', {withCredentials: true})
-            console.log('current User:', data)
-            setCurrentUser(data)
-        } catch(err) {
-            console.log(err.request)
-        }
-    }
+function NavBar(props) {
+    const {currentUser, setCurrentUser, history} = props
     const handleSignOut = async () => {
         try {
-            const { data } = await axios.post('dj-rest-auth/logout/')
-            console.log(data)
+            await axios.post('dj-rest-auth/logout/')
             setCurrentUser(null)
+            history.push('/')
         } catch(err){
             console.log(err.request)
         }
     }
     return (
         <Navbar bg="dark" variant="dark">
-            <Navbar.Brand href="#home">not-insta</Navbar.Brand>
+            <NavLink to="/"><Navbar.Brand>not-instagram</Navbar.Brand></NavLink>
             <Nav className="mr-auto">
-                <Form inline>
-                    <FormControl type="text" placeholder="search posts" className="mr-sm-2" />
-                </Form>
                 {currentUser
-                    ? <Button onClick={handleSignOut} variant="outline-info">sign out</Button>
-                    : <><Nav.Link href="#home">sign in</Nav.Link>
-                    <Nav.Link href="#features">sign up</Nav.Link></>
+                    ? <><Button onClick={handleSignOut} variant="outline-info">sign out</Button>
+                    <NavLink to={`/profiles/${currentUser.pk}/`}><Button>profile</Button></NavLink>
+                    </>
+                    : <><NavLink to="/signin"><Button>sign in</Button></NavLink>
+                    <NavLink to="/signup"><Button>sign up</Button></NavLink></>
                 }
             </Nav>
         </Navbar>
     )
 }
 
-export default NavBar
+export default withRouter(NavBar)

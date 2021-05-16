@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
-function SignInForm() {
+function SignInForm(props) {
+    const {history, setCurrentUser} = props
     const [signInData, setSignInData] = useState({
         username: '', password: ''
     })
@@ -13,7 +14,8 @@ function SignInForm() {
         event.preventDefault();
         try {
             const {data} = await axios.post('/dj-rest-auth/login/', signInData)
-            console.log(data)
+            setCurrentUser(data.user)
+            history.push('/')
         } catch(err){
             console.log(err)
         }

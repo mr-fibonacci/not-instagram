@@ -4,7 +4,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
-function SignUpForm() {
+function SignUpForm(props) {
+    const {history} = props
     const [signUpData, setSignUpData] = useState({
         username: '',
         password1: '',
@@ -14,13 +15,13 @@ function SignUpForm() {
     
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         try {
             const {data} = await axios.post(
                 '/dj-rest-auth/registration/',
                 signUpData
             )
             console.log(data)
+            history.push('/signin')
         } catch(err){
             console.log(err.response)
         }

@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import axios from 'axios'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image'
 
-function PostForm() {
+function PostCreateForm() {
     const [postData, setPostData] = useState({
         title: '',
         content: '',
@@ -13,16 +13,7 @@ function PostForm() {
     })
     const {title, content, image} = postData
     const imageFile = useRef();
-    useEffect(() => {
-        handleMount()
-    }, [])
 
-    const handleMount = async () => {
-        const {data} = await axios.get('/posts/1/')
-        console.log(data)
-        const {title, content, image} = data
-        setPostData({title, content, image})
-    }
     const handleSubmit = async (event) => {
         event.prefentDefault();
         const formData = new FormData();
@@ -30,7 +21,7 @@ function PostForm() {
         formData.append('content', content)
         formData.append('image', imageFile.current.files[0])
         try {
-            const {data} = await axios.put('/posts/1/', formData)
+            const {data} = await axios.post('/posts/', formData)
         } catch(err){
             console.log(err)
         }
@@ -63,4 +54,4 @@ function PostForm() {
     )
 }
 
-export default PostForm
+export default PostCreateForm
