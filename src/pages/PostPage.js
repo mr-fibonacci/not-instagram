@@ -26,7 +26,11 @@ function PostPage(props) {
   return (
     <>
       <Post {...post} />
-      <CommentCreateForm />
+      <CommentCreateForm
+        post={id}
+        comments={comments}
+        setComments={setComments}
+      />
       {comments.map((comment) => (
         <Comment key={comment.id} {...comment} />
       ))}

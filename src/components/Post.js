@@ -23,10 +23,13 @@ function Post(props) {
   const history = useHistory();
   const [toggleLikeId, setToggleLikeId] = useState(like_id);
   const [toggleLikes, setToggleLikes] = useState(likes);
-
+  const [toggleComments, setToggleComments] = useState(comments);
   useEffect(() => {
     setToggleLikes(likes);
   }, [likes]);
+  useEffect(() => {
+    setToggleComments(comments);
+  }, [comments]);
 
   const handleLike = async () => {
     try {

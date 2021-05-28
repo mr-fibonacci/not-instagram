@@ -2,9 +2,9 @@ import axios from "axios";
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
 
-function CommentCreateForm() {
+function CommentCreateForm(props) {
+  const { post, comments, setComments } = props;
   const [content, setContent] = useState("");
 
   const handleChange = (event) => {
@@ -13,7 +13,8 @@ function CommentCreateForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("/comments/", { content });
+      const { data } = await axios.post("/comments/", { content, post });
+      setComments((prevComments) => [data, ...prevComments]);
     } catch (err) {
       console.log(err);
     }

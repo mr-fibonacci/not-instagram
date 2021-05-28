@@ -71,7 +71,17 @@ function ProfileForm() {
           />
         </Form.Group>
         <Form.Group>
-          <Form.File label="Upload picture" ref={imageFile} accept="image/*" />
+          <Form.File
+            label="Upload picture"
+            ref={imageFile}
+            accept="image/*"
+            onChange={(e) =>
+              setProfileData({
+                ...profileData,
+                image: URL.createObjectURL(e.target.files[0]),
+              })
+            }
+          />
         </Form.Group>
         <Button type="submit">Submit</Button>
       </Form>
