@@ -1,10 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import Media from "react-bootstrap/Media";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import axios from "axios";
+import CommentEditForm from "./CommentEditForm";
 
 function Comment(props) {
-  const { id, owner, is_owner, profile_id, profile_image, content } = props;
+  const {
+    id,
+    owner,
+    is_owner,
+    profile_id,
+    profile_image,
+    content,
+    setComments,
+    setPost,
+  } = props;
+  const [showEditForm, setShowEditForm] = useState(false);
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`/comments/${id}/`);
+      setPost(([prevPost]) => [
+        { ...prevPost, comments: prevPost.comments - 1 },
+      ]);
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment.id !== id)
+      );
+    } catch (err) {
+      console.log(err.request);
+    }
+  };
   return (
     <Card>
       <Card.Body>
@@ -17,8 +44,23 @@ function Comment(props) {
             />
             {owner}{" "}
           </Link>
-          <Media.Body className="align-self-center">{content}</Media.Body>
+          {showEditForm ? (
+            <CommentEditForm
+              id={id}
+              content={content}
+              setComments={setComments}
+              setShowEditForm={setShowEditForm}
+            />
+          ) : (
+            <Media.Body className="align-self-center">{content}</Media.Body>
+          )}
         </Media>
+        {is_owner ? (
+          <>
+            <Button onClick={() => setShowEditForm(true)}>edit</Button>
+            <Button onClick={handleDelete}>delete</Button>
+          </>
+        ) : null}
         {/* <Card.Text></Card.Text> */}
       </Card.Body>
     </Card>

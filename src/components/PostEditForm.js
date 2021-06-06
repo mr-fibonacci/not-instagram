@@ -15,6 +15,7 @@ function PostEditForm() {
   });
   const { title, content, image } = postData;
   const imageFile = useRef();
+
   useEffect(() => {
     handleMount();
   }, []);
@@ -35,7 +36,7 @@ function PostEditForm() {
     formData.append("content", content);
     formData.append("image", imageFile.current.files[0]);
     try {
-      const { data } = await axios.put(`/posts/${id}/`, formData);
+      await axios.put(`/posts/${id}/`, formData);
     } catch (err) {
       console.log(err);
     }
@@ -46,9 +47,17 @@ function PostEditForm() {
       [event.target.name]: event.target.value,
     });
   };
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`/posts/${id}/`);
+    } catch (err) {
+      console.log(err.request);
+    }
+  };
   return (
     <Container>
       <h1>Post</h1>
+      <Button onClick={handleDelete}>delete</Button>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>title</Form.Label>

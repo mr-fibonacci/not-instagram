@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 function CommentCreateForm(props) {
-  const { post, comments, setComments } = props;
+  const { post, setPost, setComments } = props;
   const [content, setContent] = useState("");
 
   const handleChange = (event) => {
@@ -15,6 +15,10 @@ function CommentCreateForm(props) {
     try {
       const { data } = await axios.post("/comments/", { content, post });
       setComments((prevComments) => [data, ...prevComments]);
+      setPost(([prevPost]) => [
+        { ...prevPost, comments: prevPost.comments + 1 },
+      ]);
+      setContent("");
     } catch (err) {
       console.log(err);
     }
@@ -22,10 +26,12 @@ function CommentCreateForm(props) {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group>
-        <Form.Label>create a comment</Form.Label>
+        {/* <Form.Label>create a comment</Form.Label> */}
         <Form.Control as="textarea" value={content} onChange={handleChange} />
       </Form.Group>
-      <Button type="submit">Submit</Button>
+      <Button disabled={!content} type="submit">
+        Submit
+      </Button>
     </Form>
   );
 }

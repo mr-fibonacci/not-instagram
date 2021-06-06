@@ -2,7 +2,7 @@ import React from "react";
 import Media from "react-bootstrap/Media";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function Profile(props) {
   const {
@@ -18,6 +18,7 @@ function Profile(props) {
     owner,
     setProfilesMethods,
   } = props;
+  const history = useHistory();
   const handleFollow = async () => {
     try {
       const { data } = await axios.post("/followers/", { followed: id });
@@ -30,8 +31,8 @@ function Profile(props) {
                   followers: profile.followers + 1,
                   following_id: data.id,
                 }
-              : profile;
-              // : profile.is_owner ? {...profile, following: profile.following + 1} : profile;
+              // : profile;
+              : profile.is_owner ? {...profile, following: profile.following + 1} : profile;
           })
         );
       });
@@ -51,8 +52,8 @@ function Profile(props) {
                   followers: profile.followers - 1,
                   following_id: null,
                 }
-              : profile;
-              // : profile.is_owner ? {...profile, following: profile.following - 1} : profile;
+              // : profile;
+              : profile.is_owner ? {...profile, following: profile.following - 1} : profile;
           })
         );
       });
@@ -70,7 +71,14 @@ function Profile(props) {
         <Media.Body></Media.Body>
       </Media>
 
-      {is_owner ? null : (
+      {is_owner ? <>
+          <Button onClick={() => history.push(`/profiles/${id}/edit`)}>
+            edit
+          </Button>
+          <Button onClick={() => history.push("/posts/create")}>
+            add a post
+          </Button>
+        </> : (
         <>
           {following_id ? (
             <Button onClick={handleUnfollow}>unfollow</Button>

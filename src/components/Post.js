@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Media from "react-bootstrap/Media";
@@ -67,7 +67,7 @@ function Post(props) {
               className="align-self-center"
               src={profile_image}
             />
-            {owner}{" "}
+            {owner}
           </Link>
           <Media.Body className="align-self-center" align="center">
             <h5>{title}</h5>
@@ -76,7 +76,7 @@ function Post(props) {
       </Card.Body>
       <Link to={`/posts/${id}`}>
         <Card.Img src={image} />
-      </Link>{" "}
+      </Link>
       <Card.Body>
         <Card.Text>{content}</Card.Text>
       </Card.Body>

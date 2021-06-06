@@ -6,41 +6,39 @@ import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 
 function CommentEditForm(props) {
-  const { id } = props;
-  const [content, setContent] = useState("");
+  const { id, content, setShowEditForm, setComments } = props;
+  const [formContent, setFormContent] = useState(content);
 
-  useEffect(() => {
-    handleMount();
-  }, []);
-
-  const handleMount = async () => {
-    try {
-      const { data } = await axios.get(`/comments/${id}/`);
-      console.log(data);
-      setContent(data.content);
-    } catch (err) {
-      console.log(err.request);
-    }
-  };
   const handleChange = (event) => {
-    setContent(event.target.value);
+    setFormContent(event.target.value);
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.put(`/comments/${id}/`);
+      await axios.put(`/comments/${id}/`, { content: formContent });
+      setComments((prevComments) =>
+        prevComments.map((comment) => {
+          return comment.id === id
+            ? { ...comment, content: formContent }
+            : comment;
+        })
+      );
+      setShowEditForm(false);
     } catch (err) {
-      console.log(err);
+      console.log(err.request);
     }
   };
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
-          <Form.Label>edit a comment</Form.Label>
-          <Form.Control as="textarea" value={content} onChange={handleChange} />
+          <Form.Control
+            as="textarea"
+            value={formContent}
+            onChange={handleChange}
+          />
         </Form.Group>
-        <Button type="submit">Submit</Button>
+        <Button type="submit">save</Button>
       </Form>
     </Container>
   );

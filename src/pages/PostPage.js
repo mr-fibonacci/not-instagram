@@ -4,11 +4,12 @@ import Comment from "../components/Comment";
 import CommentCreateForm from "../components/CommentCreateForm";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router";
+import Post from "../components/Post";
 
 function PostPage(props) {
   const { id } = props.match.params;
   const history = useHistory();
-  const [post, setPost] = useState({});
+  const [[post], setPost] = useState([{}]);
   const [comments, setComments] = useState([]);
   useEffect(() => {
     handleMount();
@@ -20,39 +21,32 @@ function PostPage(props) {
         axios.get(`/comments/?post=${id}`),
       ]);
       console.log("post", post);
-      setPost(post);
+      setPost([post]);
       setComments(comments.results);
     } catch (err) {
       console.log(err.request);
     }
   };
-  const handleDelete = async () => {
-    try {
-      await axios.delete(`/posts/${id}/`);
-      history.pop();
-    } catch (err) {
-      console.log(err.request);
-    }
-  };
-  console.log(post);
+
   return (
     <>
-      {/* <Post {...post} /> */}
+      <Post {...post} setPostsMethods={[setPost]} />
       {post.is_owner ? (
-        <>
-          <Button onClick={() => history.push(`/posts/${id}/edit`)}>
-            edit
-          </Button>
-          <Button onClick={handleDelete}>delete</Button>
-        </>
+        <Button onClick={() => history.push(`/posts/${id}/edit`)}>edit</Button>
       ) : null}
+      Create a comment
       <CommentCreateForm
         post={id}
-        comments={comments}
+        setPost={setPost}
         setComments={setComments}
       />
       {comments.map((comment) => (
-        <Comment key={comment.id} {...comment} />
+        <Comment
+          key={comment.id}
+          setPost={setPost}
+          {...comment}
+          setComments={setComments}
+        />
       ))}
     </>
   );
