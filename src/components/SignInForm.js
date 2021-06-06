@@ -3,9 +3,11 @@ import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Alert from "react-bootstrap/Alert";
 
 function SignInForm(props) {
   const { history, setCurrentUser } = props;
+  const [errors, setErrors] = useState({});
   const [signInData, setSignInData] = useState({
     username: "",
     password: "",
@@ -18,7 +20,8 @@ function SignInForm(props) {
       setCurrentUser(data.user);
       history.push("/");
     } catch (err) {
-      console.log(err);
+      console.log(err.response.data);
+      setErrors(err.response.data);
     }
   };
   const handleChange = (event) => {
@@ -39,7 +42,12 @@ function SignInForm(props) {
             onChange={handleChange}
             value={username}
             name="username"
-          />
+          />{" "}
+          {errors?.username?.map((message, idx) => (
+            <Alert key={idx} variant="warning">
+              {message}
+            </Alert>
+          ))}
         </Form.Group>
         <Form.Group>
           <Form.Label>password</Form.Label>
@@ -48,9 +56,19 @@ function SignInForm(props) {
             onChange={handleChange}
             value={password}
             name="password"
-          />
+          />{" "}
+          {errors?.password?.map((message, idx) => (
+            <Alert key={idx} variant="warning">
+              {message}
+            </Alert>
+          ))}
         </Form.Group>
         <Button type="submit">sign in</Button>
+        {errors?.non_field_errors?.map((message, idx) => (
+          <Alert key={idx} variant="warning">
+            {message}
+          </Alert>
+        ))}
       </Form>
     </Container>
   );

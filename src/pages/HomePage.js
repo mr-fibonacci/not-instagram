@@ -5,7 +5,6 @@ import FormControl from "react-bootstrap/FormControl";
 import Post from "../components/Post";
 
 function HomePage(props) {
-  const { history } = props;
   const [posts, setPosts] = useState([]);
   const [query, setQuery] = useState("");
 
@@ -27,7 +26,7 @@ function HomePage(props) {
         />
       </Form>
       {posts.map((post) => (
-        <Post key={post.id} {...post} history={history} />
+        <Post key={post.id} {...post} setPostsMethods={[setPosts]} />
       ))}
     </>
   );

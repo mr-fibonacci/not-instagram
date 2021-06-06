@@ -19,23 +19,22 @@ function Post(props) {
     title,
     content,
     image,
+    setPostsMethods,
   } = props;
   const history = useHistory();
-  const [toggleLikeId, setToggleLikeId] = useState(like_id);
-  const [toggleLikes, setToggleLikes] = useState(likes);
-  const [toggleComments, setToggleComments] = useState(comments);
-  useEffect(() => {
-    setToggleLikes(likes);
-  }, [likes]);
-  useEffect(() => {
-    setToggleComments(comments);
-  }, [comments]);
 
   const handleLike = async () => {
     try {
       const { data } = await axios.post("/likes/", { post: id });
-      setToggleLikeId(data.id);
-      setToggleLikes((prevCount) => prevCount + 1);
+      setPostsMethods.forEach((setPostsMethod) => {
+        setPostsMethod((prevPosts) =>
+          prevPosts.map((post) => {
+            return post.id === id
+              ? { ...post, likes: post.likes + 1, like_id: data.id }
+              : post;
+          })
+        );
+      });
     } catch (err) {
       console.log(err.request);
     }
@@ -43,18 +42,16 @@ function Post(props) {
 
   const handleUnlike = async () => {
     try {
-      await axios.delete(`/likes/${toggleLikeId}/`);
-      setToggleLikeId(null);
-      setToggleLikes((prevCount) => prevCount - 1);
-    } catch (err) {
-      console.log(err.request);
-    }
-  };
-
-  const handleDelete = async () => {
-    try {
-      await axios.delete(`/posts/${id}/`);
-      history.push(`/profiles/${profile_id}`);
+      await axios.delete(`/likes/${like_id}/`);
+      setPostsMethods.forEach((setPostsMethod) => {
+        setPostsMethod((prevPosts) =>
+          prevPosts.map((post) => {
+            return post.id === id
+              ? { ...post, likes: post.likes - 1, like_id: null }
+              : post;
+          })
+        );
+      });
     } catch (err) {
       console.log(err.request);
     }
@@ -79,26 +76,18 @@ function Post(props) {
       </Card.Body>
       <Link to={`/posts/${id}`}>
         <Card.Img src={image} />
-      </Link>
+      </Link>{" "}
+      <Card.Body>
+        <Card.Text>{content}</Card.Text>
+      </Card.Body>
       <Card.Header>
-        {toggleLikeId ? (
+        {like_id ? (
           <Button onClick={handleUnlike}>unlike</Button>
         ) : (
           <Button onClick={handleLike}>like</Button>
         )}
-        Likes: {toggleLikes} Comments: {comments}
-        {is_owner ? (
-          <>
-            <Button onClick={() => history.push(`/posts/${id}/edit`)}>
-              edit
-            </Button>
-            <Button onClick={handleDelete}>delete</Button>
-          </>
-        ) : null}
+        Likes: {likes} Comments: {comments}
       </Card.Header>
-      <Card.Body>
-        <Card.Text>{content}</Card.Text>
-      </Card.Body>
     </Card>
   );
 }

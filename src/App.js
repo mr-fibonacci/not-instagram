@@ -11,7 +11,7 @@ import PostCreateForm from "./components/PostCreateForm";
 import ProfilePage from "./pages/ProfilePage";
 import ProfileForm from "./components/ProfileForm";
 import PostEditForm from "./components/PostEditForm";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);

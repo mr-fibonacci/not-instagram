@@ -3,6 +3,7 @@ import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Alert from "react-bootstrap/Alert";
 
 function SignUpForm(props) {
   const { history } = props;
@@ -11,6 +12,7 @@ function SignUpForm(props) {
     password1: "",
     password2: "",
   });
+  const [errors, setErrors] = useState({});
   const { username, password1, password2 } = signUpData;
 
   const handleSubmit = async (event) => {
@@ -23,7 +25,8 @@ function SignUpForm(props) {
       console.log(data);
       history.push("/signin");
     } catch (err) {
-      console.log(err.response);
+      console.log(err.response.data);
+      setErrors(err.response.data);
     }
   };
 
@@ -46,6 +49,11 @@ function SignUpForm(props) {
             onChange={handleChange}
             value={username}
           />
+          {errors?.username?.map((message, idx) => (
+            <Alert key={idx} variant="warning">
+              {message}
+            </Alert>
+          ))}
         </Form.Group>
         <Form.Group>
           <Form.Label>password</Form.Label>
@@ -54,7 +62,12 @@ function SignUpForm(props) {
             name="password1"
             onChange={handleChange}
             value={password1}
-          />
+          />{" "}
+          {errors?.password1?.map((message, idx) => (
+            <Alert key={idx} variant="warning">
+              {message}
+            </Alert>
+          ))}
         </Form.Group>
         <Form.Group>
           <Form.Label>confirm password</Form.Label>
@@ -63,7 +76,12 @@ function SignUpForm(props) {
             name="password2"
             onChange={handleChange}
             value={password2}
-          />
+          />{" "}
+          {errors?.password2?.map((message, idx) => (
+            <Alert key={idx} variant="warning">
+              {message}
+            </Alert>
+          ))}
         </Form.Group>
         <Button type="submit">sign up</Button>
       </Form>
