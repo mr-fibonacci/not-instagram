@@ -14,7 +14,10 @@ function CommentCreateForm(props) {
     event.preventDefault();
     try {
       const { data } = await axios.post("/comments/", { content, post });
-      setComments((prevComments) => [data, ...prevComments]);
+      setComments((prevComments) => ({
+        ...prevComments,
+        results: [data, ...prevComments.results],
+      }));
       setPost(([prevPost]) => [
         { ...prevPost, comments: prevPost.comments + 1 },
       ]);

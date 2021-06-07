@@ -2,18 +2,20 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
+import { useLocation } from "react-router";
 import Post from "../components/Post";
 
-function HomePage(props) {
+function PostsPage({ filter = "" }) {
+  const { pathname } = useLocation();
   const [posts, setPosts] = useState([]);
   const [query, setQuery] = useState("");
-
+  console.log(`/posts/?${filter}search=${query}`);
   useEffect(() => {
     axios
-      .get(`/posts/?search=${query}`)
+      .get(`/posts/?${filter}search=${query}`)
       .then((response) => setPosts(response.data.results))
       .catch((err) => console.log(err.request));
-  }, [query]);
+  }, [query, pathname]);
 
   return (
     <>
@@ -26,10 +28,10 @@ function HomePage(props) {
         />
       </Form>
       {posts.map((post) => (
-        <Post key={post.id} {...post} setPostsMethods={[setPosts]} />
+        <Post key={post.id} {...post} setPosts={setPosts} />
       ))}
     </>
   );
 }
 
-export default HomePage;
+export default PostsPage;

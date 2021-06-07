@@ -11,8 +11,6 @@ function ProfilePage() {
 
   const [[profile], setProfile] = useState([{}]);
   const [profilePosts, setProfilePosts] = useState([]);
-  const [likedPosts, setLikedPosts] = useState([]);
-  const [feedPosts, setFeedPosts] = useState([]);
   const [followingProfiles, setFollowingProfiles] = useState([]);
   const [followedProfiles, setFollowedProfiles] = useState([]);
 
@@ -21,22 +19,16 @@ function ProfilePage() {
       const [
         { data: profile },
         { data: profilePosts },
-        { data: likedPosts },
-        { data: feedPosts },
         { data: followingProfiles },
         { data: followedProfiles },
       ] = await Promise.all([
         axios.get(`/profiles/${id}`),
         axios.get(`/posts/?owner__profile=${id}`),
-        axios.get(`/posts/?likes__owner__profile=${id}`),
-        axios.get(`/posts/?owner__followed__owner__profile=${id}`),
         axios.get(`/profiles/?owner__followed__owner__profile=${id}`),
         axios.get(`/profiles/?owner__following__followed__profile=${id}`),
       ]);
       setProfile([profile]);
       setProfilePosts(profilePosts.results);
-      setLikedPosts(likedPosts.results);
-      setFeedPosts(feedPosts.results);
       setFollowingProfiles(followingProfiles.results);
       setFollowedProfiles(followedProfiles.results);
     } catch (err) {
@@ -50,33 +42,18 @@ function ProfilePage() {
 
   return (
     <>
-    <Profile {...profile} setProfilesMethods={[setProfile, setFollowedProfiles, setFollowingProfiles]} />
-      <Tabs transition={null}>
+      <Profile
+        {...profile}
+        setProfilesMethods={[
+          setProfile,
+          setFollowedProfiles,
+          setFollowingProfiles,
+        ]}
+      />
+      <Tabs>
         <Tab eventKey="posts" title="posts">
           {profilePosts?.map((post) => (
-            <Post
-              key={post.id}
-              {...post}
-              setPostsMethods={[setProfilePosts, setLikedPosts, setFeedPosts]}
-            />
-          ))}
-        </Tab>
-        <Tab eventKey="liked" title="liked">
-          {likedPosts?.map((post) => (
-            <Post
-              key={post.id}
-              {...post}
-              setPostsMethods={[setProfilePosts, setLikedPosts, setFeedPosts]}
-            />
-          ))}
-        </Tab>
-        <Tab eventKey="feed" title="feed">
-          {feedPosts?.map((post) => (
-            <Post
-              key={post.id}
-              {...post}
-              setPostsMethods={[setProfilePosts, setLikedPosts, setFeedPosts]}
-            />
+            <Post key={post.id} {...post} setPosts={setProfilePosts} />
           ))}
         </Tab>
         <Tab eventKey="followers" title="followers">
@@ -84,7 +61,11 @@ function ProfilePage() {
             <Profile
               key={profile.id}
               {...profile}
-              setProfilesMethods={[setProfile, setFollowedProfiles, setFollowingProfiles]}
+              setProfilesMethods={[
+                setProfile,
+                setFollowedProfiles,
+                setFollowingProfiles,
+              ]}
             />
           ))}
         </Tab>{" "}
@@ -93,7 +74,11 @@ function ProfilePage() {
             <Profile
               key={profile.id}
               {...profile}
-              setProfilesMethods={[setProfile, setFollowedProfiles, setFollowingProfiles]}
+              setProfilesMethods={[
+                setProfile,
+                setFollowedProfiles,
+                setFollowingProfiles,
+              ]}
             />
           ))}
         </Tab>

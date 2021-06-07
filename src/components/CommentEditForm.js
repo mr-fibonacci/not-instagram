@@ -1,9 +1,8 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Image from "react-bootstrap/Image";
 
 function CommentEditForm(props) {
   const { id, content, setShowEditForm, setComments } = props;
@@ -16,13 +15,14 @@ function CommentEditForm(props) {
     event.preventDefault();
     try {
       await axios.put(`/comments/${id}/`, { content: formContent });
-      setComments((prevComments) =>
-        prevComments.map((comment) => {
+      setComments((prevComments) => ({
+        ...prevComments,
+        results: prevComments.results.map((comment) => {
           return comment.id === id
             ? { ...comment, content: formContent }
             : comment;
-        })
-      );
+        }),
+      }));
       setShowEditForm(false);
     } catch (err) {
       console.log(err.request);

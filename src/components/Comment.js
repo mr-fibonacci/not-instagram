@@ -25,9 +25,10 @@ function Comment(props) {
       setPost(([prevPost]) => [
         { ...prevPost, comments: prevPost.comments - 1 },
       ]);
-      setComments((prevComments) =>
-        prevComments.filter((comment) => comment.id !== id)
-      );
+      setComments((prevComments) => ({
+        ...prevComments,
+        results: prevComments.results.filter((comment) => comment.id !== id),
+      }));
     } catch (err) {
       console.log(err.request);
     }
@@ -55,7 +56,7 @@ function Comment(props) {
             <Media.Body className="align-self-center">{content}</Media.Body>
           )}
         </Media>
-        {is_owner ? (
+        {is_owner && !showEditForm ? (
           <>
             <Button onClick={() => setShowEditForm(true)}>edit</Button>
             <Button onClick={handleDelete}>delete</Button>

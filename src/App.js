@@ -6,12 +6,12 @@ import "./axiosDefaults";
 import axios from "axios";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import PostPage from "./pages/PostPage";
-import HomePage from "./pages/HomePage";
 import PostCreateForm from "./components/PostCreateForm";
 import ProfilePage from "./pages/ProfilePage";
 import ProfileForm from "./components/ProfileForm";
 import PostEditForm from "./components/PostEditForm";
 import Container from "react-bootstrap/Container";
+import PostsPage from "./pages/PostsPage";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -36,44 +36,44 @@ function App() {
             <Route
               exact
               path="/signin"
-              render={(routeProps) => (
-                <SignInForm {...routeProps} setCurrentUser={setCurrentUser} />
+              render={() => <SignInForm setCurrentUser={setCurrentUser} />}
+            />
+            <Route exact path="/signup" render={() => <SignUpForm />} />
+            <Route exact path="/" render={() => <PostsPage />} />
+            <Route
+              exact
+              path="/feed"
+              render={() => (
+                <PostsPage
+                  filter={`owner__followed__owner__profile=${currentUser.profile_id}&`}
+                />
               )}
             />
             <Route
               exact
-              path="/signup"
-              render={(routeProps) => <SignUpForm {...routeProps} />}
-            />
-            <Route
-              exact
-              path="/"
-              render={(routeProps) => <HomePage {...routeProps} />}
+              path="/liked"
+              render={() => (
+                <PostsPage
+                  filter={`likes__owner__profile=${currentUser.profile_id}&`}
+                />
+              )}
             />
             <Route
               exact
               path="/posts/create"
-              render={(routeProps) => <PostCreateForm {...routeProps} />}
+              render={() => <PostCreateForm />}
             />
             <Route
               exact
               path="/posts/:id/edit"
-              render={(routeProps) => <PostEditForm {...routeProps} />}
+              render={() => <PostEditForm />}
             />
-            <Route
-              exact
-              path="/posts/:id"
-              render={(routeProps) => <PostPage {...routeProps} />}
-            />
-            <Route
-              exact
-              path="/profiles/:id"
-              render={(routeProps) => <ProfilePage {...routeProps} />}
-            />
+            <Route exact path="/posts/:id" render={() => <PostPage />} />
+            <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
             <Route
               exact
               path="/profiles/:id/edit"
-              render={(routeProps) => <ProfileForm {...routeProps} />}
+              render={() => <ProfileForm />}
             />
           </Switch>
         </Container>

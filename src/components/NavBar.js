@@ -27,12 +27,18 @@ function NavBar(props) {
         <Nav className="mr-auto">
           {currentUser ? (
             <>
-              <Button onClick={handleSignOut} variant="light">
-                sign out
-              </Button>
+              <NavLink to={"/feed"}>
+                <Button variant="light">feed</Button>
+              </NavLink>
+              <NavLink to={"/liked"}>
+                <Button variant="light">liked</Button>
+              </NavLink>
               <NavLink to={`/profiles/${currentUser.profile_id}`}>
                 <Button variant="light">profile</Button>
               </NavLink>
+              <Button onClick={handleSignOut} variant="light">
+                sign out
+              </Button>
             </>
           ) : (
             <>

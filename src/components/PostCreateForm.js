@@ -4,9 +4,10 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
+import { useHistory } from "react-router";
 
 function PostCreateForm(props) {
-  const { history } = props;
+  const history = useHistory();
   const [postData, setPostData] = useState({
     title: "",
     content: "",

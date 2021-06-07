@@ -19,22 +19,20 @@ function Post(props) {
     title,
     content,
     image,
-    setPostsMethods,
+    setPosts,
   } = props;
   const history = useHistory();
 
   const handleLike = async () => {
     try {
       const { data } = await axios.post("/likes/", { post: id });
-      setPostsMethods.forEach((setPostsMethod) => {
-        setPostsMethod((prevPosts) =>
-          prevPosts.map((post) => {
-            return post.id === id
-              ? { ...post, likes: post.likes + 1, like_id: data.id }
-              : post;
-          })
-        );
-      });
+      setPosts((prevPosts) =>
+        prevPosts.map((post) => {
+          return post.id === id
+            ? { ...post, likes: post.likes + 1, like_id: data.id }
+            : post;
+        })
+      );
     } catch (err) {
       console.log(err.request);
     }
@@ -43,15 +41,13 @@ function Post(props) {
   const handleUnlike = async () => {
     try {
       await axios.delete(`/likes/${like_id}/`);
-      setPostsMethods.forEach((setPostsMethod) => {
-        setPostsMethod((prevPosts) =>
-          prevPosts.map((post) => {
-            return post.id === id
-              ? { ...post, likes: post.likes - 1, like_id: null }
-              : post;
-          })
-        );
-      });
+      setPosts((prevPosts) =>
+        prevPosts.map((post) => {
+          return post.id === id
+            ? { ...post, likes: post.likes - 1, like_id: null }
+            : post;
+        })
+      );
     } catch (err) {
       console.log(err.request);
     }

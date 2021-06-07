@@ -3,14 +3,14 @@ import React, { useEffect, useState } from "react";
 import Comment from "../components/Comment";
 import CommentCreateForm from "../components/CommentCreateForm";
 import Button from "react-bootstrap/Button";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import Post from "../components/Post";
 
 function PostPage(props) {
-  const { id } = props.match.params;
+  const { id } = useParams();
   const history = useHistory();
   const [[post], setPost] = useState([{}]);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState({});
   useEffect(() => {
     handleMount();
   }, []);
@@ -22,7 +22,16 @@ function PostPage(props) {
       ]);
       console.log("post", post);
       setPost([post]);
-      setComments(comments.results);
+      setComments({
+        ...comments,
+        // this bit only for development (localhost instead of gitpod's url)
+        next: comments.next
+          ? comments.next.replace(
+              "http://localhost:8000",
+              axios.defaults.baseURL
+            )
+          : null,
+      });
     } catch (err) {
       console.log(err.request);
     }
@@ -30,7 +39,7 @@ function PostPage(props) {
 
   return (
     <>
-      <Post {...post} setPostsMethods={[setPost]} />
+      <Post {...post} setPosts={setPost} />
       {post.is_owner ? (
         <Button onClick={() => history.push(`/posts/${id}/edit`)}>edit</Button>
       ) : null}
@@ -40,7 +49,7 @@ function PostPage(props) {
         setPost={setPost}
         setComments={setComments}
       />
-      {comments.map((comment) => (
+      {comments.results?.map((comment) => (
         <Comment
           key={comment.id}
           setPost={setPost}
