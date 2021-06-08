@@ -42,6 +42,7 @@ function Comment(props) {
               width="70px"
               className="align-self-center"
               src={profile_image}
+              alt={owner}
             />
             {owner}{" "}
           </Link>

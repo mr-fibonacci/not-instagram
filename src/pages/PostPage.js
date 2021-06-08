@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import { useHistory, useParams } from "react-router";
 import Post from "../components/Post";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { fetchMoreData, setNext } from "../utils";
 
 function PostPage(props) {
   const { id } = useParams();
@@ -23,35 +24,7 @@ function PostPage(props) {
       ]);
       console.log("post", post);
       setPost([post]);
-      setComments({
-        ...comments,
-        // this bit only for development (localhost instead of gitpod's url)
-        next: comments.next
-          ? comments.next.replace(
-              "http://localhost:8000",
-              axios.defaults.baseURL
-            )
-          : null,
-      });
-    } catch (err) {
-      console.log(err.request);
-    }
-  };
-
-  const fetchMoreComments = async () => {
-    try {
-      const { data } = await axios.get(comments.next);
-      setComments((prevComments) => ({
-        ...data,
-        next: data.next
-          ? data.next.replace("http://localhost:8000", axios.defaults.baseURL)
-          : null,
-        results: data.results.reduce((acc, cur) => {
-          return acc.some((result) => result.id === cur.id)
-            ? acc
-            : [...acc, cur];
-        }, prevComments.results),
-      }));
+      setComments(setNext(comments));
     } catch (err) {
       console.log(err.request);
     }
@@ -71,13 +44,12 @@ function PostPage(props) {
       />
       <InfiniteScroll
         dataLength={comments.results.length}
-        next={fetchMoreComments}
+        next={() => fetchMoreData(comments, setComments)}
         hasMore={!!comments.next}
         loader={<h4>loading</h4>}
         endMessage={<p>everything has been loaded</p>}
-        scrollableTarget="scrollable-div"
       >
-        {comments.results?.map((comment) => (
+        {comments.results.map((comment) => (
           <Comment
             key={comment.id}
             setPost={setPost}

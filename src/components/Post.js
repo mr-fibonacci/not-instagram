@@ -62,6 +62,7 @@ function Post(props) {
               width="70px"
               className="align-self-center"
               src={profile_image}
+              alt={title}
             />
             {owner}
           </Link>

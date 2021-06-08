@@ -23,7 +23,7 @@ function PostCreateForm(props) {
     formData.append("content", content);
     formData.append("image", imageFile.current.files[0]);
     try {
-      const { data } = await axios.post("/posts/", formData);
+      await axios.post("/posts/", formData);
       history.push("/");
     } catch (err) {
       console.log(err.request);
