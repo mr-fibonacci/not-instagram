@@ -31,7 +31,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
-        <Container>
+        <Container style={{ maxWidth: "500px" }}>
           <Switch>
             <Route
               exact

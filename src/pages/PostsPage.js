@@ -9,7 +9,7 @@ import { fetchMoreData, setNext } from "../utils";
 
 function PostsPage({ filter = "" }) {
   const { pathname } = useLocation();
-  const [posts, setPosts] = useState({ count: 0, results: [] });
+  const [posts, setPosts] = useState({ results: [] });
   const [query, setQuery] = useState("");
 
   useEffect(() => {

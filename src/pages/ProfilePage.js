@@ -6,22 +6,19 @@ import { useParams } from "react-router";
 import Post from "../components/Post";
 import Profile from "../components/Profile";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchMoreData } from "../utils";
+import { fetchMoreData, setNext } from "../utils";
 
 function ProfilePage() {
   const { id } = useParams();
 
-  const [[profile], setProfile] = useState([{}]);
+  const [profile, setProfile] = useState({ results: [] });
   const [profilePosts, setProfilePosts] = useState({
-    count: 0,
     results: [],
   });
   const [followingProfiles, setFollowingProfiles] = useState({
-    count: 0,
     results: [],
   });
   const [followedProfiles, setFollowedProfiles] = useState({
-    count: 0,
     results: [],
   });
 
@@ -38,10 +35,10 @@ function ProfilePage() {
         axios.get(`/profiles/?owner__followed__owner__profile=${id}`),
         axios.get(`/profiles/?owner__following__followed__profile=${id}`),
       ]);
-      setProfile([profile]);
-      setProfilePosts(profilePosts);
-      setFollowingProfiles(followingProfiles);
-      setFollowedProfiles(followedProfiles);
+      setProfile({ results: [profile] });
+      setProfilePosts(setNext(profilePosts));
+      setFollowingProfiles(setNext(followingProfiles));
+      setFollowedProfiles(setNext(followedProfiles));
     } catch (err) {
       console.log(err.request);
     }
@@ -54,7 +51,7 @@ function ProfilePage() {
   return (
     <>
       <Profile
-        {...profile}
+        {...profile.results[0]}
         setProfilesMethods={[
           setProfile,
           setFollowedProfiles,
@@ -63,22 +60,34 @@ function ProfilePage() {
       />
       <Tabs>
         <Tab eventKey="posts" title="posts">
-          {profilePosts.results.map((post) => (
-            <Post key={post.id} {...post} setPosts={setProfilePosts} />
-          ))}
+          <InfiniteScroll
+            dataLength={profilePosts.results.length}
+            next={() => fetchMoreData(profilePosts, setProfilePosts)}
+            hasMore={!!profilePosts.next}
+          >
+            {profilePosts.results.map((post) => (
+              <Post key={post.id} {...post} setPosts={setProfilePosts} />
+            ))}
+          </InfiniteScroll>
         </Tab>
         <Tab eventKey="followers" title="followers">
-          {followedProfiles.results.map((profile) => (
-            <Profile
-              key={profile.id}
-              {...profile}
-              setProfilesMethods={[
-                setProfile,
-                setFollowedProfiles,
-                setFollowingProfiles,
-              ]}
-            />
-          ))}
+          <InfiniteScroll
+            dataLength={followedProfiles.results.length}
+            next={() => fetchMoreData(followedProfiles, setFollowedProfiles)}
+            hasMore={!!followedProfiles.next}
+          >
+            {followedProfiles.results.map((profile) => (
+              <Profile
+                key={profile.id}
+                {...profile}
+                setProfilesMethods={[
+                  setProfile,
+                  setFollowedProfiles,
+                  setFollowingProfiles,
+                ]}
+              />
+            ))}
+          </InfiniteScroll>
         </Tab>
         <Tab eventKey="following" title="following">
           <InfiniteScroll

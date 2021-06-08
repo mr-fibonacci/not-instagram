@@ -23,18 +23,20 @@ function Profile(props) {
     try {
       const { data } = await axios.post("/followers/", { followed: id });
       setProfilesMethods.forEach((setProfilesMethod) => {
-        setProfilesMethod((prevProfiles) =>
-          prevProfiles.map((profile) => {
+        setProfilesMethod((prevProfiles) => ({
+          ...prevProfiles,
+          results: prevProfiles.results.map((profile) => {
             return profile.id === id
               ? {
                   ...profile,
                   followers: profile.followers + 1,
                   following_id: data.id,
                 }
-              // : profile;
-              : profile.is_owner ? {...profile, following: profile.following + 1} : profile;
-          })
-        );
+              : profile.is_owner
+              ? { ...profile, following: profile.following + 1 }
+              : profile;
+          }),
+        }));
       });
     } catch (err) {
       console.log(err.request);
@@ -44,18 +46,20 @@ function Profile(props) {
     try {
       await axios.delete(`/followers/${following_id}/`);
       setProfilesMethods.forEach((setProfilesMethod) => {
-        setProfilesMethod((prevProfiles) =>
-          prevProfiles.map((profile) => {
+        setProfilesMethod((prevProfiles) => ({
+          ...prevProfiles,
+          results: prevProfiles.results.map((profile) => {
             return profile.id === id
               ? {
                   ...profile,
                   followers: profile.followers - 1,
                   following_id: null,
                 }
-              // : profile;
-              : profile.is_owner ? {...profile, following: profile.following - 1} : profile;
-          })
-        );
+              : profile.is_owner
+              ? { ...profile, following: profile.following - 1 }
+              : profile;
+          }),
+        }));
       });
     } catch (err) {
       console.log(err.request);
@@ -71,14 +75,16 @@ function Profile(props) {
         <Media.Body></Media.Body>
       </Media>
 
-      {is_owner ? <>
+      {is_owner ? (
+        <>
           <Button onClick={() => history.push(`/profiles/${id}/edit`)}>
             edit
           </Button>
           <Button onClick={() => history.push("/posts/create")}>
             add a post
           </Button>
-        </> : (
+        </>
+      ) : (
         <>
           {following_id ? (
             <Button onClick={handleUnfollow}>unfollow</Button>

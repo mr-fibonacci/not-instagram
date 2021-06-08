@@ -11,8 +11,8 @@ import { fetchMoreData, setNext } from "../utils";
 function PostPage(props) {
   const { id } = useParams();
   const history = useHistory();
-  const [[post], setPost] = useState([{}]);
-  const [comments, setComments] = useState({ count: 0, results: [] });
+  const [post, setPost] = useState({ results: [] });
+  const [comments, setComments] = useState({ results: [] });
   useEffect(() => {
     handleMount();
   }, []);
@@ -23,7 +23,7 @@ function PostPage(props) {
         axios.get(`/comments/?post=${id}`),
       ]);
       console.log("post", post);
-      setPost([post]);
+      setPost({ results: [post] });
       setComments(setNext(comments));
     } catch (err) {
       console.log(err.request);
@@ -32,7 +32,7 @@ function PostPage(props) {
 
   return (
     <>
-      <Post {...post} setPosts={setPost} />
+      <Post {...post.results[0]} setPosts={setPost} />
       {post.is_owner ? (
         <Button onClick={() => history.push(`/posts/${id}/edit`)}>edit</Button>
       ) : null}
