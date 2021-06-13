@@ -19,9 +19,12 @@ function Post(props) {
     title,
     content,
     image,
+    blur,
+    brightness,
+    contrast,
+    saturation,
     setPosts,
   } = props;
-  const history = useHistory();
 
   const handleLike = async () => {
     try {
@@ -74,13 +77,18 @@ function Post(props) {
         </Media>
       </Card.Body>
       <Link to={`/posts/${id}`}>
-        <Card.Img src={image} />
+        <Card.Img
+          style={{
+            filter: `blur(${blur}px) brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%)`,
+          }}
+          src={image}
+        />
       </Link>
       <Card.Body>
         <Card.Text>{content}</Card.Text>
       </Card.Body>
       <Card.Header>
-        {like_id ? (
+        {is_owner ? null : like_id ? (
           <Button onClick={handleUnlike}>unlike</Button>
         ) : (
           <Button onClick={handleLike}>like</Button>

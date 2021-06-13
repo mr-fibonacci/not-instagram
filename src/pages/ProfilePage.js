@@ -7,10 +7,11 @@ import Post from "../components/Post";
 import Profile from "../components/Profile";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData, setNext } from "../utils";
+import Spinner from "react-bootstrap/Spinner";
 
 function ProfilePage() {
   const { id } = useParams();
-
+  const [hasLoaded, setHasLoaded] = useState(false);
   const [profile, setProfile] = useState({ results: [] });
   const [profilePosts, setProfilePosts] = useState({
     results: [],
@@ -39,6 +40,7 @@ function ProfilePage() {
       setProfilePosts(setNext(profilePosts));
       setFollowingProfiles(setNext(followingProfiles));
       setFollowedProfiles(setNext(followedProfiles));
+      setHasLoaded(true);
     } catch (err) {
       console.log(err.request);
     }
@@ -48,7 +50,7 @@ function ProfilePage() {
     fetchData();
   }, [id]);
 
-  return (
+  return hasLoaded ? (
     <>
       <Profile
         {...profile.results[0]}
@@ -110,6 +112,10 @@ function ProfilePage() {
         </Tab>
       </Tabs>
     </>
+  ) : (
+    <div style={{ border: "1px black solid", display: "flex" }}>
+      <Spinner animation="border" />
+    </div>
   );
 }
 

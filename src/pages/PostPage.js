@@ -33,7 +33,7 @@ function PostPage(props) {
   return (
     <>
       <Post {...post.results[0]} setPosts={setPost} />
-      {post.is_owner ? (
+      {post.results[0]?.is_owner ? (
         <Button onClick={() => history.push(`/posts/${id}/edit`)}>edit</Button>
       ) : null}
       Create a comment

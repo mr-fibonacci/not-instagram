@@ -32,7 +32,10 @@ function ProfileForm() {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("content", content);
-    formData.append("image", imageFile.current.files[0]);
+    if (imageFile?.current?.files[0]) {
+      formData.append("image", imageFile?.current?.files[0]);
+    }
+    // formData.append("image", imageFile.current.files[0]);
     try {
       const { data } = await axios.put("/profiles/1/", formData);
       console.log(data);
@@ -60,8 +63,6 @@ function ProfileForm() {
             onChange={handleChange}
             name="name"
           />
-        </Form.Group>
-        <Form.Group>
           <Form.Label>content</Form.Label>
           <Form.Control
             as="textarea"
@@ -69,8 +70,6 @@ function ProfileForm() {
             onChange={handleChange}
             name="content"
           />
-        </Form.Group>
-        <Form.Group>
           <Form.File
             label="Upload picture"
             ref={imageFile}

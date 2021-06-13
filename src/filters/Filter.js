@@ -1,9 +1,10 @@
 //@flow
-import React, { Component, useState } from "react";
+import React, { createRef } from "react";
 import { Shaders, Node, GLSL } from "gl-react";
 import { Surface } from "gl-react-dom";
 import Form from "react-bootstrap/Form";
 import { Blur } from "./Blur";
+import GLImage from "gl-react-image";
 
 const shaders = Shaders.create({
   Saturate: {
@@ -32,67 +33,25 @@ export const Saturate = ({ contrast, saturation, brightness, children }) => (
   />
 );
 
-const Filter = ({ image }) => {
-  const [filters, setFilters] = useState({
-    contrast: 1,
-    saturation: 1,
-    brightness: 1,
-    blur: 0,
-  });
-  const handleChange = (event) => {
-    setFilters({ ...filters, [event.target.name]: event.target.value });
-  };
+const Filter = (props) => {
+  const ref = createRef();
+  // const { width, height } = useResize(ref);
   return (
-    <>
-      <Surface width={480} height={300}>
-        <Saturate {...filters}>
-          <Blur passes={6} factor={filters.blur}>
-            {image}
-            {/* https://i.imgur.com/uTP9Xfr.jpg */}
+    <div ref={ref} style={{ border: "3px black solid" }}>
+      <Surface
+        style={{ border: "3px purple solid" }}
+        // height="100%"
+        // height="800"
+        // width="700"
+        // width="100%"
+      >
+        <Saturate {...props}>
+          <Blur passes={6} factor={props.blur}>
+            <GLImage source={props.image} resizeMode="contain" />
           </Blur>
         </Saturate>
       </Surface>
-      <Form.Label>Contrast</Form.Label>
-      <Form.Control
-        type="range"
-        min="0"
-        max="2"
-        step="0.01"
-        name="contrast"
-        value={filters.contrast}
-        onChange={handleChange}
-      />
-      <Form.Label>Saturation</Form.Label>
-      <Form.Control
-        type="range"
-        min="0"
-        max="2"
-        step="0.01"
-        name="saturation"
-        value={filters.saturation}
-        onChange={handleChange}
-      />
-      <Form.Label>Brightness</Form.Label>
-      <Form.Control
-        type="range"
-        min="0"
-        max="2"
-        step="0.01"
-        name="brightness"
-        value={filters.brightness}
-        onChange={handleChange}
-      />
-      <Form.Label>Blur</Form.Label>
-      <Form.Control
-        type="range"
-        min="0"
-        max="5"
-        step="0.01"
-        name="blur"
-        value={filters.blur}
-        onChange={handleChange}
-      />
-    </>
+    </div>
   );
 };
 
