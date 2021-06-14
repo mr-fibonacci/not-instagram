@@ -14,7 +14,7 @@ import Container from "react-bootstrap/Container";
 import PostsPage from "./pages/PostsPage";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
   useEffect(() => {
     handleMount();
   }, []);
