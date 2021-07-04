@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useLocation } from "react-router";
 import Post from "../components/Post";
 import { fetchMoreData, setNext } from "../utils";
+import noResults from "../no-results.svg";
 
 function PostsPage({ filter = "" }) {
   const { pathname } = useLocation();
@@ -29,7 +30,7 @@ function PostsPage({ filter = "" }) {
 
   return (
     <>
-      <Form inline>
+      <Form>
         <FormControl
           onChange={(e) => setQuery(e.target.value)}
           type="text"
@@ -37,15 +38,19 @@ function PostsPage({ filter = "" }) {
           className="mr-sm-2"
         />
       </Form>
-      <InfiniteScroll
-        dataLength={posts.results.length}
-        next={() => fetchMoreData(posts, setPosts)}
-        hasMore={!!posts.next}
-      >
-        {posts.results.map((post) => (
-          <Post key={post.id} {...post} setPosts={setPosts} />
-        ))}
-      </InfiniteScroll>
+      {posts.results.length ? (
+        <InfiniteScroll
+          dataLength={posts.results.length}
+          next={() => fetchMoreData(posts, setPosts)}
+          hasMore={!!posts.next}
+        >
+          {posts.results.map((post) => (
+            <Post key={post.id} {...post} setPosts={setPosts} />
+          ))}
+        </InfiniteScroll>
+      ) : (
+        <img src={noResults} />
+      )}
     </>
   );
 }

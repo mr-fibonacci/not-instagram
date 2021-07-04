@@ -26,8 +26,8 @@ function SignUpForm(props) {
       console.log(data);
       history.push("/signin");
     } catch (err) {
-      console.log(err.response.data);
-      setErrors(err.response.data);
+      console.log(err.response?.data);
+      setErrors(err.response?.data);
     }
   };
 

@@ -5,6 +5,11 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { NavLink, useHistory, withRouter } from "react-router-dom";
 import Container from "react-bootstrap/Container";
+import logo from "../logo.svg";
+import heart from "../heart.svg";
+import signout from "../signout.svg";
+import feed from "../feed.svg";
+import styles from "./NavBar.module.css";
 
 function NavBar(props) {
   const { currentUser, setCurrentUser } = props;
@@ -19,26 +24,28 @@ function NavBar(props) {
     }
   };
   return (
-    <Navbar bg="dark" variant="dark">
+    <Navbar className={styles.NavBar} sticky="top">
       <Container>
         <NavLink to="/">
-          <Navbar.Brand>moments</Navbar.Brand>
+          <Navbar.Brand>
+            <img src={logo} height={50} />
+          </Navbar.Brand>
         </NavLink>
         <Nav className="mr-auto">
           {currentUser ? (
             <>
               <NavLink to={"/feed"}>
-                <Button variant="light">feed</Button>
+                <img src={feed} height={30} />
               </NavLink>
               <NavLink to={"/liked"}>
-                <Button variant="light">liked</Button>
+                <img src={heart} height={20} />
               </NavLink>
-              <NavLink to={`/profiles/${currentUser.profile_id}`}>
-                <Button variant="light">profile</Button>
+              <NavLink to={`/profiles/${currentUser?.profile_id}`}>
+                <img src={currentUser?.profile_image} height={40} />
               </NavLink>
-              <Button onClick={handleSignOut} variant="light">
-                sign out
-              </Button>
+              <NavLink to="/" onClick={handleSignOut}>
+                <img src={signout} height={20} />
+              </NavLink>
             </>
           ) : (
             <>

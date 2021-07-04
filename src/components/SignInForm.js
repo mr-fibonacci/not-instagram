@@ -22,7 +22,7 @@ function SignInForm(props) {
       setCurrentUser(data.user);
       history.push("/");
     } catch (err) {
-      setErrors(err.response.data);
+      setErrors(err.response?.data);
     }
   };
   const handleChange = (event) => {

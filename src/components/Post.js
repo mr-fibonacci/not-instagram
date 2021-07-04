@@ -5,6 +5,9 @@ import Card from "react-bootstrap/Card";
 import Media from "react-bootstrap/Media";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import heart from "../heart.svg";
+import heartRed from "../heart-red.svg";
+import comment from "../comment.svg";
 
 function Post(props) {
   const {
@@ -59,15 +62,16 @@ function Post(props) {
   };
 
   return (
-    <Card>
+    <Card style={{ marginTop: 10 }}>
       <Card.Body>
         <Media>
           <Link to={`/profiles/${profile_id}`}>
             <img
-              width="70px"
+              width="50px"
               className="align-self-center"
               src={profile_image}
               alt={title}
+              style={{ borderRadius: 20 }}
             />
             {owner}
           </Link>
@@ -84,16 +88,20 @@ function Post(props) {
           src={image}
         />
       </Link>
-      <Card.Body>
-        <Card.Text>{content}</Card.Text>
-      </Card.Body>
+      {(
+        <Card.Body>
+          <Card.Text>{content}</Card.Text>
+        </Card.Body>
+      ) && content}
       <Card.Header>
-        {is_owner ? null : like_id ? (
-          <Button onClick={handleUnlike}>unlike</Button>
+        {is_owner ? (
+          <img src={heartRed} />
+        ) : like_id ? (
+          <img src={heartRed} onClick={handleUnlike} />
         ) : (
-          <Button onClick={handleLike}>like</Button>
+          <img src={heartRed} onClick={handleLike} />
         )}
-        Likes: {likes} Comments: {comments}
+        {likes} <img src={comment} /> {comments}
       </Card.Header>
     </Card>
   );

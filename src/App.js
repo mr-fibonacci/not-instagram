@@ -14,7 +14,7 @@ import Container from "react-bootstrap/Container";
 import PostsPage from "./pages/PostsPage";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState(null);
   useEffect(() => {
     handleMount();
   }, []);
@@ -45,7 +45,7 @@ function App() {
               path="/feed"
               render={() => (
                 <PostsPage
-                  filter={`owner__followed__owner__profile=${currentUser.profile_id}&`}
+                  filter={`owner__followed__owner__profile=${currentUser?.profile_id}&`}
                 />
               )}
             />
@@ -54,7 +54,7 @@ function App() {
               path="/liked"
               render={() => (
                 <PostsPage
-                  filter={`likes__owner__profile=${currentUser.profile_id}&`}
+                  filter={`likes__owner__profile=${currentUser?.profile_id}&`}
                 />
               )}
             />
