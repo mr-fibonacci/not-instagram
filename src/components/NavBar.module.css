@@ -1,5 +1,10 @@
 .NavBar {
   background-color: #ffffff;
-  opacity: 0.9;
+  /* opacity: 0.9; */
   border: 1px solid #dadadf;
+  margin-bottom: 10px;
 }
+
+/* path:hover {
+  fill: #2142b2;
+} */

@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import heart from "../heart.svg";
 import heartRed from "../heart-red.svg";
 import comment from "../comment.svg";
+import styles from "./Post.module.css";
 
 function Post(props) {
   const {
@@ -62,7 +63,7 @@ function Post(props) {
   };
 
   return (
-    <Card style={{ marginTop: 10 }}>
+    <Card className={styles.Post}>
       <Card.Body>
         <Media>
           <Link to={`/profiles/${profile_id}`}>
@@ -81,19 +82,12 @@ function Post(props) {
         </Media>
       </Card.Body>
       <Link to={`/posts/${id}`}>
-        <Card.Img
-          style={{
-            filter: `blur(${blur}px) brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%)`,
-          }}
-          src={image}
-        />
+        <Card.Img className={styles.PostImage} src={image} />
+        {/* <img className={styles.PostImage} src={image} /> */}
       </Link>
-      {(
-        <Card.Body>
-          <Card.Text>{content}</Card.Text>
-        </Card.Body>
-      ) && content}
-      <Card.Header>
+
+      <div className={styles.PostBar}>
+        {/* <Card.Header> */}
         {is_owner ? (
           <img src={heartRed} />
         ) : like_id ? (
@@ -102,7 +96,15 @@ function Post(props) {
           <img src={heartRed} onClick={handleLike} />
         )}
         {likes} <img src={comment} /> {comments}
-      </Card.Header>
+        {/* </Card.Header> */}
+      </div>
+      {content && (
+        <Card.Body>
+          <Card.Text>
+            <b>{owner}</b> {content}
+          </Card.Text>
+        </Card.Body>
+      )}
     </Card>
   );
 }

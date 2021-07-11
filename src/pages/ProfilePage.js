@@ -60,7 +60,7 @@ function ProfilePage() {
           setFollowingProfiles,
         ]}
       />
-      <Tabs>
+      <Tabs variant="pills">
         <Tab eventKey="posts" title="posts">
           <InfiniteScroll
             dataLength={profilePosts.results.length}

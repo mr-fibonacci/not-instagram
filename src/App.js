@@ -12,6 +12,7 @@ import ProfileForm from "./components/ProfileForm";
 import PostEditForm from "./components/PostEditForm";
 import Container from "react-bootstrap/Container";
 import PostsPage from "./pages/PostsPage";
+import styles from "./App.module.css";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -28,7 +29,7 @@ function App() {
     }
   };
   return (
-    <div className="App">
+    <div className={styles.App}>
       <BrowserRouter>
         <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
         <Container style={{ maxWidth: "500px" }}>

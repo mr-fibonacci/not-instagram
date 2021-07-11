@@ -72,27 +72,27 @@ function Profile(props) {
           <img width="100px" className="align-self-center" src={image} />
           {`${owner} posts: ${posts} followers: ${followers} following: ${following}`}
         </Link>
-        <Media.Body></Media.Body>
-      </Media>
-
-      {is_owner ? (
-        <>
-          <Button onClick={() => history.push(`/profiles/${id}/edit`)}>
-            edit
-          </Button>
-          <Button onClick={() => history.push("/posts/create")}>
-            add a post
-          </Button>
-        </>
-      ) : (
-        <>
-          {following_id ? (
-            <Button onClick={handleUnfollow}>unfollow</Button>
+        <Media.Body>
+          {is_owner ? (
+            <>
+              <Button onClick={() => history.push(`/profiles/${id}/edit`)}>
+                edit
+              </Button>
+              <Button onClick={() => history.push("/posts/create")}>
+                add a post
+              </Button>
+            </>
           ) : (
-            <Button onClick={handleFollow}>follow</Button>
+            <>
+              {following_id ? (
+                <Button onClick={handleUnfollow}>unfollow</Button>
+              ) : (
+                <Button onClick={handleFollow}>follow</Button>
+              )}
+            </>
           )}
-        </>
-      )}
+        </Media.Body>
+      </Media>
     </>
   );
 }
