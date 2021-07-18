@@ -1,10 +1,10 @@
 @font-face {
   font-family: Gilroy;
-  src: url("./Gilroy-Light.otf") format("opentype");
+  src: url("./assets/Gilroy-Light.otf") format("opentype");
 }
 @font-face {
   font-family: GilroyBold;
-  src: url("./Gilroy-ExtraBold.otf") format("opentype");
+  src: url("./assets/Gilroy-ExtraBold.otf") format("opentype");
 }
 
 .App {

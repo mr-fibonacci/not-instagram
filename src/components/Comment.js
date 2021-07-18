@@ -6,9 +6,9 @@ import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import axios from "axios";
 import CommentEditForm from "./CommentEditForm";
-import dots from "../dots.svg";
-import { ReactComponent as Edit } from "../edit.svg";
-import { ReactComponent as Remove } from "../remove.svg";
+import dots from "../assets/dots.svg";
+import { ReactComponent as Edit } from "../assets/edit.svg";
+import { ReactComponent as Remove } from "../assets/remove.svg";
 import Icon from "./Icon";
 import Avatar from "./Avatar";
 

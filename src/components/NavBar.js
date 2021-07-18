@@ -5,14 +5,14 @@ import axios from "axios";
 
 import { NavLink, useHistory, withRouter } from "react-router-dom";
 import Container from "react-bootstrap/Container";
-import logo from "../logo.svg";
-import { ReactComponent as AddPost } from "../add-post.svg";
-import { ReactComponent as Home } from "../home.svg";
-import { ReactComponent as Heart } from "../heart.svg";
-import { ReactComponent as Signin } from "../signin.svg";
-import { ReactComponent as Signup } from "../signup.svg";
-import { ReactComponent as Signout } from "../signout.svg";
-import { ReactComponent as Feed } from "../feed.svg";
+import logo from "../assets/logo.svg";
+import { ReactComponent as AddPost } from "../assets/add-post.svg";
+import { ReactComponent as Home } from "../assets/home.svg";
+import { ReactComponent as Heart } from "../assets/heart.svg";
+import { ReactComponent as Signin } from "../assets/signin.svg";
+import { ReactComponent as Signup } from "../assets/signup.svg";
+import { ReactComponent as Signout } from "../assets/signout.svg";
+import { ReactComponent as Feed } from "../assets/feed.svg";
 import styles from "./NavBar.module.css";
 
 import Avatar from "./Avatar";

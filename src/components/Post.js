@@ -7,9 +7,9 @@ import Image from "react-bootstrap/Image";
 import Avatar from "./Avatar";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { ReactComponent as Heart } from "../heart.svg";
-import { ReactComponent as HeartRed } from "../heart-red.svg";
-import { ReactComponent as Comment } from "../comment.svg";
+import { ReactComponent as Heart } from "../assets/heart.svg";
+import { ReactComponent as HeartRed } from "../assets/heart-red.svg";
+import { ReactComponent as Comment } from "../assets/comment.svg";
 import styles from "./Post.module.css";
 import Icon from "./Icon";
 

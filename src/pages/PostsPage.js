@@ -6,7 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useLocation } from "react-router";
 import Post from "../components/Post";
 import { fetchMoreData, setNext } from "../utils";
-import noResults from "../no-results.svg";
+import noResults from "../assets/no-results.svg";
 
 import styles from "./PostsPage.module.css";
 
