@@ -11,4 +11,5 @@
   font-family: Gilroy;
   background-color: #f8f8f8;
   min-height: 100vh;
+  box-sizing: border-box;
 }

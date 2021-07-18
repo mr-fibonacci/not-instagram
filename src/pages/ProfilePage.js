@@ -69,19 +69,17 @@ function ProfilePage() {
             dataLength={profilePosts.results.length}
             next={() => fetchMoreData(profilePosts, setProfilePosts)}
             hasMore={!!profilePosts.next}
-          >
-            {profilePosts.results.map((post) => (
+            children={profilePosts.results.map((post) => (
               <Post key={post.id} {...post} setPosts={setProfilePosts} />
             ))}
-          </InfiniteScroll>
+          />
         </Tab>
         <Tab eventKey="followers" title="followers">
           <InfiniteScroll
             dataLength={followedProfiles.results.length}
             next={() => fetchMoreData(followedProfiles, setFollowedProfiles)}
             hasMore={!!followedProfiles.next}
-          >
-            {followedProfiles.results.map((profile) => (
+            children={followedProfiles.results.map((profile) => (
               <Profile
                 key={profile.id}
                 {...profile}
@@ -92,15 +90,14 @@ function ProfilePage() {
                 ]}
               />
             ))}
-          </InfiniteScroll>
+          />
         </Tab>
         <Tab eventKey="following" title="following">
           <InfiniteScroll
             dataLength={followingProfiles.results.length}
             next={() => fetchMoreData(followingProfiles, setFollowingProfiles)}
             hasMore={!!followingProfiles.next}
-          >
-            {followingProfiles.results.map((profile) => (
+            children={followingProfiles.results.map((profile) => (
               <Profile
                 key={profile.id}
                 {...profile}
@@ -111,7 +108,7 @@ function ProfilePage() {
                 ]}
               />
             ))}
-          </InfiniteScroll>
+          />
         </Tab>
       </Tabs>
     </>

@@ -48,8 +48,7 @@ function PostPage(props) {
         hasMore={!!comments.next}
         loader={<h4>loading</h4>}
         endMessage={<p>everything has been loaded</p>}
-      >
-        {comments.results.map((comment) => (
+        children={comments.results.map((comment) => (
           <Comment
             key={comment.id}
             setPost={setPost}
@@ -57,7 +56,7 @@ function PostPage(props) {
             setComments={setComments}
           />
         ))}
-      </InfiniteScroll>
+      />
     </>
   );
 }

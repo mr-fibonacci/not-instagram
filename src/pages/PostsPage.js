@@ -45,11 +45,10 @@ function PostsPage({ filter = "" }) {
           dataLength={posts.results.length}
           next={() => fetchMoreData(posts, setPosts)}
           hasMore={!!posts.next}
-        >
-          {posts.results.map((post) => (
+          children={posts.results.map((post) => (
             <Post key={post.id} {...post} setPosts={setPosts} />
           ))}
-        </InfiniteScroll>
+        />
       ) : (
         <img src={noResults} />
       )}
