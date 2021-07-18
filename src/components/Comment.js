@@ -3,8 +3,28 @@ import Media from "react-bootstrap/Media";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import Dropdown from "react-bootstrap/Dropdown";
 import axios from "axios";
 import CommentEditForm from "./CommentEditForm";
+import dots from "../dots.svg";
+import { ReactComponent as Edit } from "../edit.svg";
+import { ReactComponent as Remove } from "../remove.svg";
+import Icon from "./Icon";
+import Avatar from "./Avatar";
+
+const ThreeDots = React.forwardRef(({ onClick }, ref) => (
+  <img
+    role="button"
+    alt="more options"
+    src={dots}
+    height={25}
+    ref={ref}
+    onClick={(e) => {
+      e.preventDefault();
+      onClick(e);
+    }}
+  />
+));
 
 function Comment(props) {
   const {
@@ -43,14 +63,9 @@ function Comment(props) {
       <Card.Body>
         <Media>
           <Link to={`/profiles/${profile_id}`}>
-            <img
-              width="70px"
-              className="align-self-center"
-              src={profile_image}
-              alt={owner}
-            />
-            {owner}{" "}
+            <Avatar src={profile_image} height={70} />
           </Link>
+
           {showEditForm ? (
             <CommentEditForm
               id={id}
@@ -59,16 +74,28 @@ function Comment(props) {
               setShowEditForm={setShowEditForm}
             />
           ) : (
-            <Media.Body className="align-self-center">{content}</Media.Body>
+            <>
+              <Media.Body className="align-self-center">
+                <b>{owner}</b> {content}
+              </Media.Body>
+              {is_owner && !showEditForm && (
+                <Dropdown drop="left">
+                  <Dropdown.Toggle as={ThreeDots}></Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item onClick={() => setShowEditForm(true)}>
+                      <Icon component={Edit} />
+                      Edit
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={handleDelete}>
+                      <Icon component={Remove} />
+                      Remove
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              )}
+            </>
           )}
         </Media>
-        {is_owner && !showEditForm ? (
-          <>
-            <Button onClick={() => setShowEditForm(true)}>edit</Button>
-            <Button onClick={handleDelete}>delete</Button>
-          </>
-        ) : null}
-        {/* <Card.Text></Card.Text> */}
       </Card.Body>
     </Card>
   );

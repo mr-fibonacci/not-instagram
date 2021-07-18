@@ -3,12 +3,15 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Media from "react-bootstrap/Media";
+import Image from "react-bootstrap/Image";
+import Avatar from "./Avatar";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import heart from "../heart.svg";
-import heartRed from "../heart-red.svg";
-import comment from "../comment.svg";
+import { ReactComponent as Heart } from "../heart.svg";
+import { ReactComponent as HeartRed } from "../heart-red.svg";
+import { ReactComponent as Comment } from "../comment.svg";
 import styles from "./Post.module.css";
+import Icon from "./Icon";
 
 function Post(props) {
   const {
@@ -23,10 +26,7 @@ function Post(props) {
     title,
     content,
     image,
-    blur,
-    brightness,
-    contrast,
-    saturation,
+    image_filter,
     setPosts,
   } = props;
 
@@ -67,13 +67,7 @@ function Post(props) {
       <Card.Body>
         <Media>
           <Link to={`/profiles/${profile_id}`}>
-            <img
-              width="50px"
-              className="align-self-center"
-              src={profile_image}
-              alt={title}
-              style={{ borderRadius: 20 }}
-            />
+            <Avatar src={profile_image} height={45} />
             {owner}
           </Link>
           <Media.Body className="align-self-center" align="center">
@@ -82,20 +76,29 @@ function Post(props) {
         </Media>
       </Card.Body>
       <Link to={`/posts/${id}`}>
-        <Card.Img className={styles.PostImage} src={image} />
-        {/* <img className={styles.PostImage} src={image} /> */}
+        {image_filter === "normal" ? (
+          <Card.Img src={image} />
+        ) : (
+          <figure className={image_filter}>
+            <Image alt={title} className={styles.PostImage} src={image} />
+          </figure>
+        )}
       </Link>
 
       <div className={styles.PostBar}>
         {/* <Card.Header> */}
         {is_owner ? (
-          <img src={heartRed} />
+          <Icon component={HeartRed} />
         ) : like_id ? (
-          <img src={heartRed} onClick={handleUnlike} />
+          <span onClick={handleUnlike}>
+            <Icon component={HeartRed} />
+          </span>
         ) : (
-          <img src={heartRed} onClick={handleLike} />
+          <span onClick={handleLike}>
+            <Icon component={Heart} />
+          </span>
         )}
-        {likes} <img src={comment} /> {comments}
+        {likes} <Icon component={Comment} /> {comments}
         {/* </Card.Header> */}
       </div>
       {content && (

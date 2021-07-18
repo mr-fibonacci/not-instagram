@@ -1,0 +1,11 @@
+.icon {
+  height: 100%;
+}
+
+.icon:hover path {
+  fill: #2142b2;
+}
+
+.icon:hover g {
+  opacity: 1;
+}

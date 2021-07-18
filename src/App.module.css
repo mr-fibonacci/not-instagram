@@ -1,4 +1,14 @@
+@font-face {
+  font-family: Gilroy;
+  src: url("./Gilroy-Light.otf") format("opentype");
+}
+@font-face {
+  font-family: GilroyBold;
+  src: url("./Gilroy-ExtraBold.otf") format("opentype");
+}
+
 .App {
-  /* font-family: Gilroy; */
-  background-color: #e5e5e5;
+  font-family: Gilroy;
+  background-color: #f8f8f8;
+  min-height: 100vh;
 }

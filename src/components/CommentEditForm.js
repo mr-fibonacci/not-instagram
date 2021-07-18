@@ -30,15 +30,16 @@ function CommentEditForm(props) {
   };
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+      <Form inline onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Control
             as="textarea"
             value={formContent}
             onChange={handleChange}
           />
+          <Button type="submit">save</Button>
+          <Button onClick={() => setShowEditForm(false)}>cancel</Button>
         </Form.Group>
-        <Button type="submit">save</Button>
       </Form>
     </Container>
   );

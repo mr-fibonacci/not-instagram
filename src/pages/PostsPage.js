@@ -8,6 +8,8 @@ import Post from "../components/Post";
 import { fetchMoreData, setNext } from "../utils";
 import noResults from "../no-results.svg";
 
+import styles from "./PostsPage.module.css";
+
 function PostsPage({ filter = "" }) {
   const { pathname } = useLocation();
   const [posts, setPosts] = useState({ results: [] });
@@ -30,7 +32,7 @@ function PostsPage({ filter = "" }) {
 
   return (
     <>
-      <Form>
+      <Form className={styles.SearchBar}>
         <FormControl
           onChange={(e) => setQuery(e.target.value)}
           type="text"

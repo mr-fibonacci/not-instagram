@@ -4,6 +4,8 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 
+import Avatar from "./Avatar";
+
 function Profile(props) {
   const {
     id,
@@ -17,6 +19,7 @@ function Profile(props) {
     name,
     owner,
     setProfilesMethods,
+    imageSize = 80,
   } = props;
   const history = useHistory();
   const handleFollow = async () => {
@@ -69,7 +72,7 @@ function Profile(props) {
     <>
       <Media>
         <Link to={`/profiles/${id}`}>
-          <img width="100px" className="align-self-center" src={image} />
+          <Avatar src={image} height={imageSize} />
           {`${owner} posts: ${posts} followers: ${followers} following: ${following}`}
         </Link>
         <Media.Body>

@@ -32,7 +32,7 @@ function App() {
     <div className={styles.App}>
       <BrowserRouter>
         <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
-        <Container style={{ maxWidth: "500px" }}>
+        <Container>
           <Switch>
             <Route
               exact

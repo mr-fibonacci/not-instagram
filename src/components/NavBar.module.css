@@ -1,10 +1,14 @@
 .NavBar {
   background-color: #ffffff;
-  /* opacity: 0.9; */
   border: 1px solid #dadadf;
   margin-bottom: 10px;
+  max-height: 50px;
 }
 
-/* path:hover {
+.Active path {
   fill: #2142b2;
-} */
+}
+
+.Active g {
+  opacity: 1;
+}

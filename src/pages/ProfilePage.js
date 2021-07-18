@@ -9,6 +9,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData, setNext } from "../utils";
 import Spinner from "react-bootstrap/Spinner";
 
+import styles from "./ProfilePage.module.css";
+
 function ProfilePage() {
   const { id } = useParams();
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -59,6 +61,7 @@ function ProfilePage() {
           setFollowedProfiles,
           setFollowingProfiles,
         ]}
+        imageSize={200}
       />
       <Tabs variant="pills">
         <Tab eventKey="posts" title="posts">

@@ -5,6 +5,8 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import { useHistory, useParams } from "react-router";
+import Row from "react-bootstrap/Row";
+import { IMAGE_FILTERS } from "../utils";
 
 function PostEditForm() {
   const { id } = useParams();
@@ -13,13 +15,9 @@ function PostEditForm() {
     title: "",
     content: "",
     image: "",
-    blur: 0,
-    brightness: 100,
-    contrast: 100,
-    saturation: 100,
+    image_filter: "normal",
   });
-  const { title, content, image, blur, brightness, contrast, saturation } =
-    postData;
+  const { title, content, image, image_filter } = postData;
   const imageFile = useRef();
   useEffect(() => {
     handleMount();
@@ -28,15 +26,12 @@ function PostEditForm() {
   const handleMount = async () => {
     try {
       const { data } = await axios.get(`/posts/${id}/`);
-      const { title, content, image } = data;
+      const { title, content, image, image_filter } = data;
       setPostData({
         title,
         content,
         image,
-        blur,
-        brightness,
-        contrast,
-        saturation,
+        image_filter,
       });
     } catch (err) {
       console.log(err.response);
@@ -50,10 +45,7 @@ function PostEditForm() {
     if (imageFile?.current?.files[0]) {
       formData.append("image", imageFile?.current?.files[0]);
     }
-    formData.append("blur", blur);
-    formData.append("brightness", brightness);
-    formData.append("contrast", contrast);
-    formData.append("saturation", saturation);
+    formData.append("image_filter", image_filter);
     try {
       await axios.put(`/posts/${id}/`, formData);
       history.goBack();
@@ -110,59 +102,31 @@ function PostEditForm() {
             }
           />
         </Form.Group>
-        {image && (
-          <Image
-            style={{
-              filter: `blur(${blur}px) brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%)`,
-            }}
-            src={image}
-            thumbnail
-          />
-        )}
-        <Form.Group>
-          <Form.Label>Contrast</Form.Label>
-          <Form.Control
-            type="range"
-            min="0"
-            max="200"
-            step="1"
-            name="contrast"
-            value={contrast}
-            onChange={handleChange}
-          />
-          <Form.Label>Saturation</Form.Label>
-          <Form.Control
-            type="range"
-            min="0"
-            max="200"
-            step="1"
-            name="saturation"
-            value={saturation}
-            onChange={handleChange}
-          />
-          <Form.Label>Brightness</Form.Label>
-          <Form.Control
-            type="range"
-            min="0"
-            max="200"
-            step="1"
-            name="brightness"
-            value={brightness}
-            onChange={handleChange}
-          />
-          <Form.Label>Blur</Form.Label>
-          <Form.Control
-            type="range"
-            min="0"
-            max="3"
-            step="0.01"
-            name="blur"
-            value={blur}
-            onChange={handleChange}
-          />
-        </Form.Group>
         <Button type="submit">Submit</Button>
       </Form>
+      {image && (
+        <figure className={image_filter}>
+          <Image src={image} thumbnail />
+        </figure>
+      )}
+      <Row xs={2} sm={3} md={4} lg={5} xl={6}>
+        {image &&
+          IMAGE_FILTERS.map((imageFilter) => (
+            <div key={imageFilter.value}>
+              <figure
+                onClick={() =>
+                  setPostData((prevState) => ({
+                    ...prevState,
+                    image_filter: imageFilter.value,
+                  }))
+                }
+                className={imageFilter.value}
+              >
+                <Image src={image} thumbnail />
+              </figure>
+            </div>
+          ))}
+      </Row>
     </Container>
   );
 }

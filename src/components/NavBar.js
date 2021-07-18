@@ -1,17 +1,22 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import Button from "react-bootstrap/Button";
 import axios from "axios";
+
 import { NavLink, useHistory, withRouter } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import logo from "../logo.svg";
-import addPost from "../add-post.svg";
-import home from "../home.svg";
-import heart from "../heart.svg";
-import signout from "../signout.svg";
-import feed from "../feed.svg";
+import { ReactComponent as AddPost } from "../add-post.svg";
+import { ReactComponent as Home } from "../home.svg";
+import { ReactComponent as Heart } from "../heart.svg";
+import { ReactComponent as Signin } from "../signin.svg";
+import { ReactComponent as Signup } from "../signup.svg";
+import { ReactComponent as Signout } from "../signout.svg";
+import { ReactComponent as Feed } from "../feed.svg";
 import styles from "./NavBar.module.css";
+
+import Avatar from "./Avatar";
+import Icon from "./Icon";
 
 function NavBar(props) {
   const { currentUser, setCurrentUser } = props;
@@ -30,42 +35,41 @@ function NavBar(props) {
       <Container>
         <NavLink to="/">
           <Navbar.Brand>
-            <img src={logo} height={45} />
+            <Avatar src={logo} height={45} />
           </Navbar.Brand>
         </NavLink>
-        <Nav className="mr-auto">
+        <Nav>
           {currentUser ? (
             <>
               <NavLink to={"/posts/create"}>
-                <img src={addPost} height={35} />
+                <Icon component={AddPost} />
               </NavLink>
-              <NavLink to={"/"}>
-                <img src={home} height={35} />
+              <NavLink activeClassName={styles.Active} to={"/"}>
+                <Icon component={Home} />
               </NavLink>
               <NavLink to={"/feed"}>
-                <img src={feed} height={35} />
+                <Icon component={Feed} />
               </NavLink>
               <NavLink to={"/liked"}>
-                <img src={heart} height={35} />
+                <Icon component={Heart} />
               </NavLink>
               <NavLink to={`/profiles/${currentUser?.profile_id}`}>
-                <img
-                  src={currentUser?.profile_image}
-                  height={35}
-                  style={{ borderRadius: "5px" }}
-                />
+                <Avatar src={currentUser?.profile_image} />
               </NavLink>
               <NavLink to="/" onClick={handleSignOut}>
-                <img src={signout} height={35} />
+                <Icon component={Signout} />
               </NavLink>
             </>
           ) : (
             <>
+              <NavLink to={"/"}>
+                <Icon component={Home} />
+              </NavLink>
               <NavLink to="/signin">
-                <Button variant="light">sign in</Button>
+                <Icon component={Signin} />
               </NavLink>
               <NavLink to="/signup">
-                <Button variant="light">sign up</Button>
+                <Icon component={Signup} />
               </NavLink>
             </>
           )}
