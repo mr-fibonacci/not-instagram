@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/not-instagram/static/css/main.96e39b24.chunk.css",
+    "main.js": "/not-instagram/static/js/main.7e5944e5.chunk.js",
+    "main.js.map": "/not-instagram/static/js/main.7e5944e5.chunk.js.map",
+    "runtime-main.js": "/not-instagram/static/js/runtime-main.a9e18128.js",
+    "runtime-main.js.map": "/not-instagram/static/js/runtime-main.a9e18128.js.map",
+    "static/js/2.06cd2dab.chunk.js": "/not-instagram/static/js/2.06cd2dab.chunk.js",
+    "static/js/2.06cd2dab.chunk.js.map": "/not-instagram/static/js/2.06cd2dab.chunk.js.map",
+    "static/js/3.0e34c328.chunk.js": "/not-instagram/static/js/3.0e34c328.chunk.js",
+    "static/js/3.0e34c328.chunk.js.map": "/not-instagram/static/js/3.0e34c328.chunk.js.map",
+    "index.html": "/not-instagram/index.html",
+    "static/css/main.96e39b24.chunk.css.map": "/not-instagram/static/css/main.96e39b24.chunk.css.map",
+    "static/js/2.06cd2dab.chunk.js.LICENSE.txt": "/not-instagram/static/js/2.06cd2dab.chunk.js.LICENSE.txt",
+    "static/media/App.module.css": "/not-instagram/static/media/Gilroy-Light.cc7ab55d.otf",
+    "static/media/add-post.73052a1d.svg": "/not-instagram/static/media/add-post.73052a1d.svg",
+    "static/media/comment.3e71f785.svg": "/not-instagram/static/media/comment.3e71f785.svg",
+    "static/media/delete.c227d7e4.svg": "/not-instagram/static/media/delete.c227d7e4.svg",
+    "static/media/dots.c4c806e9.svg": "/not-instagram/static/media/dots.c4c806e9.svg",
+    "static/media/edit.78d39bb2.svg": "/not-instagram/static/media/edit.78d39bb2.svg",
+    "static/media/feed.a8cf3207.svg": "/not-instagram/static/media/feed.a8cf3207.svg",
+    "static/media/heart-red.6f261627.svg": "/not-instagram/static/media/heart-red.6f261627.svg",
+    "static/media/heart.395ad223.svg": "/not-instagram/static/media/heart.395ad223.svg",
+    "static/media/home.55b90c3e.svg": "/not-instagram/static/media/home.55b90c3e.svg",
+    "static/media/logo.7e888a47.svg": "/not-instagram/static/media/logo.7e888a47.svg",
+    "static/media/no-results.c388251b.svg": "/not-instagram/static/media/no-results.c388251b.svg",
+    "static/media/PostsPage.module.css": "/not-instagram/static/media/search.8601128d.svg",
+    "static/media/signin.7507493c.svg": "/not-instagram/static/media/signin.7507493c.svg",
+    "static/media/signout.77cff9ae.svg": "/not-instagram/static/media/signout.77cff9ae.svg",
+    "static/media/signup.c9704a42.svg": "/not-instagram/static/media/signup.c9704a42.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a9e18128.js",
+    "static/js/2.06cd2dab.chunk.js",
+    "static/css/main.96e39b24.chunk.css",
+    "static/js/main.7e5944e5.chunk.js"
+  ]
+}
