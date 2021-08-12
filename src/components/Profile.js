@@ -10,9 +10,9 @@ function Profile(props) {
   const {
     id,
     content,
-    posts,
-    followers,
-    following,
+    posts_count,
+    followers_count,
+    following_count,
     following_id,
     image,
     is_owner,
@@ -32,11 +32,11 @@ function Profile(props) {
             return profile.id === id
               ? {
                   ...profile,
-                  followers: profile.followers + 1,
+                  followers_count: profile.followers_count + 1,
                   following_id: data.id,
                 }
               : profile.is_owner
-              ? { ...profile, following: profile.following + 1 }
+              ? { ...profile, following_count: profile.following_count + 1 }
               : profile;
           }),
         }));
@@ -55,11 +55,11 @@ function Profile(props) {
             return profile.id === id
               ? {
                   ...profile,
-                  followers: profile.followers - 1,
+                  followers_count: profile.followers_count - 1,
                   following_id: null,
                 }
               : profile.is_owner
-              ? { ...profile, following: profile.following - 1 }
+              ? { ...profile, following_count: profile.following_count - 1 }
               : profile;
           }),
         }));
@@ -73,7 +73,7 @@ function Profile(props) {
       <Media>
         <Link to={`/profiles/${id}`}>
           <Avatar src={image} height={imageSize} />
-          {`${owner} posts: ${posts} followers: ${followers} following: ${following}`}
+          {`${owner} posts: ${posts_count} followers: ${followers_count} following: ${following_count}`}
         </Link>
         <Media.Body>
           {is_owner ? (

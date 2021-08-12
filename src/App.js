@@ -4,7 +4,7 @@ import SignUpForm from "./components/SignUpForm";
 import NavBar from "./components/NavBar";
 import "./axiosDefaults";
 import axios from "axios";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import PostPage from "./pages/PostPage";
 import PostCreateForm from "./components/PostCreateForm";
 import ProfilePage from "./pages/ProfilePage";
@@ -30,7 +30,7 @@ function App() {
   };
   return (
     <div className={styles.App}>
-      <BrowserRouter>
+      <Router>
         <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
         <Container>
           <Switch>
@@ -82,7 +82,7 @@ function App() {
             />
           </Switch>
         </Container>
-      </BrowserRouter>
+      </Router>
     </div>
   );
 }
