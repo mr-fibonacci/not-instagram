@@ -59,17 +59,10 @@ function PostEditForm() {
       [event.target.name]: event.target.value,
     });
   };
-  const handleDelete = async () => {
-    try {
-      await axios.delete(`/posts/${id}/`);
-    } catch (err) {
-      console.log(err.request);
-    }
-  };
+
   return (
     <Container>
       <h1>Post</h1>
-      <Button onClick={handleDelete}>delete</Button>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>title</Form.Label>

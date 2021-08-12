@@ -31,7 +31,7 @@ function NavBar(props) {
     }
   };
   return (
-    <Navbar className={styles.NavBar} sticky="top">
+    <Navbar className={styles.NavBar}>
       <Container>
         <NavLink to="/">
           <Navbar.Brand>
@@ -44,16 +44,19 @@ function NavBar(props) {
               <NavLink to={"/posts/create"}>
                 <Icon component={AddPost} />
               </NavLink>
-              <NavLink activeClassName={styles.Active} to={"/"}>
+              <NavLink exact activeClassName={styles.Active} to={"/"}>
                 <Icon component={Home} />
               </NavLink>
-              <NavLink to={"/feed"}>
+              <NavLink activeClassName={styles.Active} to={"/feed"}>
                 <Icon component={Feed} />
               </NavLink>
-              <NavLink to={"/liked"}>
+              <NavLink activeClassName={styles.Active} to={"/liked"}>
                 <Icon component={Heart} />
               </NavLink>
-              <NavLink to={`/profiles/${currentUser?.profile_id}`}>
+              <NavLink
+                activeClassName={styles.Active}
+                to={`/profiles/${currentUser?.profile_id}`}
+              >
                 <Avatar src={currentUser?.profile_image} />
               </NavLink>
               <NavLink to="/" onClick={handleSignOut}>
@@ -62,13 +65,13 @@ function NavBar(props) {
             </>
           ) : (
             <>
-              <NavLink to={"/"}>
+              <NavLink exact activeClassName={styles.Active} to={"/"}>
                 <Icon component={Home} />
               </NavLink>
-              <NavLink to="/signin">
+              <NavLink activeClassName={styles.Active} to="/signin">
                 <Icon component={Signin} />
               </NavLink>
-              <NavLink to="/signup">
+              <NavLink activeClassName={styles.Active} to="/signup">
                 <Icon component={Signup} />
               </NavLink>
             </>

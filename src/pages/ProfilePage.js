@@ -33,7 +33,7 @@ function ProfilePage() {
         { data: followingProfiles },
         { data: followedProfiles },
       ] = await Promise.all([
-        axios.get(`/profiles/${id}`),
+        axios.get(`/profiles/${id}/`),
         axios.get(`/posts/?owner__profile=${id}`),
         axios.get(`/profiles/?owner__followed__owner__profile=${id}`),
         axios.get(`/profiles/?owner__following__followed__profile=${id}`),
@@ -62,9 +62,15 @@ function ProfilePage() {
           setFollowingProfiles,
         ]}
         imageSize={200}
+        is_owner={profile.results[0].is_owner}
       />
       <Tabs variant="pills">
         <Tab eventKey="posts" title="posts">
+          {/* <Tab.Content>
+            <Tab.Pane >
+
+            </Tab.Pane>
+          </Tab.Content> */}
           <InfiniteScroll
             dataLength={profilePosts.results.length}
             next={() => fetchMoreData(profilePosts, setProfilePosts)}

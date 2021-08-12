@@ -7,7 +7,7 @@ import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import { useHistory } from "react-router";
 import { IMAGE_FILTERS } from "../utils";
-import Badge from "react-bootstrap/Badge";
+import Content from "./Content";
 
 function PostCreateForm(props) {
   const history = useHistory();
@@ -42,7 +42,7 @@ function PostCreateForm(props) {
     });
   };
   return (
-    <Container>
+    <Content>
       <h1>Post</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
@@ -97,7 +97,7 @@ function PostCreateForm(props) {
             </div>
           ))}
       </Row>
-    </Container>
+    </Content>
   );
 }
 

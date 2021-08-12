@@ -1,10 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
+import styles from "./CommentCreateEditForm.module.css";
+import Avatar from "./Avatar";
 
 function CommentCreateForm(props) {
-  const { post, setPost, setComments } = props;
+  const { post, setPost, setComments, profileImage } = props;
   const [content, setContent] = useState("");
 
   const handleChange = (event) => {
@@ -34,12 +37,21 @@ function CommentCreateForm(props) {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group>
-        {/* <Form.Label>create a comment</Form.Label> */}
-        <Form.Control as="textarea" value={content} onChange={handleChange} />
+        <InputGroup>
+          <Avatar src={profileImage} height={70} />
+          <Form.Control
+            className={styles.Form}
+            placeholder="my comment..."
+            as="textarea"
+            value={content}
+            onChange={handleChange}
+            rows={3}
+          />
+          <button className={styles.Button} disabled={!content} type="submit">
+            post
+          </button>
+        </InputGroup>
       </Form.Group>
-      <Button disabled={!content} type="submit">
-        Submit
-      </Button>
     </Form>
   );
 }

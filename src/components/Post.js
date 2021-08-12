@@ -12,6 +12,7 @@ import { ReactComponent as HeartRed } from "../assets/heart-red.svg";
 import { ReactComponent as Comment } from "../assets/comment.svg";
 import styles from "./Post.module.css";
 import Icon from "./Icon";
+import MoreDropdown from "./MoreDropdown";
 
 function Post(props) {
   const {
@@ -28,6 +29,9 @@ function Post(props) {
     image,
     image_filter,
     setPosts,
+    handleEdit,
+    handleDelete,
+    postPage,
   } = props;
 
   const handleLike = async () => {
@@ -73,6 +77,9 @@ function Post(props) {
           <Media.Body className="align-self-center" align="center">
             <h5>{title}</h5>
           </Media.Body>
+          {is_owner && postPage && (
+            <MoreDropdown handleEdit={handleEdit} handleDelete={handleDelete} />
+          )}
         </Media>
       </Card.Body>
       <Link to={`/posts/${id}`}>
@@ -86,7 +93,6 @@ function Post(props) {
       </Link>
 
       <div className={styles.PostBar}>
-        {/* <Card.Header> */}
         {is_owner ? (
           <Icon component={HeartRed} />
         ) : like_id ? (
@@ -99,7 +105,6 @@ function Post(props) {
           </span>
         )}
         {likes} <Icon component={Comment} /> {comments}
-        {/* </Card.Header> */}
       </div>
       {content && (
         <Card.Body>

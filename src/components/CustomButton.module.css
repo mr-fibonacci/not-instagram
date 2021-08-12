@@ -1,0 +1,34 @@
+.Button {
+  padding: 10px 50px;
+  border-radius: 100px;
+  width: 100%;
+  border-color: transparent;
+  background-color: #2ed9ff;
+}
+
+.Blue {
+  background-color: #2142b2;
+  color: #ffffff;
+}
+
+.BlueOutline {
+  border: 1px solid #2142b2;
+  background-color: #ffffff;
+  color: #2142b2;
+}
+
+.Black {
+  background-color: #242a3d;
+  color: white;
+}
+
+.BlackOutline {
+  background-color: #dadadf;
+  color: #242a3d;
+  border-color: #242a3d;
+}
+
+.Bright {
+  background-color: #2ed9ff;
+  color: #2142b2;
+}

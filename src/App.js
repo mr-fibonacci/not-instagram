@@ -69,7 +69,11 @@ function App() {
               path="/posts/:id/edit"
               render={() => <PostEditForm />}
             />
-            <Route exact path="/posts/:id" render={() => <PostPage />} />
+            <Route
+              exact
+              path="/posts/:id"
+              render={() => <PostPage currentUser={currentUser} />}
+            />
             <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
             <Route
               exact

@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
+import styles from "./CommentCreateEditForm.module.css";
+import InputGroup from "react-bootstrap/InputGroup";
+import Avatar from "./Avatar";
 
 function CommentEditForm(props) {
-  const { id, content, setShowEditForm, setComments } = props;
+  const { id, content, setShowEditForm, setComments, profileImage } = props;
   const [formContent, setFormContent] = useState(content);
 
   const handleChange = (event) => {
@@ -29,19 +30,28 @@ function CommentEditForm(props) {
     }
   };
   return (
-    <Container>
-      <Form inline onSubmit={handleSubmit}>
-        <Form.Group>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group>
+        <InputGroup>
+          <Avatar src={profileImage} height={70} />
           <Form.Control
+            className={styles.Form}
             as="textarea"
             value={formContent}
             onChange={handleChange}
           />
-          <Button type="submit">save</Button>
-          <Button onClick={() => setShowEditForm(false)}>cancel</Button>
-        </Form.Group>
-      </Form>
-    </Container>
+          <button className={styles.Button} disabled={!content} type="submit">
+            save
+          </button>
+          <button
+            className={styles.Button}
+            onClick={() => setShowEditForm(false)}
+          >
+            cancel
+          </button>
+        </InputGroup>
+      </Form.Group>
+    </Form>
   );
 }
 

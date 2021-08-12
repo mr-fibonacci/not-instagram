@@ -5,6 +5,10 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
 import { useHistory } from "react-router";
+import Content from "./Content";
+import CustomButton from "./CustomButton";
+import { NavLink } from "react-router-dom";
+import styles from "./SignInUpForm.module.css";
 
 function SignUpForm(props) {
   const history = useHistory();
@@ -39,54 +43,64 @@ function SignUpForm(props) {
   };
 
   return (
-    <Container>
-      <h1>Sign up</h1>
-      <Form onSubmit={(e) => handleSubmit(e)}>
-        <Form.Group>
-          <Form.Label>username</Form.Label>
-          <Form.Control
-            type="text"
-            name="username"
-            onChange={handleChange}
-            value={username}
-          />
-          {errors?.username?.map((message, idx) => (
-            <Alert key={idx} variant="warning">
-              {message}
-            </Alert>
-          ))}
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>password</Form.Label>
-          <Form.Control
-            type="password"
-            name="password1"
-            onChange={handleChange}
-            value={password1}
-          />{" "}
-          {errors?.password1?.map((message, idx) => (
-            <Alert key={idx} variant="warning">
-              {message}
-            </Alert>
-          ))}
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>confirm password</Form.Label>
-          <Form.Control
-            type="password"
-            name="password2"
-            onChange={handleChange}
-            value={password2}
-          />{" "}
-          {errors?.password2?.map((message, idx) => (
-            <Alert key={idx} variant="warning">
-              {message}
-            </Alert>
-          ))}
-        </Form.Group>
-        <Button type="submit">sign up</Button>
-      </Form>
-    </Container>
+    <>
+      <Content>
+        <h1 className={styles.Header}>sign up</h1>
+        <Form onSubmit={(e) => handleSubmit(e)}>
+          <Form.Group>
+            <Form.Control
+              placeholder="username"
+              className={styles.Input}
+              type="text"
+              name="username"
+              onChange={handleChange}
+              value={username}
+            />
+            {errors?.username?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
+          </Form.Group>
+          <Form.Group>
+            <Form.Control
+              placeholder="password"
+              className={styles.Input}
+              type="password"
+              name="password1"
+              onChange={handleChange}
+              value={password1}
+            />{" "}
+            {errors?.password1?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
+          </Form.Group>
+          <Form.Group>
+            <Form.Control
+              placeholder="confirm password"
+              className={styles.Input}
+              type="password"
+              name="password2"
+              onChange={handleChange}
+              value={password2}
+            />{" "}
+            {errors?.password2?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
+          </Form.Group>
+          <CustomButton text="sign up" />
+        </Form>
+      </Content>
+      <Content>
+        <NavLink className={styles.Link} to="/signin">
+          Already have an account? <span>Sign in</span>
+        </NavLink>{" "}
+      </Content>
+    </>
   );
 }
 

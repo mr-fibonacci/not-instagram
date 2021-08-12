@@ -6,7 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useLocation } from "react-router";
 import Post from "../components/Post";
 import { fetchMoreData, setNext } from "../utils";
-import noResults from "../assets/no-results.svg";
+import { ReactComponent as NoResults } from "../assets/no-results.svg";
 
 import styles from "./PostsPage.module.css";
 
@@ -50,7 +50,11 @@ function PostsPage({ filter = "" }) {
           ))}
         />
       ) : (
-        <img src={noResults} />
+        <NoResults
+          style={{
+            border: "2px black solid",
+          }}
+        />
       )}
     </>
   );

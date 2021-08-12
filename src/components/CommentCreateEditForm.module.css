@@ -1,0 +1,10 @@
+.Form {
+  border: none;
+  border-bottom: 2px #2ed9ff solid;
+}
+
+.Button {
+  border: none;
+  background-color: transparent;
+  color: #2ed9ff;
+}
