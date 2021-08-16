@@ -28,9 +28,9 @@ function NavBar(props) {
         setExpanded(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mouseup", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mouseup", handleClickOutside);
     };
   }, [ref]);
   const history = useHistory();
@@ -47,7 +47,6 @@ function NavBar(props) {
   return (
     <Navbar
       expanded={expanded}
-      collapseOnSelect
       expand="md"
       fixed="top"
       className={styles.NavBar}
@@ -68,16 +67,16 @@ function NavBar(props) {
             {currentUser ? (
               <>
                 <NavLink to={"/posts/create"}>
-                  <Icon component={AddPost} text="add" />
+                  <Icon component={AddPost} text="add" nav />
                 </NavLink>
                 <NavLink exact activeClassName={styles.Active} to={"/"}>
-                  <Icon component={Home} text="home" />
+                  <Icon component={Home} text="home" nav />
                 </NavLink>
                 <NavLink activeClassName={styles.Active} to={"/feed"}>
-                  <Icon component={Feed} text="feed" />
+                  <Icon component={Feed} text="feed" nav />
                 </NavLink>
                 <NavLink activeClassName={styles.Active} to={"/liked"}>
-                  <Icon component={Heart} text="liked" />
+                  <Icon component={Heart} text="liked" nav />
                 </NavLink>
                 <NavLink
                   activeClassName={styles.Active}
@@ -86,19 +85,19 @@ function NavBar(props) {
                   <Avatar src={currentUser?.profile_image} text="profile" />
                 </NavLink>
                 <NavLink to="/" onClick={handleSignOut}>
-                  <Icon component={Signout} text="leave" />
+                  <Icon component={Signout} text="sign out" nav />
                 </NavLink>
               </>
             ) : (
               <>
                 <NavLink exact activeClassName={styles.Active} to={"/"}>
-                  <Icon component={Home} text="home" />
+                  <Icon component={Home} text="home" nav />
                 </NavLink>
                 <NavLink activeClassName={styles.Active} to="/signin">
-                  <Icon component={Signin} text="sign in" />
+                  <Icon component={Signin} text="sign in" nav />
                 </NavLink>
                 <NavLink activeClassName={styles.Active} to="/signup">
-                  <Icon component={Signup} text="sign up" />
+                  <Icon component={Signup} text="sign up" nav />
                 </NavLink>
               </>
             )}
