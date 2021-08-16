@@ -32,7 +32,7 @@ function App() {
     <div className={styles.App}>
       <Router>
         <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
-        <Container>
+        <Container className="min-vh-100" style={{ paddingTop: "80px" }}>
           <Switch>
             <Route
               exact

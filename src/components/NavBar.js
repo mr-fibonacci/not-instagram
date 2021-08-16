@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import axios from "axios";
@@ -19,8 +19,22 @@ import Avatar from "./Avatar";
 import Icon from "./Icon";
 
 function NavBar(props) {
+  const [expanded, setExpanded] = useState(false);
+  const ref = useRef(null);
   const { currentUser, setCurrentUser } = props;
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setExpanded(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
   const history = useHistory();
+
   const handleSignOut = async () => {
     try {
       await axios.post("dj-rest-auth/logout/");
@@ -31,52 +45,65 @@ function NavBar(props) {
     }
   };
   return (
-    <Navbar className={styles.NavBar}>
+    <Navbar
+      expanded={expanded}
+      collapseOnSelect
+      expand="md"
+      fixed="top"
+      className={styles.NavBar}
+    >
       <Container>
         <NavLink to="/">
           <Navbar.Brand>
             <Avatar src={logo} height={45} />
           </Navbar.Brand>
         </NavLink>
-        <Nav>
-          {currentUser ? (
-            <>
-              <NavLink to={"/posts/create"}>
-                <Icon component={AddPost} />
-              </NavLink>
-              <NavLink exact activeClassName={styles.Active} to={"/"}>
-                <Icon component={Home} />
-              </NavLink>
-              <NavLink activeClassName={styles.Active} to={"/feed"}>
-                <Icon component={Feed} />
-              </NavLink>
-              <NavLink activeClassName={styles.Active} to={"/liked"}>
-                <Icon component={Heart} />
-              </NavLink>
-              <NavLink
-                activeClassName={styles.Active}
-                to={`/profiles/${currentUser?.profile_id}`}
-              >
-                <Avatar src={currentUser?.profile_image} />
-              </NavLink>
-              <NavLink to="/" onClick={handleSignOut}>
-                <Icon component={Signout} />
-              </NavLink>
-            </>
-          ) : (
-            <>
-              <NavLink exact activeClassName={styles.Active} to={"/"}>
-                <Icon component={Home} />
-              </NavLink>
-              <NavLink activeClassName={styles.Active} to="/signin">
-                <Icon component={Signin} />
-              </NavLink>
-              <NavLink activeClassName={styles.Active} to="/signup">
-                <Icon component={Signup} />
-              </NavLink>
-            </>
-          )}
-        </Nav>
+        <Navbar.Toggle
+          ref={ref}
+          aria-controls="navbar"
+          onClick={() => setExpanded(!expanded)}
+        />
+        <Navbar.Collapse className="justify-content-end" id="navbar">
+          <Nav>
+            {currentUser ? (
+              <>
+                <NavLink to={"/posts/create"}>
+                  <Icon component={AddPost} text="add" />
+                </NavLink>
+                <NavLink exact activeClassName={styles.Active} to={"/"}>
+                  <Icon component={Home} text="home" />
+                </NavLink>
+                <NavLink activeClassName={styles.Active} to={"/feed"}>
+                  <Icon component={Feed} text="feed" />
+                </NavLink>
+                <NavLink activeClassName={styles.Active} to={"/liked"}>
+                  <Icon component={Heart} text="liked" />
+                </NavLink>
+                <NavLink
+                  activeClassName={styles.Active}
+                  to={`/profiles/${currentUser?.profile_id}`}
+                >
+                  <Avatar src={currentUser?.profile_image} text="profile" />
+                </NavLink>
+                <NavLink to="/" onClick={handleSignOut}>
+                  <Icon component={Signout} text="leave" />
+                </NavLink>
+              </>
+            ) : (
+              <>
+                <NavLink exact activeClassName={styles.Active} to={"/"}>
+                  <Icon component={Home} text="home" />
+                </NavLink>
+                <NavLink activeClassName={styles.Active} to="/signin">
+                  <Icon component={Signin} text="sign in" />
+                </NavLink>
+                <NavLink activeClassName={styles.Active} to="/signup">
+                  <Icon component={Signup} text="sign up" />
+                </NavLink>
+              </>
+            )}
+          </Nav>
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );

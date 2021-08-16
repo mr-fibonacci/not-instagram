@@ -1,11 +1,18 @@
-.icon {
-  height: 100%;
+.Icon {
+  /* border: 1px black solid; */
+  padding: 10px 3px;
+  line-height: 40px;
 }
 
-.icon:hover path {
+.Icon:hover path {
   fill: #2142b2;
 }
 
-.icon:hover g {
+.Icon:hover g {
   opacity: 1;
+}
+
+.Icon svg {
+  height: 27px;
+  width: 27px;
 }

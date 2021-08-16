@@ -1,10 +1,11 @@
 import React from "react";
 import styles from "./Icon.module.css";
 
-function Icon({ component: Component }) {
+function Icon({ component: Component, text }) {
   return (
-    <span style={{ padding: "10px" }}>
-      <Component className={styles.icon} />
+    <span className={styles.Icon}>
+      <Component style={{ marginRight: "2px" }} />
+      {text}
     </span>
   );
 }
