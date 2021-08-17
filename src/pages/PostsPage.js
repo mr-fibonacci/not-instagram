@@ -7,6 +7,8 @@ import { useLocation } from "react-router";
 import Post from "../components/Post";
 import { fetchMoreData, setNext } from "../utils";
 import { ReactComponent as NoResults } from "../assets/no-results.svg";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import styles from "./PostsPage.module.css";
 
@@ -31,32 +33,35 @@ function PostsPage({ filter = "" }) {
   };
 
   return (
-    <>
-      <Form className={styles.SearchBar}>
-        <FormControl
-          onChange={(e) => setQuery(e.target.value)}
-          type="text"
-          placeholder="search posts"
-          className="mr-sm-2"
-        />
-      </Form>
-      {posts.results.length ? (
-        <InfiniteScroll
-          dataLength={posts.results.length}
-          next={() => fetchMoreData(posts, setPosts)}
-          hasMore={!!posts.next}
-          children={posts.results.map((post) => (
-            <Post key={post.id} {...post} setPosts={setPosts} />
-          ))}
-        />
-      ) : (
-        <NoResults
-          style={{
-            border: "2px black solid",
-          }}
-        />
-      )}
-    </>
+    <Row>
+      <Col lg={9}>
+        <Form className={styles.SearchBar}>
+          <FormControl
+            onChange={(e) => setQuery(e.target.value)}
+            type="text"
+            placeholder="search posts"
+            className="mr-sm-2"
+          />
+        </Form>
+        {posts.results.length ? (
+          <InfiniteScroll
+            dataLength={posts.results.length}
+            next={() => fetchMoreData(posts, setPosts)}
+            hasMore={!!posts.next}
+            children={posts.results.map((post) => (
+              <Post key={post.id} {...post} setPosts={setPosts} />
+            ))}
+          />
+        ) : (
+          <NoResults
+            style={{
+              border: "2px black solid",
+            }}
+          />
+        )}
+      </Col>
+      <Col className="d-none d-lg-block">Popular profiles</Col>
+    </Row>
   );
 }
 

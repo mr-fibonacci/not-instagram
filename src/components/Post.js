@@ -21,8 +21,8 @@ function Post(props) {
     is_owner,
     profile_id,
     profile_image,
-    comments,
-    likes,
+    comments_count,
+    likes_count,
     like_id,
     title,
     content,
@@ -41,7 +41,7 @@ function Post(props) {
         ...prevPosts,
         results: prevPosts.results.map((post) => {
           return post.id === id
-            ? { ...post, likes: post.likes + 1, like_id: data.id }
+            ? { ...post, likes_count: post.likes_count + 1, like_id: data.id }
             : post;
         }),
       }));
@@ -57,7 +57,7 @@ function Post(props) {
         ...prevPosts,
         results: prevPosts.results.map((post) => {
           return post.id === id
-            ? { ...post, likes: post.likes - 1, like_id: null }
+            ? { ...post, likes_count: post.likes_count - 1, like_id: null }
             : post;
         }),
       }));
@@ -104,7 +104,7 @@ function Post(props) {
             <Icon component={Heart} />
           </span>
         )}
-        {likes} <Icon component={Comment} /> {comments}
+        {likes_count} <Icon component={Comment} /> {comments_count}
       </div>
       {content && (
         <Card.Body>

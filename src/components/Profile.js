@@ -73,27 +73,41 @@ function Profile(props) {
       <Media>
         <Link to={`/profiles/${id}`}>
           <Avatar src={image} height={imageSize} />
-          {`${owner} posts: ${posts_count} followers: ${followers_count} following: ${following_count}`}
         </Link>
         <Media.Body>
-          {is_owner ? (
-            <>
-              <Button onClick={() => history.push(`/profiles/${id}/edit`)}>
-                edit
-              </Button>
-              <Button onClick={() => history.push("/posts/create")}>
-                add a post
-              </Button>
-            </>
-          ) : (
-            <>
-              {following_id ? (
-                <Button onClick={handleUnfollow}>unfollow</Button>
-              ) : (
-                <Button onClick={handleFollow}>follow</Button>
-              )}
-            </>
-          )}
+          <h4>{owner}</h4>
+          <div className="d-flex text-center">
+            <div className="m-2">
+              <div>{posts_count}</div>
+              <div>posts</div>
+            </div>
+            <div className="m-2">
+              <div>{followers_count}</div>
+              <div>followers</div>
+            </div>
+            <div className="m-2">
+              <div>{following_count}</div>
+              <div>following</div>
+            </div>
+            {is_owner ? (
+              <>
+                <Button onClick={() => history.push(`/profiles/${id}/edit`)}>
+                  edit
+                </Button>
+                <Button onClick={() => history.push("/posts/create")}>
+                  add a post
+                </Button>
+              </>
+            ) : (
+              <>
+                {following_id ? (
+                  <Button onClick={handleUnfollow}>unfollow</Button>
+                ) : (
+                  <Button onClick={handleFollow}>follow</Button>
+                )}
+              </>
+            )}
+          </div>
         </Media.Body>
       </Media>
     </>

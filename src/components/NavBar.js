@@ -78,14 +78,14 @@ function NavBar(props) {
                 <NavLink activeClassName={styles.Active} to={"/liked"}>
                   <Icon component={Heart} text="liked" nav />
                 </NavLink>
+                <NavLink to="/" onClick={handleSignOut}>
+                  <Icon component={Signout} text="sign out" nav />
+                </NavLink>
                 <NavLink
                   activeClassName={styles.Active}
                   to={`/profiles/${currentUser?.profile_id}`}
                 >
                   <Avatar src={currentUser?.profile_image} text="profile" />
-                </NavLink>
-                <NavLink to="/" onClick={handleSignOut}>
-                  <Icon component={Signout} text="sign out" nav />
                 </NavLink>
               </>
             ) : (

@@ -9,7 +9,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData, setNext } from "../utils";
 import Spinner from "react-bootstrap/Spinner";
 
-import styles from "./ProfilePage.module.css";
+import "./ProfilePage.css";
 
 function ProfilePage() {
   const { id } = useParams();
@@ -61,16 +61,12 @@ function ProfilePage() {
           setFollowedProfiles,
           setFollowingProfiles,
         ]}
-        imageSize={200}
-        is_owner={profile.results[0].is_owner}
+        imageSize={120}
+        is_owner={true}
+        // is_owner={profile.results[0].is_owner}
       />
       <Tabs variant="pills">
         <Tab eventKey="posts" title="posts">
-          {/* <Tab.Content>
-            <Tab.Pane >
-
-            </Tab.Pane>
-          </Tab.Content> */}
           <InfiniteScroll
             dataLength={profilePosts.results.length}
             next={() => fetchMoreData(profilePosts, setProfilePosts)}

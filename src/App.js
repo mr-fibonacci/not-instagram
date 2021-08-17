@@ -13,6 +13,7 @@ import PostEditForm from "./components/PostEditForm";
 import Container from "react-bootstrap/Container";
 import PostsPage from "./pages/PostsPage";
 import styles from "./App.module.css";
+import Layout from "./pages/Layout";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -37,9 +38,21 @@ function App() {
             <Route
               exact
               path="/signin"
-              render={() => <SignInForm setCurrentUser={setCurrentUser} />}
+              render={() => (
+                <Layout>
+                  <SignInForm setCurrentUser={setCurrentUser} />
+                </Layout>
+              )}
             />
-            <Route exact path="/signup" render={() => <SignUpForm />} />
+            <Route
+              exact
+              path="/signup"
+              render={() => (
+                <Layout>
+                  <SignUpForm />
+                </Layout>
+              )}
+            />
             <Route exact path="/" render={() => <PostsPage />} />
             <Route
               exact
@@ -62,23 +75,47 @@ function App() {
             <Route
               exact
               path="/posts/create"
-              render={() => <PostCreateForm />}
+              render={() => (
+                <Layout>
+                  <PostCreateForm />
+                </Layout>
+              )}
             />
             <Route
               exact
               path="/posts/:id/edit"
-              render={() => <PostEditForm />}
+              render={() => (
+                <Layout>
+                  <PostEditForm />
+                </Layout>
+              )}
             />
             <Route
               exact
               path="/posts/:id"
-              render={() => <PostPage currentUser={currentUser} />}
+              render={() => (
+                <Layout>
+                  <PostPage currentUser={currentUser} />
+                </Layout>
+              )}
             />
-            <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
+            <Route
+              exact
+              path="/profiles/:id"
+              render={() => (
+                <Layout>
+                  <ProfilePage />
+                </Layout>
+              )}
+            />
             <Route
               exact
               path="/profiles/:id/edit"
-              render={() => <ProfileForm />}
+              render={() => (
+                <Layout>
+                  <ProfileForm />
+                </Layout>
+              )}
             />
           </Switch>
         </Container>

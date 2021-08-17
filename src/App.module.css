@@ -1,18 +1,11 @@
-@font-face {
-  font-family: Gilroy;
-  src: url("./assets/Gilroy-Light.otf") format("opentype");
-}
-@font-face {
-  font-family: GilroyBold;
-  src: url("./assets/Gilroy-ExtraBold.otf") format("opentype");
-}
-
 .App {
-  font-family: Gilroy;
+  font-family: "DM Sans", sans-serif;
   background-color: #f8f8f8;
   min-height: 100vh;
 }
-
+* {
+  box-sizing: border-box;
+}
 a:hover {
   text-decoration: none;
 }
