@@ -50,6 +50,11 @@ function NavBar() {
             <Avatar src={logo} height={45} />
           </Navbar.Brand>
         </NavLink>
+        {currentUser && (
+          <NavLink to={"/posts/create"}>
+            <Icon component={AddPost} text="add" nav />
+          </NavLink>
+        )}
         <Navbar.Toggle
           ref={ref}
           aria-controls="navbar"
@@ -59,9 +64,6 @@ function NavBar() {
           <Nav>
             {currentUser ? (
               <>
-                <NavLink to={"/posts/create"}>
-                  <Icon component={AddPost} text="add" nav />
-                </NavLink>
                 <NavLink exact activeClassName={styles.Active} to={"/"}>
                   <Icon component={Home} text="home" nav />
                 </NavLink>

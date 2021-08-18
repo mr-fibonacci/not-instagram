@@ -7,7 +7,7 @@ import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import PostPage from "./pages/PostPage";
 import PostCreateForm from "./components/PostCreateForm";
 import ProfilePage from "./pages/ProfilePage";
-import ProfileForm from "./components/ProfileForm";
+import ProfileEditForm from "./components/ProfileEditForm";
 import PostEditForm from "./components/PostEditForm";
 import Container from "react-bootstrap/Container";
 import PostsPage from "./pages/PostsPage";
@@ -102,7 +102,7 @@ function App() {
               path="/profiles/:id/edit"
               render={() => (
                 <Layout>
-                  <ProfileForm />
+                  <ProfileEditForm />
                 </Layout>
               )}
             />

@@ -4,8 +4,10 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
+import { useParams } from "react-router-dom";
 
 function ProfileForm() {
+  const { id } = useParams();
   const [profileData, setProfileData] = useState({
     name: "",
     content: "",
@@ -19,7 +21,7 @@ function ProfileForm() {
 
   const handleMount = async () => {
     try {
-      const { data } = await axios.get("/profiles/1/");
+      const { data } = await axios.get(`/profiles/${id}/`);
       const { name, content, image } = data;
       setProfileData({ name, content, image });
     } catch (err) {
