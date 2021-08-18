@@ -7,9 +7,11 @@ import Post from "../components/Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData, setNext } from "../utils";
 import Content from "../components/Content";
+import { useCurrentUser } from "../CurrentUserContext";
 
-function PostPage(props) {
-  const profile_image = props?.currentUser?.profile_image;
+function PostPage() {
+  const currentUser = useCurrentUser();
+  const profile_image = currentUser?.profile_image;
   const { id } = useParams();
   const history = useHistory();
   const [post, setPost] = useState({ results: [] });

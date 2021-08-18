@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
 import { useHistory } from "react-router";
 import Content from "./Content";
 import CustomButton from "./CustomButton";
 import styles from "./SignInUpForm.module.css";
 import { NavLink } from "react-router-dom";
+import { useSetCurrentUser } from "../CurrentUserContext";
 
-function SignInForm(props) {
-  const { setCurrentUser } = props;
+function SignInForm() {
+  const setCurrentUser = useSetCurrentUser();
   const history = useHistory();
   const [errors, setErrors] = useState({});
   const [signInData, setSignInData] = useState({
@@ -23,7 +22,7 @@ function SignInForm(props) {
     event.preventDefault();
     try {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
-     setCurrentUser(data.user);
+      setCurrentUser(data.user);
       history.push("/");
     } catch (err) {
       setErrors(err.response?.data);
@@ -49,7 +48,7 @@ function SignInForm(props) {
               onChange={handleChange}
               value={username}
               name="username"
-            />{" "}
+            />
             {errors?.username?.map((message, idx) => (
               <Alert key={idx} variant="warning">
                 {message}
@@ -64,7 +63,7 @@ function SignInForm(props) {
               onChange={handleChange}
               value={password}
               name="password"
-            />{" "}
+            />
             {errors?.password?.map((message, idx) => (
               <Alert key={idx} variant="warning">
                 {message}

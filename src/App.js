@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
 import NavBar from "./components/NavBar";
 import "./axiosDefaults";
-import axios from "axios";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import PostPage from "./pages/PostPage";
 import PostCreateForm from "./components/PostCreateForm";
@@ -14,33 +13,23 @@ import Container from "react-bootstrap/Container";
 import PostsPage from "./pages/PostsPage";
 import styles from "./App.module.css";
 import Layout from "./pages/Layout";
+import { useCurrentUser } from "./CurrentUserContext";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
-  useEffect(() => {
-    handleMount();
-  }, []);
-  const handleMount = async () => {
-    try {
-      const { data } = await axios.get("dj-rest-auth/user/");
-      console.log("current User:", data);
-      setCurrentUser(data);
-    } catch (err) {
-      console.log(err.request);
-    }
-  };
+  const currentUser = useCurrentUser();
+
   return (
     <div className={styles.App}>
       <Router>
-        <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
-        <Container className="min-vh-100" style={{ paddingTop: "80px" }}>
+        <NavBar />
+        <Container className="min-vh-100" style={{ paddingTop: "85px" }}>
           <Switch>
             <Route
               exact
               path="/signin"
               render={() => (
                 <Layout>
-                  <SignInForm setCurrentUser={setCurrentUser} />
+                  <SignInForm />
                 </Layout>
               )}
             />
@@ -95,7 +84,7 @@ function App() {
               path="/posts/:id"
               render={() => (
                 <Layout>
-                  <PostPage currentUser={currentUser} />
+                  <PostPage />
                 </Layout>
               )}
             />

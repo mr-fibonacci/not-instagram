@@ -8,6 +8,7 @@ import Profile from "../components/Profile";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData, setNext } from "../utils";
 import Spinner from "react-bootstrap/Spinner";
+import Content from "../components/Content";
 
 import "./ProfilePage.css";
 
@@ -54,65 +55,69 @@ function ProfilePage() {
 
   return hasLoaded ? (
     <>
-      <Profile
-        {...profile.results[0]}
-        setProfilesMethods={[
-          setProfile,
-          setFollowedProfiles,
-          setFollowingProfiles,
-        ]}
-        imageSize={120}
-        is_owner={true}
-        // is_owner={profile.results[0].is_owner}
-      />
-      <Tabs variant="pills">
-        <Tab eventKey="posts" title="posts">
-          <InfiniteScroll
-            dataLength={profilePosts.results.length}
-            next={() => fetchMoreData(profilePosts, setProfilePosts)}
-            hasMore={!!profilePosts.next}
-            children={profilePosts.results.map((post) => (
-              <Post key={post.id} {...post} setPosts={setProfilePosts} />
-            ))}
-          />
-        </Tab>
-        <Tab eventKey="followers" title="followers">
-          <InfiniteScroll
-            dataLength={followedProfiles.results.length}
-            next={() => fetchMoreData(followedProfiles, setFollowedProfiles)}
-            hasMore={!!followedProfiles.next}
-            children={followedProfiles.results.map((profile) => (
-              <Profile
-                key={profile.id}
-                {...profile}
-                setProfilesMethods={[
-                  setProfile,
-                  setFollowedProfiles,
-                  setFollowingProfiles,
-                ]}
-              />
-            ))}
-          />
-        </Tab>
-        <Tab eventKey="following" title="following">
-          <InfiniteScroll
-            dataLength={followingProfiles.results.length}
-            next={() => fetchMoreData(followingProfiles, setFollowingProfiles)}
-            hasMore={!!followingProfiles.next}
-            children={followingProfiles.results.map((profile) => (
-              <Profile
-                key={profile.id}
-                {...profile}
-                setProfilesMethods={[
-                  setProfile,
-                  setFollowedProfiles,
-                  setFollowingProfiles,
-                ]}
-              />
-            ))}
-          />
-        </Tab>
-      </Tabs>
+      <Content>
+        <Profile
+          {...profile.results[0]}
+          setProfilesMethods={[
+            setProfile,
+            setFollowedProfiles,
+            setFollowingProfiles,
+          ]}
+          imageSize={120}
+          // is_owner={true}
+          // is_owner={profile.results[0].is_owner}
+        />
+        <Tabs variant="pills">
+          <Tab eventKey="posts" title="posts">
+            <InfiniteScroll
+              dataLength={profilePosts.results.length}
+              next={() => fetchMoreData(profilePosts, setProfilePosts)}
+              hasMore={!!profilePosts.next}
+              children={profilePosts.results.map((post) => (
+                <Post key={post.id} {...post} setPosts={setProfilePosts} />
+              ))}
+            />
+          </Tab>
+          <Tab eventKey="followers" title="followers">
+            <InfiniteScroll
+              dataLength={followedProfiles.results.length}
+              next={() => fetchMoreData(followedProfiles, setFollowedProfiles)}
+              hasMore={!!followedProfiles.next}
+              children={followedProfiles.results.map((profile) => (
+                <Profile
+                  key={profile.id}
+                  {...profile}
+                  setProfilesMethods={[
+                    setProfile,
+                    setFollowedProfiles,
+                    setFollowingProfiles,
+                  ]}
+                />
+              ))}
+            />
+          </Tab>
+          <Tab eventKey="following" title="following">
+            <InfiniteScroll
+              dataLength={followingProfiles.results.length}
+              next={() =>
+                fetchMoreData(followingProfiles, setFollowingProfiles)
+              }
+              hasMore={!!followingProfiles.next}
+              children={followingProfiles.results.map((profile) => (
+                <Profile
+                  key={profile.id}
+                  {...profile}
+                  setProfilesMethods={[
+                    setProfile,
+                    setFollowedProfiles,
+                    setFollowingProfiles,
+                  ]}
+                />
+              ))}
+            />
+          </Tab>
+        </Tabs>
+      </Content>
     </>
   ) : (
     <div style={{ border: "1px black solid", display: "flex" }}>

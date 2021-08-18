@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import axios from "axios";
@@ -15,24 +15,17 @@ import { ReactComponent as Signout } from "../assets/signout.svg";
 import { ReactComponent as Feed } from "../assets/feed.svg";
 import styles from "./NavBar.module.css";
 
+import { useCurrentUser, useSetCurrentUser } from "../CurrentUserContext";
+import { useClickOutsideToggle } from "../hooks";
+
 import Avatar from "./Avatar";
 import Icon from "./Icon";
 
-function NavBar(props) {
-  const [expanded, setExpanded] = useState(false);
-  const ref = useRef(null);
-  const { currentUser, setCurrentUser } = props;
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setExpanded(false);
-      }
-    };
-    document.addEventListener("mouseup", handleClickOutside);
-    return () => {
-      document.removeEventListener("mouseup", handleClickOutside);
-    };
-  }, [ref]);
+function NavBar() {
+  const currentUser = useCurrentUser();
+  const setCurrentUser = useSetCurrentUser();
+
+  const { expanded, setExpanded, ref } = useClickOutsideToggle();
   const history = useHistory();
 
   const handleSignOut = async () => {

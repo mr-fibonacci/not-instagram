@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
 import { useHistory } from "react-router";
 import Content from "./Content";
@@ -10,7 +8,7 @@ import CustomButton from "./CustomButton";
 import { NavLink } from "react-router-dom";
 import styles from "./SignInUpForm.module.css";
 
-function SignUpForm(props) {
+function SignUpForm() {
   const history = useHistory();
   const [signUpData, setSignUpData] = useState({
     username: "",
@@ -70,7 +68,7 @@ function SignUpForm(props) {
               name="password1"
               onChange={handleChange}
               value={password1}
-            />{" "}
+            />
             {errors?.password1?.map((message, idx) => (
               <Alert key={idx} variant="warning">
                 {message}
@@ -85,7 +83,7 @@ function SignUpForm(props) {
               name="password2"
               onChange={handleChange}
               value={password2}
-            />{" "}
+            />
             {errors?.password2?.map((message, idx) => (
               <Alert key={idx} variant="warning">
                 {message}
@@ -98,7 +96,7 @@ function SignUpForm(props) {
       <Content>
         <NavLink className={styles.Link} to="/signin">
           Already have an account? <span>Sign in</span>
-        </NavLink>{" "}
+        </NavLink>
       </Content>
     </>
   );
