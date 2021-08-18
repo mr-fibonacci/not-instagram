@@ -3,7 +3,7 @@ import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
 import NavBar from "./components/NavBar";
 import "./axiosDefaults";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import PostPage from "./pages/PostPage";
 import PostCreateForm from "./components/PostCreateForm";
 import ProfilePage from "./pages/ProfilePage";
@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div className={styles.App}>
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router>
         <NavBar />
         <Container className="min-vh-100" style={{ paddingTop: "85px" }}>
           <Switch>

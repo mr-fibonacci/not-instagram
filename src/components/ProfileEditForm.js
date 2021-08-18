@@ -4,10 +4,11 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 function ProfileForm() {
   const { id } = useParams();
+  const history = useHistory();
   const [profileData, setProfileData] = useState({
     name: "",
     content: "",
@@ -41,6 +42,7 @@ function ProfileForm() {
     try {
       const { data } = await axios.put(`/profiles/${id}/`, formData);
       console.log(data);
+      history.goBack();
     } catch (err) {
       console.log(err);
     }
