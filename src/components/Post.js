@@ -1,11 +1,9 @@
 import axios from "axios";
 import React from "react";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Media from "react-bootstrap/Media";
 import Image from "react-bootstrap/Image";
 import Avatar from "./Avatar";
-import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { ReactComponent as Heart } from "../assets/heart.svg";
 import { ReactComponent as HeartRed } from "../assets/heart-red.svg";
@@ -13,12 +11,12 @@ import { ReactComponent as Comment } from "../assets/comment.svg";
 import styles from "./Post.module.css";
 import Icon from "./Icon";
 import MoreDropdown from "./MoreDropdown";
+import { useCurrentUser } from "../CurrentUserContext";
 
 function Post(props) {
   const {
     id,
     owner,
-    is_owner,
     profile_id,
     profile_image,
     comments_count,
@@ -33,6 +31,8 @@ function Post(props) {
     handleDelete,
     postPage,
   } = props;
+  const currentUser = useCurrentUser();
+  const is_owner = currentUser?.username === owner;
 
   const handleLike = async () => {
     try {

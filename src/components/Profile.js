@@ -3,7 +3,7 @@ import Media from "react-bootstrap/Media";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
-
+import { useCurrentUser } from "../CurrentUserContext";
 import Avatar from "./Avatar";
 
 function Profile(props) {
@@ -15,13 +15,15 @@ function Profile(props) {
     following_count,
     following_id,
     image,
-    is_owner,
     name,
     owner,
     setProfilesMethods,
     imageSize = 80,
   } = props;
+  console.log("following id", following_id);
   const history = useHistory();
+  const currentUser = useCurrentUser();
+  const is_owner = currentUser?.username === owner;
   const handleFollow = async () => {
     try {
       const { data } = await axios.post("/followers/", { followed: id });
@@ -29,13 +31,14 @@ function Profile(props) {
         setProfilesMethod((prevProfiles) => ({
           ...prevProfiles,
           results: prevProfiles.results.map((profile) => {
+            const is_owner = currentUser?.username === profile.owner;
             return profile.id === id
               ? {
                   ...profile,
                   followers_count: profile.followers_count + 1,
                   following_id: data.id,
                 }
-              : profile.is_owner
+              : is_owner
               ? { ...profile, following_count: profile.following_count + 1 }
               : profile;
           }),
@@ -52,13 +55,14 @@ function Profile(props) {
         setProfilesMethod((prevProfiles) => ({
           ...prevProfiles,
           results: prevProfiles.results.map((profile) => {
+            const is_owner = currentUser?.username === profile.owner;
             return profile.id === id
               ? {
                   ...profile,
                   followers_count: profile.followers_count - 1,
                   following_id: null,
                 }
-              : profile.is_owner
+              : is_owner
               ? { ...profile, following_count: profile.following_count - 1 }
               : profile;
           }),
