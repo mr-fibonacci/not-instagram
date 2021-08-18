@@ -11,11 +11,15 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import styles from "./PostsPage.module.css";
+import Asset from "../components/Asset";
+import Content from "../components/Content";
+import Spinner from "react-bootstrap/Spinner";
 
 function PostsPage({ filter = "" }) {
   const { pathname } = useLocation();
   const [posts, setPosts] = useState({ results: [] });
   const [query, setQuery] = useState("");
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
     handleMount();
@@ -27,6 +31,7 @@ function PostsPage({ filter = "" }) {
         `/posts/?${filter}search=${query}`
       );
       setPosts(setNext(posts));
+      setHasLoaded(true);
     } catch (err) {
       console.log(err.request);
     }
@@ -35,29 +40,36 @@ function PostsPage({ filter = "" }) {
   return (
     <Row>
       <Col lg={9}>
-        <Form className={styles.SearchBar}>
-          <FormControl
-            onChange={(e) => setQuery(e.target.value)}
-            type="text"
-            placeholder="search posts"
-            className="mr-sm-2"
-          />
-        </Form>
-        {posts.results.length ? (
-          <InfiniteScroll
-            dataLength={posts.results.length}
-            next={() => fetchMoreData(posts, setPosts)}
-            hasMore={!!posts.next}
-            children={posts.results.map((post) => (
-              <Post key={post.id} {...post} setPosts={setPosts} />
-            ))}
-          />
+        {hasLoaded ? (
+          <>
+            <Form className={styles.SearchBar}>
+              <FormControl
+                onChange={(e) => setQuery(e.target.value)}
+                type="text"
+                placeholder="search posts"
+                className="mr-sm-2"
+              />
+            </Form>
+            {posts.results.length ? (
+              <InfiniteScroll
+                dataLength={posts.results.length}
+                next={() => fetchMoreData(posts, setPosts)}
+                hasMore={!!posts.next}
+                loader={<Asset children={<Spinner animation="border" />} />}
+                children={posts.results.map((post) => (
+                  <Post key={post.id} {...post} setPosts={setPosts} />
+                ))}
+              />
+            ) : (
+              <Content>
+                <Asset children={<NoResults />} />
+              </Content>
+            )}
+          </>
         ) : (
-          <NoResults
-            style={{
-              border: "2px black solid",
-            }}
-          />
+          <Content>
+            <Asset children={<Spinner animation="border" />} />
+          </Content>
         )}
       </Col>
       <Col className="d-none d-lg-block">Popular profiles</Col>

@@ -4,10 +4,11 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import { useHistory } from "react-router";
 import Content from "./Content";
-import CustomButton from "./CustomButton";
 import styles from "./SignInUpForm.module.css";
+import btnStyles from "./Button.module.css";
 import { NavLink } from "react-router-dom";
 import { useSetCurrentUser } from "../CurrentUserContext";
+import Button from "react-bootstrap/Button";
 
 function SignInForm() {
   const setCurrentUser = useSetCurrentUser();
@@ -70,7 +71,11 @@ function SignInForm() {
               </Alert>
             ))}
           </Form.Group>
-          <CustomButton text="sign in" />
+          <Button
+            className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
+          >
+            sign in
+          </Button>
           {errors?.non_field_errors?.map((message, idx) => (
             <Alert key={idx} variant="warning">
               {message}

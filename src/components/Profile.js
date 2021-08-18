@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useCurrentUser } from "../CurrentUserContext";
 import Avatar from "./Avatar";
 import MoreDropdown from "./MoreDropdown";
+import styles from "./Button.module.css";
 
 function Profile(props) {
   const {
@@ -20,6 +21,7 @@ function Profile(props) {
     owner,
     setProfilesMethods,
     imageSize = 80,
+    profilePage,
   } = props;
   const history = useHistory();
   const currentUser = useCurrentUser();
@@ -97,34 +99,26 @@ function Profile(props) {
             </div>
           </div>
         </Media.Body>
-        {is_owner ? (
+        {is_owner && profilePage ? (
           <MoreDropdown handleEdit={handleEdit} handleAdd={handleAddPost} />
         ) : (
           <>
             {following_id ? (
               <Button
-                style={{
-                  alignSelf: "center",
-                  borderRadius: "100px",
-                  backgroundColor: "#2142b2",
-                  color: "#ffffff",
-                }}
+                className={`${styles.Button} ${styles.BlackOutline}`}
                 onClick={handleUnfollow}
               >
                 unfollow
               </Button>
             ) : (
-              <Button
-                style={{
-                  alignSelf: "center",
-                  borderRadius: "100px",
-                  backgroundColor: "#2142b2",
-                  color: "#ffffff",
-                }}
-                onClick={handleFollow}
-              >
-                follow
-              </Button>
+              !is_owner && (
+                <Button
+                  className={`${styles.Button} ${styles.Black}`}
+                  onClick={handleFollow}
+                >
+                  follow
+                </Button>
+              )
             )}
           </>
         )}

@@ -4,9 +4,10 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import { useHistory } from "react-router";
 import Content from "./Content";
-import CustomButton from "./CustomButton";
 import { NavLink } from "react-router-dom";
 import styles from "./SignInUpForm.module.css";
+import btnStyles from "./Button.module.css";
+import Button from "react-bootstrap/Button";
 
 function SignUpForm() {
   const history = useHistory();
@@ -90,7 +91,11 @@ function SignUpForm() {
               </Alert>
             ))}
           </Form.Group>
-          <CustomButton text="sign up" />
+          <Button
+            className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
+          >
+            sign up
+          </Button>
         </Form>
       </Content>
       <Content>

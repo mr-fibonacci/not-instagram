@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import { useHistory } from "react-router";
 import { IMAGE_FILTERS } from "../utils";
 import Content from "./Content";
+import btnStyles from "./Button.module.css";
 
 function PostCreateForm() {
   const history = useHistory();
@@ -71,7 +72,12 @@ function PostCreateForm() {
             }
           />
         </Form.Group>
-        <Button type="submit">Submit</Button>
+        <Button
+          className={`${btnStyles.Button} ${btnStyles.Blue}`}
+          type="submit"
+        >
+          create
+        </Button>
       </Form>
       {image && (
         <figure className={image_filter}>

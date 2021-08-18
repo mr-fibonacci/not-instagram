@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import { useHistory, useParams } from "react-router-dom";
+import Content from "./Content";
+import btnStyles from "./Button.module.css";
 
 function ProfileForm() {
   const { id } = useParams();
@@ -56,7 +57,7 @@ function ProfileForm() {
   };
 
   return (
-    <Container>
+    <Content>
       <h1>Profile</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
@@ -86,10 +87,15 @@ function ProfileForm() {
             }
           />
         </Form.Group>
-        <Button type="submit">Submit</Button>
+        <Button
+          className={`${btnStyles.Button} ${btnStyles.Blue}`}
+          type="submit"
+        >
+          save
+        </Button>
       </Form>
       {image && <Image src={image} thumbnail />}
-    </Container>
+    </Content>
   );
 }
 

@@ -1,27 +1,39 @@
 .Button {
-  padding: 10px 50px;
+  align-self: center;
   border-radius: 100px;
-  width: 100%;
   border-color: transparent;
-  background-color: #2ed9ff;
+}
+.Button:hover {
+  opacity: 0.8;
+  border-color: transparent;
 }
 
-.Blue {
+.Wide {
+  padding: 10px 50px;
+  width: 100%;
+}
+
+.Blue,
+.BlueOutline:hover,
+.Bright:hover {
   background-color: #2142b2;
   color: #ffffff;
 }
 
-.BlueOutline {
+.BlueOutline,
+.Blue:hover {
   border: 1px solid #2142b2;
   background-color: #ffffff;
   color: #2142b2;
 }
 
-.Black {
+.Black,
+.BlackOutline:hover {
   background-color: #242a3d;
   color: white;
 }
 
+.Black:hover,
 .BlackOutline {
   background-color: #dadadf;
   color: #242a3d;

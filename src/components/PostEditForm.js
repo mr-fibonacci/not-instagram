@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import { useHistory, useParams } from "react-router";
 import Row from "react-bootstrap/Row";
 import { IMAGE_FILTERS } from "../utils";
+import Content from "./Content";
+import btnStyles from "./Button.module.css";
 
 function PostEditForm() {
   const { id } = useParams();
@@ -61,7 +62,7 @@ function PostEditForm() {
   };
 
   return (
-    <Container>
+    <Content>
       <h1>Post</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
@@ -95,7 +96,12 @@ function PostEditForm() {
             }
           />
         </Form.Group>
-        <Button type="submit">Submit</Button>
+        <Button
+          className={`${btnStyles.Button} ${btnStyles.Blue}`}
+          type="submit"
+        >
+          save
+        </Button>
       </Form>
       {image && (
         <figure className={image_filter}>
@@ -120,7 +126,7 @@ function PostEditForm() {
             </div>
           ))}
       </Row>
-    </Container>
+    </Content>
   );
 }
 

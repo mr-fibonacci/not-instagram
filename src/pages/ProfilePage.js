@@ -7,9 +7,10 @@ import Post from "../components/Post";
 import Profile from "../components/Profile";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData, setNext } from "../utils";
-import Spinner from "react-bootstrap/Spinner";
 import Content from "../components/Content";
 import "./ProfilePage.css";
+import Asset from "../components/Asset";
+import Spinner from "react-bootstrap/Spinner";
 
 function ProfilePage() {
   const { id } = useParams();
@@ -52,74 +53,80 @@ function ProfilePage() {
     fetchData();
   }, [id]);
 
-  return hasLoaded ? (
-    <>
-      <Content>
-        <Profile
-          {...profile.results[0]}
-          setProfilesMethods={[
-            setProfile,
-            setFollowedProfiles,
-            setFollowingProfiles,
-          ]}
-          imageSize={120}
-        />
-        <Tabs variant="pills">
-          <Tab eventKey="posts" title="posts">
-            <InfiniteScroll
-              dataLength={profilePosts.results.length}
-              next={() => fetchMoreData(profilePosts, setProfilePosts)}
-              hasMore={!!profilePosts.next}
-              children={profilePosts.results.map((post) => (
-                <Post key={post.id} {...post} setPosts={setProfilePosts} />
-              ))}
-            />
-          </Tab>
-          <Tab eventKey="followers" title="followers">
-            <InfiniteScroll
-              dataLength={followedProfiles.results.length}
-              next={() => fetchMoreData(followedProfiles, setFollowedProfiles)}
-              hasMore={!!followedProfiles.next}
-              children={followedProfiles.results.map((profile) => (
-                <Profile
-                  key={profile.id}
-                  {...profile}
-                  setProfilesMethods={[
-                    setProfile,
-                    setFollowedProfiles,
-                    setFollowingProfiles,
-                  ]}
-                />
-              ))}
-            />
-          </Tab>
-          <Tab eventKey="following" title="following">
-            <InfiniteScroll
-              dataLength={followingProfiles.results.length}
-              next={() =>
-                fetchMoreData(followingProfiles, setFollowingProfiles)
-              }
-              hasMore={!!followingProfiles.next}
-              children={followingProfiles.results.map((profile) => (
-                <Profile
-                  key={profile.id}
-                  {...profile}
-                  setProfilesMethods={[
-                    setProfile,
-                    setFollowedProfiles,
-                    setFollowingProfiles,
-                  ]}
-                />
-              ))}
-            />
-          </Tab>
-        </Tabs>
-      </Content>
-    </>
-  ) : (
-    <div style={{ border: "1px black solid", display: "flex" }}>
-      <Spinner animation="border" />
-    </div>
+  return (
+    <Content>
+      {hasLoaded ? (
+        <>
+          <Profile
+            {...profile.results[0]}
+            setProfilesMethods={[
+              setProfile,
+              setFollowedProfiles,
+              setFollowingProfiles,
+            ]}
+            imageSize={120}
+            profilePage
+          />
+          <Tabs variant="pills">
+            <Tab eventKey="posts" title="posts">
+              <InfiniteScroll
+                dataLength={profilePosts.results.length}
+                next={() => fetchMoreData(profilePosts, setProfilePosts)}
+                hasMore={!!profilePosts.next}
+                loader={<Asset children={<Spinner animation="border" />} />}
+                children={profilePosts.results.map((post) => (
+                  <Post key={post.id} {...post} setPosts={setProfilePosts} />
+                ))}
+              />
+            </Tab>
+            <Tab eventKey="followers" title="followers">
+              <InfiniteScroll
+                dataLength={followedProfiles.results.length}
+                next={() =>
+                  fetchMoreData(followedProfiles, setFollowedProfiles)
+                }
+                hasMore={!!followedProfiles.next}
+                loader={<Asset children={<Spinner animation="border" />} />}
+                children={followedProfiles.results.map((profile) => (
+                  <Profile
+                    key={profile.id}
+                    {...profile}
+                    setProfilesMethods={[
+                      setProfile,
+                      setFollowedProfiles,
+                      setFollowingProfiles,
+                    ]}
+                  />
+                ))}
+              />
+            </Tab>
+            <Tab eventKey="following" title="following">
+              <InfiniteScroll
+                dataLength={followingProfiles.results.length}
+                next={() =>
+                  fetchMoreData(followingProfiles, setFollowingProfiles)
+                }
+                hasMore={!!followingProfiles.next}
+                loader={<Asset children={<Spinner animation="border" />} />}
+                children={followingProfiles.results.map((profile) => (
+                  <Profile
+                    key={profile.id}
+                    {...profile}
+                    setProfilesMethods={[
+                      setProfile,
+                      setFollowedProfiles,
+                      setFollowingProfiles,
+                    ]}
+                  />
+                ))}
+              />
+            </Tab>
+          </Tabs>
+        </>
+      ) : (
+        <Asset children={<Spinner animation="border" />} />
+      )}
+    </Content>
   );
 }
 

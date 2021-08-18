@@ -8,6 +8,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData, setNext } from "../utils";
 import Content from "../components/Content";
 import { useCurrentUser } from "../CurrentUserContext";
+import Asset from "../components/Asset";
+import Spinner from "react-bootstrap/Spinner";
 
 function PostPage() {
   const currentUser = useCurrentUser();
@@ -67,8 +69,7 @@ function PostPage() {
           dataLength={comments.results.length}
           next={() => fetchMoreData(comments, setComments)}
           hasMore={!!comments.next}
-          loader={<h4>loading</h4>}
-          endMessage={<p>everything has been loaded</p>}
+          loader={<Asset children={<Spinner animation="border" />} />}
           children={comments.results.map((comment) => (
             <Comment
               key={comment.id}
