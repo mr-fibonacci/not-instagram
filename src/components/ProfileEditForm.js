@@ -39,7 +39,7 @@ function ProfileForm() {
     }
     // formData.append("image", imageFile.current.files[0]);
     try {
-      const { data } = await axios.put("/profiles/1/", formData);
+      const { data } = await axios.put(`/profiles/${id}/`, formData);
       console.log(data);
     } catch (err) {
       console.log(err);
