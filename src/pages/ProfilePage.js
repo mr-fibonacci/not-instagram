@@ -9,7 +9,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData, setNext } from "../utils";
 import Spinner from "react-bootstrap/Spinner";
 import Content from "../components/Content";
-import { useCurrentUser } from "../CurrentUserContext";
 import "./ProfilePage.css";
 
 function ProfilePage() {
@@ -25,9 +24,6 @@ function ProfilePage() {
   const [followedProfiles, setFollowedProfiles] = useState({
     results: [],
   });
-
-  const currentUser = useCurrentUser();
-  const is_owner = currentUser?.username === profile?.results[0]?.owner;
 
   const fetchData = async () => {
     try {
@@ -67,7 +63,6 @@ function ProfilePage() {
             setFollowingProfiles,
           ]}
           imageSize={120}
-          is_owner={is_owner}
         />
         <Tabs variant="pills">
           <Tab eventKey="posts" title="posts">

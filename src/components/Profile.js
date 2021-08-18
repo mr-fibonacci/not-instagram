@@ -5,6 +5,7 @@ import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import { useCurrentUser } from "../CurrentUserContext";
 import Avatar from "./Avatar";
+import MoreDropdown from "./MoreDropdown";
 
 function Profile(props) {
   const {
@@ -20,10 +21,11 @@ function Profile(props) {
     setProfilesMethods,
     imageSize = 80,
   } = props;
-  console.log("following id", following_id);
   const history = useHistory();
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
+  const handleEdit = () => history.push(`/profiles/${id}/edit`);
+  const handleAddPost = () => history.push("/posts/create");
   const handleFollow = async () => {
     try {
       const { data } = await axios.post("/followers/", { followed: id });
@@ -93,26 +95,39 @@ function Profile(props) {
               <div>{following_count}</div>
               <div>following</div>
             </div>
-            {is_owner ? (
-              <>
-                <Button onClick={() => history.push(`/profiles/${id}/edit`)}>
-                  edit
-                </Button>
-                <Button onClick={() => history.push("/posts/create")}>
-                  add a post
-                </Button>
-              </>
-            ) : (
-              <>
-                {following_id ? (
-                  <Button onClick={handleUnfollow}>unfollow</Button>
-                ) : (
-                  <Button onClick={handleFollow}>follow</Button>
-                )}
-              </>
-            )}
           </div>
         </Media.Body>
+        {is_owner ? (
+          <MoreDropdown handleEdit={handleEdit} handleAdd={handleAddPost} />
+        ) : (
+          <>
+            {following_id ? (
+              <Button
+                style={{
+                  alignSelf: "center",
+                  borderRadius: "100px",
+                  backgroundColor: "#2142b2",
+                  color: "#ffffff",
+                }}
+                onClick={handleUnfollow}
+              >
+                unfollow
+              </Button>
+            ) : (
+              <Button
+                style={{
+                  alignSelf: "center",
+                  borderRadius: "100px",
+                  backgroundColor: "#2142b2",
+                  color: "#ffffff",
+                }}
+                onClick={handleFollow}
+              >
+                follow
+              </Button>
+            )}
+          </>
+        )}
       </Media>
     </>
   );

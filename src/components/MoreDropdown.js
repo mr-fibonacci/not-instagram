@@ -1,5 +1,6 @@
 import React from "react";
 import dots from "../assets/dots.svg";
+import { ReactComponent as Add } from "../assets/add-post.svg";
 import { ReactComponent as Edit } from "../assets/edit.svg";
 import { ReactComponent as Delete } from "../assets/delete.svg";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -19,7 +20,7 @@ const ThreeDots = React.forwardRef(({ onClick }, ref) => (
   />
 ));
 
-function MoreDropdown({ handleEdit, handleDelete }) {
+function MoreDropdown({ handleAdd, handleEdit, handleDelete }) {
   return (
     <Dropdown drop="left">
       <Dropdown.Toggle as={ThreeDots} />
@@ -28,10 +29,18 @@ function MoreDropdown({ handleEdit, handleDelete }) {
           <Icon component={Edit} />
           Edit
         </Dropdown.Item>
-        <Dropdown.Item onClick={handleDelete}>
-          <Icon component={Delete} />
-          Delete
-        </Dropdown.Item>
+        {handleAdd && (
+          <Dropdown.Item onClick={handleAdd}>
+            <Icon component={Add} />
+            Add a post
+          </Dropdown.Item>
+        )}
+        {handleDelete && (
+          <Dropdown.Item onClick={handleDelete}>
+            <Icon component={Delete} />
+            Delete
+          </Dropdown.Item>
+        )}
       </Dropdown.Menu>
     </Dropdown>
   );
