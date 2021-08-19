@@ -47,7 +47,7 @@ function NavBar() {
       <Container>
         <NavLink to="/">
           <Navbar.Brand>
-            <Avatar src={logo} height={45} />
+            <img src={logo} height={45} />
           </Navbar.Brand>
         </NavLink>
         {currentUser && (
