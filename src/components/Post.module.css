@@ -4,7 +4,9 @@
   border-radius: 15px;
   margin-bottom: 10px;
 }
-.Post figure {
+
+.Post figure,
+h5 {
   margin: 0 0;
 }
 

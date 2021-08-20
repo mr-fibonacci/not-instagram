@@ -72,6 +72,7 @@ function SignInForm() {
             ))}
           </Form.Group>
           <Button
+            type="submit"
             className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
           >
             sign in

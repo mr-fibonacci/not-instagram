@@ -104,7 +104,14 @@ function Post(props) {
             <Icon component={Heart} />
           </span>
         )}
-        {likes_count} <Icon component={Comment} /> {comments_count}
+        {likes_count}
+        <Link to={`/posts/${id}`}>
+          <Icon component={Comment} />
+        </Link>
+        {comments_count}
+        <span style={{ marginLeft: "12px", marginRight: "7px" }}>
+          {image_filter === "normal" ? "#nofilter" : `#${image_filter}`}
+        </span>
       </div>
       {content && (
         <Card.Body>

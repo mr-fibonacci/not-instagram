@@ -92,6 +92,7 @@ function SignUpForm() {
             ))}
           </Form.Group>
           <Button
+            type="submit"
             className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
           >
             sign up

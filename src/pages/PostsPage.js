@@ -14,6 +14,7 @@ import styles from "./PostsPage.module.css";
 import Asset from "../components/Asset";
 import Content from "../components/Content";
 import Spinner from "react-bootstrap/Spinner";
+import PopularProfiles from "../components/PopularProfiles";
 
 function PostsPage({ filter = "" }) {
   const { pathname } = useLocation();
@@ -27,6 +28,12 @@ function PostsPage({ filter = "" }) {
 
   const handleMount = async () => {
     try {
+      // REFRESH THE TOKEN SEPARATELY!
+      await axios.post("/dj-rest-auth/token/refresh/");
+    } catch (err) {
+      console.log(err.request);
+    }
+    try {
       const { data: posts } = await axios.get(
         `/posts/?${filter}search=${query}`
       );
@@ -39,7 +46,7 @@ function PostsPage({ filter = "" }) {
 
   return (
     <Row>
-      <Col lg={9}>
+      <Col className="p-0" lg={7}>
         {hasLoaded ? (
           <>
             <Form className={styles.SearchBar}>
@@ -72,7 +79,9 @@ function PostsPage({ filter = "" }) {
           </Content>
         )}
       </Col>
-      <Col className="d-none d-lg-block">Popular profiles</Col>
+      <Col lg={5} className="d-none d-lg-block pl-10 pr-0">
+        <PopularProfiles />
+      </Col>
     </Row>
   );
 }

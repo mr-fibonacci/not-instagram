@@ -6,7 +6,7 @@ const Layout = ({ children, width = 8 }) => {
   return (
     <Row>
       <Col className="d-none d-md-block" />
-      <Col md={width + 1} lg={width - 1}>
+      <Col className="px-0" md={width + 1} lg={width - 1}>
         {children}
       </Col>
       <Col className="d-none d-md-block" />

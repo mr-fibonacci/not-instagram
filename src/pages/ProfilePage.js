@@ -28,6 +28,12 @@ function ProfilePage() {
 
   const fetchData = async () => {
     try {
+      // REFRESH THE TOKEN SEPARATELY!
+      await axios.post("/dj-rest-auth/token/refresh/");
+    } catch (err) {
+      console.log(err.request);
+    }
+    try {
       const [
         { data: profile },
         { data: profilePosts },
