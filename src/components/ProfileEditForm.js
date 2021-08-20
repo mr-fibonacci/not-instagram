@@ -4,10 +4,12 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import { useHistory, useParams } from "react-router-dom";
+import { useSetCurrentUser } from "../CurrentUserContext";
 import Content from "./Content";
 import btnStyles from "./Button.module.css";
 
 function ProfileForm() {
+  const setCurrentUser = useSetCurrentUser();
   const { id } = useParams();
   const history = useHistory();
   const [profileData, setProfileData] = useState({
@@ -39,10 +41,13 @@ function ProfileForm() {
     if (imageFile?.current?.files[0]) {
       formData.append("image", imageFile?.current?.files[0]);
     }
-    // formData.append("image", imageFile.current.files[0]);
     try {
       const { data } = await axios.put(`/profiles/${id}/`, formData);
       console.log(data);
+      setCurrentUser((currentUser) => ({
+        ...currentUser,
+        profile_image: data.image,
+      }));
       history.goBack();
     } catch (err) {
       console.log(err);

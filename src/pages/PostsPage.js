@@ -44,45 +44,36 @@ function PostsPage({ filter = "" }) {
     }
   };
 
-  return (
-    <Row>
-      <Col className="p-0" lg={7}>
-        {hasLoaded ? (
-          <>
-            <Form className={styles.SearchBar}>
-              <FormControl
-                onChange={(e) => setQuery(e.target.value)}
-                type="text"
-                placeholder="search posts"
-                className="mr-sm-2"
-              />
-            </Form>
-            {posts.results.length ? (
-              <InfiniteScroll
-                dataLength={posts.results.length}
-                next={() => fetchMoreData(posts, setPosts)}
-                hasMore={!!posts.next}
-                loader={<Asset children={<Spinner animation="border" />} />}
-                children={posts.results.map((post) => (
-                  <Post key={post.id} {...post} setPosts={setPosts} />
-                ))}
-              />
-            ) : (
-              <Content>
-                <Asset children={<NoResults />} />
-              </Content>
-            )}
-          </>
-        ) : (
-          <Content>
-            <Asset children={<Spinner animation="border" />} />
-          </Content>
-        )}
-      </Col>
-      <Col lg={5} className="d-none d-lg-block pl-10 pr-0">
-        <PopularProfiles />
-      </Col>
-    </Row>
+  return hasLoaded ? (
+    <>
+      <Form className={styles.SearchBar}>
+        <FormControl
+          onChange={(e) => setQuery(e.target.value)}
+          type="text"
+          placeholder="search posts"
+          className="mr-sm-2"
+        />
+      </Form>
+      {posts.results.length ? (
+        <InfiniteScroll
+          dataLength={posts.results.length}
+          next={() => fetchMoreData(posts, setPosts)}
+          hasMore={!!posts.next}
+          loader={<Asset children={<Spinner animation="border" />} />}
+          children={posts.results.map((post) => (
+            <Post key={post.id} {...post} setPosts={setPosts} />
+          ))}
+        />
+      ) : (
+        <Content>
+          <Asset children={<NoResults />} />
+        </Content>
+      )}
+    </>
+  ) : (
+    <Content>
+      <Asset children={<Spinner animation="border" />} />
+    </Content>
   );
 }
 

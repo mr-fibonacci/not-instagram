@@ -1,15 +1,17 @@
 import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import PopularProfiles from "../components/PopularProfiles";
 
-const Layout = ({ children, width = 8 }) => {
+const Layout = ({ children, panel = <PopularProfiles /> }) => {
   return (
     <Row>
-      <Col className="d-none d-md-block" />
-      <Col className="px-0" md={width + 1} lg={width - 1}>
+      <Col className="p-0 p-md-2" md={8}>
         {children}
       </Col>
-      <Col className="d-none d-md-block" />
+      <Col md={4} className="d-none d-md-block p-0 p-md-2">
+        {panel}
+      </Col>
     </Row>
   );
 };

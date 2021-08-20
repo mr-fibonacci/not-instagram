@@ -14,21 +14,28 @@ import PostsPage from "./pages/PostsPage";
 import styles from "./App.module.css";
 import Layout from "./pages/Layout";
 import { useCurrentUser } from "./CurrentUserContext";
+import Content from "./components/Content";
 
 function App() {
   const currentUser = useCurrentUser();
-
+  const profile_id = currentUser?.profile_id || "";
   return (
     <div className={styles.App}>
       <Router>
         <NavBar />
-        <Container className="min-vh-100" style={{ paddingTop: "85px" }}>
+        <Container className="min-vh-100" style={{ paddingTop: "81px" }}>
           <Switch>
             <Route
               exact
               path="/signin"
               render={() => (
-                <Layout>
+                <Layout
+                  panel={
+                    <Content>
+                      <h1>filler graphic</h1>
+                    </Content>
+                  }
+                >
                   <SignInForm />
                 </Layout>
               )}
@@ -42,23 +49,33 @@ function App() {
                 </Layout>
               )}
             />
-            <Route exact path="/" render={() => <PostsPage />} />
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <Layout>
+                  <PostsPage />
+                </Layout>
+              )}
+            />
             <Route
               exact
               path="/feed"
               render={() => (
-                <PostsPage
-                  filter={`owner__followed__owner__profile=${currentUser?.profile_id}&`}
-                />
+                <Layout>
+                  <PostsPage
+                    filter={`owner__followed__owner__profile=${profile_id}&`}
+                  />
+                </Layout>
               )}
             />
             <Route
               exact
               path="/liked"
               render={() => (
-                <PostsPage
-                  filter={`likes__owner__profile=${currentUser?.profile_id}&`}
-                />
+                <Layout>
+                  <PostsPage filter={`likes__owner__profile=${profile_id}&`} />
+                </Layout>
               )}
             />
             <Route
