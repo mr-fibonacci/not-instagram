@@ -1,5 +1,13 @@
 import axios from "axios";
 
+export const refreshToken = async () => {
+  try {
+    return axios.post("/dj-rest-auth/token/refresh/");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 // the ternary bit needed only for development (localhost instead of gitpod's url)
 export const setNext = (resource) => {
   return {

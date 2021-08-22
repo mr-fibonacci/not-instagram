@@ -20,8 +20,9 @@ function Profile(props) {
     name,
     owner,
     setProfilesMethods,
-    imageSize = 80,
+    imageSize = 50,
     profilePage,
+    stats = true,
   } = props;
   const history = useHistory();
   const currentUser = useCurrentUser();
@@ -83,43 +84,46 @@ function Profile(props) {
           <Avatar src={image} height={imageSize} />
         </Link>
         <Media.Body>
-          <h4>{owner}</h4>
-          <div className="d-flex text-center">
-            <div className="m-2">
-              <div>{posts_count}</div>
-              <div>posts</div>
+          <h5>{owner}</h5>
+          {stats && (
+            <div className="d-flex text-center">
+              <div className="m-2">
+                <div>{posts_count}</div>
+                <div>posts</div>
+              </div>
+              <div className="m-2">
+                <div>{followers_count}</div>
+                <div>followers</div>
+              </div>
+              <div className="m-2">
+                <div>{following_count}</div>
+                <div>following</div>
+              </div>
             </div>
-            <div className="m-2">
-              <div>{followers_count}</div>
-              <div>followers</div>
-            </div>
-            <div className="m-2">
-              <div>{following_count}</div>
-              <div>following</div>
-            </div>
-          </div>
+          )}
         </Media.Body>
         {is_owner && profilePage ? (
           <MoreDropdown handleEdit={handleEdit} handleAdd={handleAddPost} />
         ) : (
           <>
-            {following_id ? (
-              <Button
-                className={`${styles.Button} ${styles.BlackOutline}`}
-                onClick={handleUnfollow}
-              >
-                unfollow
-              </Button>
-            ) : (
-              !is_owner && (
+            {currentUser &&
+              (following_id ? (
                 <Button
-                  className={`${styles.Button} ${styles.Black}`}
-                  onClick={handleFollow}
+                  className={`${styles.Button} ${styles.BlackOutline}`}
+                  onClick={handleUnfollow}
                 >
-                  follow
+                  unfollow
                 </Button>
-              )
-            )}
+              ) : (
+                !is_owner && (
+                  <Button
+                    className={`${styles.Button} ${styles.Black}`}
+                    onClick={handleFollow}
+                  >
+                    follow
+                  </Button>
+                )
+              ))}
           </>
         )}
       </Media>

@@ -30,6 +30,7 @@ function App() {
               path="/signin"
               render={() => (
                 <Layout
+                  width={6}
                   panel={
                     <Content>
                       <h1>filler graphic</h1>
@@ -44,7 +45,14 @@ function App() {
               exact
               path="/signup"
               render={() => (
-                <Layout>
+                <Layout
+                  width={6}
+                  panel={
+                    <Content>
+                      <h1>filler graphic</h1>
+                    </Content>
+                  }
+                >
                   <SignUpForm />
                 </Layout>
               )}

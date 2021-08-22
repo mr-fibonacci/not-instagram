@@ -58,13 +58,18 @@ function PostPage() {
         postPage
       />
       <Content>
-        <CommentCreateForm
-          profileImage={profile_image}
-          post={id}
-          setPost={setPost}
-          setComments={setComments}
-        />
-        <hr />
+        {currentUser && (
+          <>
+            <CommentCreateForm
+              profileImage={profile_image}
+              post={id}
+              setPost={setPost}
+              setComments={setComments}
+            />
+            <hr />
+          </>
+        )}
+
         <InfiniteScroll
           dataLength={comments.results.length}
           next={() => fetchMoreData(comments, setComments)}

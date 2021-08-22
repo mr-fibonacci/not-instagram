@@ -39,59 +39,50 @@ function SignInForm() {
   return (
     <>
       <Content>
-        <div
-          style={{
-            maxWidth: "20rem",
-            margin: "auto",
-            padding: "20px 10px",
-            border: "1px black solid",
-          }}
-        >
-          <h1 className={styles.Header}>sign in</h1>
-          <Form onSubmit={(e) => handleSubmit(e)}>
-            <Form.Group>
-              <Form.Control
-                placeholder="username"
-                className={styles.Input}
-                type="text"
-                onChange={handleChange}
-                value={username}
-                name="username"
-              />
-              {errors?.username?.map((message, idx) => (
-                <Alert key={idx} variant="warning">
-                  {message}
-                </Alert>
-              ))}
-            </Form.Group>
-            <Form.Group>
-              <Form.Control
-                placeholder="password"
-                className={styles.Input}
-                type="password"
-                onChange={handleChange}
-                value={password}
-                name="password"
-              />
-              {errors?.password?.map((message, idx) => (
-                <Alert key={idx} variant="warning">
-                  {message}
-                </Alert>
-              ))}
-            </Form.Group>
-            <Button
-              type="submit"
-              className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
-            >
-              sign in
-            </Button>
-            {errors?.non_field_errors?.map((message, idx) => (
+        <h1 className={styles.Header}>sign in</h1>
+        <Form onSubmit={(e) => handleSubmit(e)}>
+          <Form.Group>
+            <Form.Control
+              placeholder="username"
+              className={styles.Input}
+              type="text"
+              onChange={handleChange}
+              value={username}
+              name="username"
+            />
+            {errors?.username?.map((message, idx) => (
               <Alert key={idx} variant="warning">
                 {message}
               </Alert>
             ))}
-          </Form>
-        </div>
+          </Form.Group>
+          <Form.Group>
+            <Form.Control
+              placeholder="password"
+              className={styles.Input}
+              type="password"
+              onChange={handleChange}
+              value={password}
+              name="password"
+            />
+            {errors?.password?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
+          </Form.Group>
+          <Button
+            type="submit"
+            className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
+          >
+            sign in
+          </Button>
+          {errors?.non_field_errors?.map((message, idx) => (
+            <Alert key={idx} variant="warning">
+              {message}
+            </Alert>
+          ))}
+        </Form>
       </Content>
       <Content>
         <NavLink className={styles.Link} to="/signup">

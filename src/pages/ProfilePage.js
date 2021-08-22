@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 import Post from "../components/Post";
 import Profile from "../components/Profile";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchMoreData, setNext } from "../utils";
+import { fetchMoreData, refreshToken, setNext } from "../utils";
 import Content from "../components/Content";
 import "./ProfilePage.css";
 import Asset from "../components/Asset";
@@ -27,12 +27,8 @@ function ProfilePage() {
   });
 
   const fetchData = async () => {
-    try {
-      // REFRESH THE TOKEN SEPARATELY!
-      await axios.post("/dj-rest-auth/token/refresh/");
-    } catch (err) {
-      console.log(err.request);
-    }
+    // refreshToken
+    await refreshToken();
     try {
       const [
         { data: profile },

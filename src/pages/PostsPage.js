@@ -5,7 +5,7 @@ import FormControl from "react-bootstrap/FormControl";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useLocation } from "react-router";
 import Post from "../components/Post";
-import { fetchMoreData, setNext } from "../utils";
+import { fetchMoreData, refreshToken, setNext } from "../utils";
 import { ReactComponent as NoResults } from "../assets/no-results.svg";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -27,12 +27,8 @@ function PostsPage({ filter = "" }) {
   }, [query, pathname]);
 
   const handleMount = async () => {
-    try {
-      // REFRESH THE TOKEN SEPARATELY!
-      await axios.post("/dj-rest-auth/token/refresh/");
-    } catch (err) {
-      console.log(err.request);
-    }
+    // refreshToken
+    await refreshToken();
     try {
       const { data: posts } = await axios.get(
         `/posts/?${filter}search=${query}`
