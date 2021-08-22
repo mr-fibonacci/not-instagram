@@ -89,20 +89,12 @@ function App() {
             <Route
               exact
               path="/posts/create"
-              render={() => (
-                <Layout>
-                  <PostCreateForm />
-                </Layout>
-              )}
+              render={() => <PostCreateForm />}
             />
             <Route
               exact
               path="/posts/:id/edit"
-              render={() => (
-                <Layout>
-                  <PostEditForm />
-                </Layout>
-              )}
+              render={() => <PostEditForm />}
             />
             <Route
               exact
@@ -125,11 +117,7 @@ function App() {
             <Route
               exact
               path="/profiles/:id/edit"
-              render={() => (
-                <Layout>
-                  <ProfileEditForm />
-                </Layout>
-              )}
+              render={() => <ProfileEditForm />}
             />
           </Switch>
         </Container>

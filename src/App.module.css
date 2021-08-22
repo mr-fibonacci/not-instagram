@@ -9,3 +9,6 @@
 a:hover {
   text-decoration: none;
 }
+input[type="file"] {
+  display: none;
+}

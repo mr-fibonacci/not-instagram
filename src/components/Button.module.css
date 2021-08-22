@@ -2,6 +2,7 @@
   align-self: center;
   border-radius: 100px;
   border-color: transparent;
+  padding: 6px 12px;
 }
 .Button:hover {
   opacity: 0.8;

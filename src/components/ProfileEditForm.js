@@ -7,6 +7,8 @@ import { useHistory, useParams } from "react-router-dom";
 import { useSetCurrentUser } from "../CurrentUserContext";
 import Content from "./Content";
 import btnStyles from "./Button.module.css";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function ProfileForm() {
   const setCurrentUser = useSetCurrentUser();
@@ -61,46 +63,66 @@ function ProfileForm() {
     });
   };
 
+  const textFields = (
+    <>
+      <Form.Group>
+        <Form.Label>name</Form.Label>
+        <Form.Control
+          type="text"
+          value={name}
+          onChange={handleChange}
+          name="name"
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>content</Form.Label>
+        <Form.Control
+          as="textarea"
+          value={content}
+          onChange={handleChange}
+          name="content"
+        />
+      </Form.Group>
+      <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
+        save
+      </Button>
+    </>
+  );
+
   return (
-    <Content>
-      <h1>Profile</h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
-          <Form.Label>name</Form.Label>
-          <Form.Control
-            type="text"
-            value={name}
-            onChange={handleChange}
-            name="name"
-          />
-          <Form.Label>content</Form.Label>
-          <Form.Control
-            as="textarea"
-            value={content}
-            onChange={handleChange}
-            name="content"
-          />
-          <Form.File
-            label="Upload picture"
-            ref={imageFile}
-            accept="image/*"
-            onChange={(e) =>
-              setProfileData({
-                ...profileData,
-                image: URL.createObjectURL(e.target.files[0]),
-              })
-            }
-          />
-        </Form.Group>
-        <Button
-          className={`${btnStyles.Button} ${btnStyles.Blue}`}
-          type="submit"
-        >
-          save
-        </Button>
-      </Form>
-      {image && <Image src={image} thumbnail />}
-    </Content>
+    <Row>
+      <Col className="p-0 p-md-2" md={7} lg={6}>
+        <Content>
+          <Form onSubmit={handleSubmit}>
+            {image && (
+              <figure>
+                <Image src={image} thumbnail />
+              </figure>
+            )}
+            <Form.Label
+              className={`${btnStyles.Button} ${btnStyles.Blue}`}
+              htmlFor="image-upload"
+            >
+              change the image
+            </Form.Label>
+            <Form.File
+              ref={imageFile}
+              accept="image/*"
+              onChange={(e) =>
+                setProfileData({
+                  ...profileData,
+                  image: URL.createObjectURL(e.target.files[0]),
+                })
+              }
+            />
+            <div className="d-md-none">{textFields}</div>
+          </Form>
+        </Content>
+      </Col>
+      <Col md={5} lg={6} className="d-none d-md-block p-0 p-md-2">
+        <Content>{textFields}</Content>
+      </Col>
+    </Row>
   );
 }
 

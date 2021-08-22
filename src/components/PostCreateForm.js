@@ -4,10 +4,13 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { useHistory } from "react-router";
 import { IMAGE_FILTERS } from "../utils";
 import Content from "./Content";
+import { ReactComponent as Upload } from "../assets/upload.svg";
 import btnStyles from "./Button.module.css";
+import Asset from "./Asset";
 
 function PostCreateForm() {
   const history = useHistory();
@@ -41,68 +44,98 @@ function PostCreateForm() {
       [event.target.name]: event.target.value,
     });
   };
+
+  const textFields = (
+    <>
+      <Form.Group>
+        <Form.Label>title</Form.Label>
+        <Form.Control
+          type="text"
+          value={title}
+          onChange={handleChange}
+          name="title"
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>content</Form.Label>
+        <Form.Control
+          as="textarea"
+          value={content}
+          onChange={handleChange}
+          name="content"
+        />
+      </Form.Group>
+      <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
+        create
+      </Button>
+    </>
+  );
+
   return (
-    <Content>
-      <h1>Post</h1>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
-          <Form.Label>title</Form.Label>
-          <Form.Control
-            type="text"
-            value={title}
-            onChange={handleChange}
-            name="title"
-          />
-          <Form.Label>content</Form.Label>
-          <Form.Control
-            as="textarea"
-            value={content}
-            onChange={handleChange}
-            name="content"
-          />
-          <Form.File
-            label="Upload picture"
-            ref={imageFile}
-            accept="image/*"
-            onChange={(e) =>
-              setPostData({
-                ...postData,
-                image: URL.createObjectURL(e.target.files[0]),
-              })
-            }
-          />
-        </Form.Group>
-        <Button
-          className={`${btnStyles.Button} ${btnStyles.Blue}`}
-          type="submit"
-        >
-          create
-        </Button>
-      </Form>
-      {image && (
-        <figure className={image_filter}>
-          <Image src={image} thumbnail />
-        </figure>
-      )}
-      <Row xs={2} sm={3} md={4} lg={5} xl={6}>
-        {image &&
-          IMAGE_FILTERS.map((imageFilter) => (
-            <div key={imageFilter.value}>
-              <figure
-                onClick={() =>
-                  setPostData((prevState) => ({
-                    ...prevState,
-                    image_filter: imageFilter.value,
-                  }))
+    <Row>
+      <Col className="p-0 p-md-2" md={7} lg={8}>
+        <Content>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group>
+              {image ? (
+                <>
+                  <figure className={image_filter}>
+                    <Image style={{ width: "100%" }} src={image} />
+                  </figure>
+                  <Form.Label
+                    className={`${btnStyles.Button} ${btnStyles.Blue}`}
+                    htmlFor="image-upload"
+                  >
+                    change the image
+                  </Form.Label>
+                  <Row xs={4} sm={4} md={4} lg={5} xl={6}>
+                    {image &&
+                      IMAGE_FILTERS.map((imageFilter) => (
+                        <div key={imageFilter.value}>
+                          <figure
+                            onClick={() =>
+                              setPostData((prevState) => ({
+                                ...prevState,
+                                image_filter: imageFilter.value,
+                              }))
+                            }
+                            className={imageFilter.value}
+                          >
+                            <Image style={{ width: "100%" }} src={image} />
+                          </figure>
+                        </div>
+                      ))}
+                  </Row>
+                </>
+              ) : (
+                <Form.Label
+                  style={{ display: "flex", justifyContent: "center" }}
+                  htmlFor="image-upload"
+                >
+                  <Asset children={<Upload />} />
+                </Form.Label>
+              )}
+
+              <Form.File
+                id="image-upload"
+                ref={imageFile}
+                accept="image/*"
+                onChange={(e) =>
+                  setPostData({
+                    ...postData,
+                    image: URL.createObjectURL(e.target.files[0]),
+                  })
                 }
-                className={imageFilter.value}
-              >
-                <Image src={image} thumbnail />
-              </figure>
-            </div>
-          ))}
-      </Row>
-    </Content>
+              />
+            </Form.Group>
+            <div className="d-md-none">{textFields}</div>
+          </Form>
+        </Content>
+      </Col>
+      <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
+        <Content>{textFields}</Content>
+      </Col>
+    </Row>
   );
 }
 
