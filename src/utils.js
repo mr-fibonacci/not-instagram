@@ -2,27 +2,17 @@ import axios from "axios";
 
 export const refreshToken = async () => {
   try {
-    return axios.post("/dj-rest-auth/token/refresh/");
+    await axios.post("/dj-rest-auth/token/refresh/");
   } catch (err) {
     console.log(err);
   }
-};
-
-// the ternary bit needed only for development (localhost instead of gitpod's url)
-export const setNext = (resource) => {
-  return {
-    ...resource,
-    next: resource.next
-      ? resource.next.replace("http://localhost:8000", axios.defaults.baseURL)
-      : null,
-  };
 };
 
 export const fetchMoreData = async (resource, setResource) => {
   try {
     const { data } = await axios.get(resource.next);
     setResource((prevResource) => ({
-      ...setNext(data),
+      ...prevResource,
       results: data.results.reduce((acc, cur) => {
         return acc.some((result) => result.id === cur.id) ? acc : [...acc, cur];
       }, prevResource.results),

@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 import Post from "../components/Post";
 import Profile from "../components/Profile";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchMoreData, refreshToken, setNext } from "../utils";
+import { fetchMoreData, refreshToken } from "../utils";
 import Content from "../components/Content";
 import "./ProfilePage.css";
 import Asset from "../components/Asset";
@@ -42,9 +42,9 @@ function ProfilePage() {
         axios.get(`/profiles/?owner__following__followed__profile=${id}`),
       ]);
       setProfile({ results: [profile] });
-      setProfilePosts(setNext(profilePosts));
-      setFollowingProfiles(setNext(followingProfiles));
-      setFollowedProfiles(setNext(followedProfiles));
+      setProfilePosts(profilePosts);
+      setFollowingProfiles(followingProfiles);
+      setFollowedProfiles(followedProfiles);
       setHasLoaded(true);
     } catch (err) {
       console.log(err.request);

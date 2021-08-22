@@ -5,7 +5,7 @@ import CommentCreateForm from "../components/CommentCreateForm";
 import { useHistory, useParams } from "react-router";
 import Post from "../components/Post";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchMoreData, setNext } from "../utils";
+import { fetchMoreData } from "../utils";
 import Content from "../components/Content";
 import { useCurrentUser } from "../CurrentUserContext";
 import Asset from "../components/Asset";
@@ -29,7 +29,7 @@ function PostPage() {
       ]);
       console.log("post", post);
       setPost({ results: [post] });
-      setComments(setNext(comments));
+      setComments(comments);
     } catch (err) {
       console.log(err.request);
     }

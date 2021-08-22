@@ -5,16 +5,13 @@ import FormControl from "react-bootstrap/FormControl";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useLocation } from "react-router";
 import Post from "../components/Post";
-import { fetchMoreData, refreshToken, setNext } from "../utils";
+import { fetchMoreData, refreshToken } from "../utils";
 import { ReactComponent as NoResults } from "../assets/no-results.svg";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 
 import styles from "./PostsPage.module.css";
 import Asset from "../components/Asset";
 import Content from "../components/Content";
 import Spinner from "react-bootstrap/Spinner";
-import PopularProfiles from "../components/PopularProfiles";
 
 function PostsPage({ filter = "" }) {
   const { pathname } = useLocation();
@@ -33,7 +30,7 @@ function PostsPage({ filter = "" }) {
       const { data: posts } = await axios.get(
         `/posts/?${filter}search=${query}`
       );
-      setPosts(setNext(posts));
+      setPosts(posts);
       setHasLoaded(true);
     } catch (err) {
       console.log(err.request);
