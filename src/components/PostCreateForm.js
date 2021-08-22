@@ -11,6 +11,8 @@ import Content from "./Content";
 import { ReactComponent as Upload } from "../assets/upload.svg";
 import btnStyles from "./Button.module.css";
 import Asset from "./Asset";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper.min.css";
 
 function PostCreateForm() {
   const history = useHistory();
@@ -88,24 +90,64 @@ function PostCreateForm() {
                   >
                     change the image
                   </Form.Label>
-                  <Row xs={4} sm={4} md={4} lg={5} xl={6}>
+                  <p>swipe to choose a filter: #{image_filter}</p>
+                  <Swiper
+                    style={{
+                      textAlign: "center",
+                      marginLeft: "-20px",
+                      marginRight: "-20px",
+                    }}
+                    slidesPerView={3}
+                    spaceBetween={10}
+                    freeMode={true}
+                  >
                     {image &&
                       IMAGE_FILTERS.map((imageFilter) => (
-                        <div key={imageFilter.value}>
-                          <figure
-                            onClick={() =>
-                              setPostData((prevState) => ({
-                                ...prevState,
-                                image_filter: imageFilter.value,
-                              }))
-                            }
-                            className={imageFilter.value}
-                          >
-                            <Image style={{ width: "100%" }} src={image} />
-                          </figure>
-                        </div>
+                        <SwiperSlide
+                          style={{
+                            backgroundPosition: "center",
+                            backgroundSize: "cover",
+                          }}
+                          key={imageFilter.value}
+                        >
+                          {imageFilter.value === "normal" ? (
+                            <div>
+                              <figure
+                                onClick={() =>
+                                  setPostData((prevState) => ({
+                                    ...prevState,
+                                    image_filter: "nofilter",
+                                  }))
+                                }
+                              >
+                                <Image
+                                  style={{
+                                    width: "100%",
+                                  }}
+                                  src={image}
+                                />
+                              </figure>
+                              #nofilter
+                            </div>
+                          ) : (
+                            <div>
+                              <figure
+                                onClick={() =>
+                                  setPostData((prevState) => ({
+                                    ...prevState,
+                                    image_filter: imageFilter.value,
+                                  }))
+                                }
+                                className={imageFilter.value}
+                              >
+                                <Image src={image} />
+                              </figure>
+                              #{imageFilter.value}
+                            </div>
+                          )}
+                        </SwiperSlide>
                       ))}
-                  </Row>
+                  </Swiper>
                 </>
               ) : (
                 <Form.Label
