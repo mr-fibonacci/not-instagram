@@ -6,13 +6,11 @@ import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useHistory } from "react-router";
-import { IMAGE_FILTERS } from "../utils";
 import Content from "./Content";
 import { ReactComponent as Upload } from "../assets/upload.svg";
 import btnStyles from "./Button.module.css";
 import Asset from "./Asset";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper.min.css";
+import FilterSlider from "./FilterSlider";
 
 function PostCreateForm() {
   const history = useHistory();
@@ -46,6 +44,12 @@ function PostCreateForm() {
       [event.target.name]: event.target.value,
     });
   };
+  const handleClick = (newFilter) => {
+    setPostData((prevState) => ({
+      ...prevState,
+      image_filter: newFilter,
+    }));
+  };
 
   const textFields = (
     <>
@@ -74,10 +78,10 @@ function PostCreateForm() {
   );
 
   return (
-    <Row>
-      <Col className="p-0 p-md-2" md={7} lg={8}>
-        <Content>
-          <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
+      <Row>
+        <Col className="p-0 p-md-2" md={7} lg={8}>
+          <Content>
             <Form.Group>
               {image ? (
                 <>
@@ -90,64 +94,11 @@ function PostCreateForm() {
                   >
                     change the image
                   </Form.Label>
-                  <p>swipe to choose a filter: #{image_filter}</p>
-                  <Swiper
-                    style={{
-                      textAlign: "center",
-                      marginLeft: "-20px",
-                      marginRight: "-20px",
-                    }}
-                    slidesPerView={3}
-                    spaceBetween={10}
-                    freeMode={true}
-                  >
-                    {image &&
-                      IMAGE_FILTERS.map((imageFilter) => (
-                        <SwiperSlide
-                          style={{
-                            backgroundPosition: "center",
-                            backgroundSize: "cover",
-                          }}
-                          key={imageFilter.value}
-                        >
-                          {imageFilter.value === "normal" ? (
-                            <div>
-                              <figure
-                                onClick={() =>
-                                  setPostData((prevState) => ({
-                                    ...prevState,
-                                    image_filter: "nofilter",
-                                  }))
-                                }
-                              >
-                                <Image
-                                  style={{
-                                    width: "100%",
-                                  }}
-                                  src={image}
-                                />
-                              </figure>
-                              #nofilter
-                            </div>
-                          ) : (
-                            <div>
-                              <figure
-                                onClick={() =>
-                                  setPostData((prevState) => ({
-                                    ...prevState,
-                                    image_filter: imageFilter.value,
-                                  }))
-                                }
-                                className={imageFilter.value}
-                              >
-                                <Image src={image} />
-                              </figure>
-                              #{imageFilter.value}
-                            </div>
-                          )}
-                        </SwiperSlide>
-                      ))}
-                  </Swiper>
+                  <FilterSlider
+                    image={image}
+                    image_filter={image_filter}
+                    handleClick={handleClick}
+                  />
                 </>
               ) : (
                 <Form.Label
@@ -171,13 +122,13 @@ function PostCreateForm() {
               />
             </Form.Group>
             <div className="d-md-none">{textFields}</div>
-          </Form>
-        </Content>
-      </Col>
-      <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
-        <Content>{textFields}</Content>
-      </Col>
-    </Row>
+          </Content>
+        </Col>
+        <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
+          <Content>{textFields}</Content>
+        </Col>
+      </Row>
+    </Form>
   );
 }
 

@@ -6,9 +6,9 @@ import Image from "react-bootstrap/Image";
 import { useHistory, useParams } from "react-router";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { IMAGE_FILTERS } from "../utils";
 import Content from "./Content";
 import btnStyles from "./Button.module.css";
+import FilterSlider from "./FilterSlider";
 
 function PostEditForm() {
   const { id } = useParams();
@@ -62,6 +62,13 @@ function PostEditForm() {
     });
   };
 
+  const handleClick = (newFilter) => {
+    setPostData((prevState) => ({
+      ...prevState,
+      image_filter: newFilter,
+    }));
+  };
+
   const textFields = (
     <>
       <Form.Group>
@@ -89,10 +96,10 @@ function PostEditForm() {
   );
 
   return (
-    <Row>
-      <Col className="p-0 p-md-2" md={7} lg={8}>
-        <Content>
-          <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
+      <Row>
+        <Col className="p-0 p-md-2" md={7} lg={8}>
+          <Content>
             <Form.Group>
               {image && (
                 <figure className={image_filter}>
@@ -105,24 +112,11 @@ function PostEditForm() {
               >
                 change the image
               </Form.Label>
-              <Row xs={4} sm={4} md={4} lg={5} xl={6}>
-                {image &&
-                  IMAGE_FILTERS.map((imageFilter) => (
-                    <div key={imageFilter.value}>
-                      <figure
-                        onClick={() =>
-                          setPostData((prevState) => ({
-                            ...prevState,
-                            image_filter: imageFilter.value,
-                          }))
-                        }
-                        className={imageFilter.value}
-                      >
-                        <Image style={{ width: "100%" }} src={image} />
-                      </figure>
-                    </div>
-                  ))}
-              </Row>
+              <FilterSlider
+                image={image}
+                image_filter={image_filter}
+                handleClick={handleClick}
+              />
               <Form.File
                 id="image-upload"
                 ref={imageFile}
@@ -136,13 +130,13 @@ function PostEditForm() {
               />
             </Form.Group>
             <div className="d-md-none">{textFields}</div>
-          </Form>
-        </Content>
-      </Col>
-      <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
-        <Content>{textFields}</Content>
-      </Col>
-    </Row>
+          </Content>
+        </Col>
+        <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
+          <Content>{textFields}</Content>
+        </Col>
+      </Row>
+    </Form>
   );
 }
 
