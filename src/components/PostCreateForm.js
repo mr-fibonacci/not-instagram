@@ -6,11 +6,12 @@ import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useHistory } from "react-router";
-import Content from "./Content";
 import { ReactComponent as Upload } from "../assets/upload.svg";
 import btnStyles from "./Button.module.css";
 import Asset from "./Asset";
 import FilterSlider from "./FilterSlider";
+import { Container } from "react-bootstrap";
+import appStyles from "../App.module.css";
 
 function PostCreateForm() {
   const history = useHistory();
@@ -66,6 +67,7 @@ function PostCreateForm() {
         <Form.Label>content</Form.Label>
         <Form.Control
           as="textarea"
+          rows={6}
           value={content}
           onChange={handleChange}
           name="content"
@@ -78,10 +80,10 @@ function PostCreateForm() {
   );
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Row>
-        <Col className="p-0 p-md-2" md={7} lg={8}>
-          <Content>
+    <Form className="h-100" onSubmit={handleSubmit}>
+      <Row className="h-100">
+        <Col className="my-auto p-0 p-md-2" md={7} lg={8}>
+          <Container className={appStyles.Content}>
             <Form.Group>
               {image ? (
                 <>
@@ -122,10 +124,10 @@ function PostCreateForm() {
               />
             </Form.Group>
             <div className="d-md-none">{textFields}</div>
-          </Content>
+          </Container>
         </Col>
-        <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
-          <Content>{textFields}</Content>
+        <Col md={5} lg={4} className="my-auto d-none d-md-block p-0 p-md-2">
+          <Container className={appStyles.Content}>{textFields}</Container>
         </Col>
       </Row>
     </Form>

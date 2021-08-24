@@ -1,16 +1,11 @@
 .Post {
   background-color: #ffffff;
   border: 1px solid #dadadf;
-  border-radius: 15px;
+  border-radius: 2px;
   margin-bottom: 16px;
 }
 
 .Post figure,
 h5 {
   margin: 0 0;
-}
-
-.PostBar {
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 20px;
 }

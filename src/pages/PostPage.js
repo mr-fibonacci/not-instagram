@@ -6,10 +6,12 @@ import { useHistory, useParams } from "react-router";
 import Post from "../components/Post";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../utils";
-import Content from "../components/Content";
 import { useCurrentUser } from "../CurrentUserContext";
 import Asset from "../components/Asset";
 import Spinner from "react-bootstrap/Spinner";
+import { Col, Container, Row } from "react-bootstrap";
+import appStyles from "../App.module.css";
+import PopularProfiles from "../components/PopularProfiles";
 
 function PostPage() {
   const currentUser = useCurrentUser();
@@ -49,43 +51,48 @@ function PostPage() {
   };
 
   return (
-    <>
-      <Post
-        {...post.results[0]}
-        setPosts={setPost}
-        handleEdit={handleEdit}
-        handleDelete={handleDelete}
-        postPage
-      />
-      <Content>
-        {currentUser && (
-          <>
-            <CommentCreateForm
-              profileImage={profile_image}
-              post={id}
-              setPost={setPost}
-              setComments={setComments}
-            />
-            <hr />
-          </>
-        )}
-
-        <InfiniteScroll
-          dataLength={comments.results.length}
-          next={() => fetchMoreData(comments, setComments)}
-          hasMore={!!comments.next}
-          loader={<Asset children={<Spinner animation="border" />} />}
-          children={comments.results.map((comment) => (
-            <Comment
-              key={comment.id}
-              setPost={setPost}
-              {...comment}
-              setComments={setComments}
-            />
-          ))}
+    <Row className="h-100">
+      <Col className="p-0 p-md-2" md={8}>
+        <Post
+          {...post.results[0]}
+          setPosts={setPost}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+          postPage
         />
-      </Content>
-    </>
+        <Container className={appStyles.Content}>
+          {currentUser && (
+            <>
+              <CommentCreateForm
+                profileImage={profile_image}
+                post={id}
+                setPost={setPost}
+                setComments={setComments}
+              />
+              <hr />
+            </>
+          )}
+
+          <InfiniteScroll
+            dataLength={comments.results.length}
+            next={() => fetchMoreData(comments, setComments)}
+            hasMore={!!comments.next}
+            loader={<Asset children={<Spinner animation="border" />} />}
+            children={comments.results.map((comment) => (
+              <Comment
+                key={comment.id}
+                setPost={setPost}
+                {...comment}
+                setComments={setComments}
+              />
+            ))}
+          />
+        </Container>
+      </Col>
+      <Col md={4} className="d-none d-md-block p-0 p-md-2">
+        <PopularProfiles />
+      </Col>
+    </Row>
   );
 }
 

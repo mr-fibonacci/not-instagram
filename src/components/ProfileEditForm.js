@@ -5,10 +5,11 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import { useHistory, useParams } from "react-router-dom";
 import { useSetCurrentUser } from "../CurrentUserContext";
-import Content from "./Content";
 import btnStyles from "./Button.module.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import appStyles from "../App.module.css";
+import { Container } from "react-bootstrap";
 
 function ProfileForm() {
   const setCurrentUser = useSetCurrentUser();
@@ -90,13 +91,13 @@ function ProfileForm() {
   );
 
   return (
-    <Row>
-      <Col className="p-0 p-md-2" md={7} lg={6}>
-        <Content>
-          <Form onSubmit={handleSubmit}>
+    <Form className="h-100" onSubmit={handleSubmit}>
+      <Row className="h-100">
+        <Col className="my-auto p-0 p-md-2" md={7} lg={6}>
+          <Container className={appStyles.Content}>
             {image && (
               <figure>
-                <Image src={image} thumbnail />
+                <Image className="d-block m-auto" src={image} />
               </figure>
             )}
             <Form.Label
@@ -106,6 +107,7 @@ function ProfileForm() {
               change the image
             </Form.Label>
             <Form.File
+              id="image-upload"
               ref={imageFile}
               accept="image/*"
               onChange={(e) =>
@@ -116,13 +118,13 @@ function ProfileForm() {
               }
             />
             <div className="d-md-none">{textFields}</div>
-          </Form>
-        </Content>
-      </Col>
-      <Col md={5} lg={6} className="d-none d-md-block p-0 p-md-2">
-        <Content>{textFields}</Content>
-      </Col>
-    </Row>
+          </Container>
+        </Col>
+        <Col md={5} lg={6} className="my-auto d-none d-md-block p-0 p-md-2">
+          <Container className={appStyles.Content}>{textFields}</Container>
+        </Col>
+      </Row>
+    </Form>
   );
 }
 

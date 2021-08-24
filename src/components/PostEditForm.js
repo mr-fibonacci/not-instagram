@@ -6,9 +6,10 @@ import Image from "react-bootstrap/Image";
 import { useHistory, useParams } from "react-router";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Content from "./Content";
 import btnStyles from "./Button.module.css";
 import FilterSlider from "./FilterSlider";
+import appStyles from "../App.module.css";
+import { Container } from "react-bootstrap";
 
 function PostEditForm() {
   const { id } = useParams();
@@ -85,6 +86,7 @@ function PostEditForm() {
         <Form.Control
           as="textarea"
           name="content"
+          rows={6}
           value={content}
           onChange={handleChange}
         />
@@ -96,10 +98,10 @@ function PostEditForm() {
   );
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Row>
-        <Col className="p-0 p-md-2" md={7} lg={8}>
-          <Content>
+    <Form style={{ height: "100%" }} onSubmit={handleSubmit}>
+      <Row style={{ height: "100%" }}>
+        <Col className="my-auto p-0 p-md-2" md={7} lg={8}>
+          <Container className={appStyles.Content}>
             <Form.Group>
               {image && (
                 <figure className={image_filter}>
@@ -130,10 +132,10 @@ function PostEditForm() {
               />
             </Form.Group>
             <div className="d-md-none">{textFields}</div>
-          </Content>
+          </Container>
         </Col>
-        <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
-          <Content>{textFields}</Content>
+        <Col md={5} lg={4} className="my-auto d-none d-md-flex p-0 p-md-2">
+          <Container className={appStyles.Content}>{textFields}</Container>
         </Col>
       </Row>
     </Form>

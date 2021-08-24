@@ -12,9 +12,7 @@ import PostEditForm from "./components/PostEditForm";
 import Container from "react-bootstrap/Container";
 import PostsPage from "./pages/PostsPage";
 import styles from "./App.module.css";
-import Layout from "./pages/Layout";
 import { useCurrentUser } from "./CurrentUserContext";
-import Content from "./components/Content";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -23,67 +21,25 @@ function App() {
     <div className={styles.App}>
       <Router>
         <NavBar />
-        <Container className="min-vh-100" style={{ paddingTop: "81px" }}>
+        <Container className="vh-100" style={{ paddingTop: "81px" }}>
           <Switch>
-            <Route
-              exact
-              path="/signin"
-              render={() => (
-                <Layout
-                  width={6}
-                  panel={
-                    <Content>
-                      <h1>filler graphic</h1>
-                    </Content>
-                  }
-                >
-                  <SignInForm />
-                </Layout>
-              )}
-            />
-            <Route
-              exact
-              path="/signup"
-              render={() => (
-                <Layout
-                  width={6}
-                  panel={
-                    <Content>
-                      <h1>filler graphic</h1>
-                    </Content>
-                  }
-                >
-                  <SignUpForm />
-                </Layout>
-              )}
-            />
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <Layout>
-                  <PostsPage />
-                </Layout>
-              )}
-            />
+            <Route exact path="/signin" render={() => <SignInForm />} />
+            <Route exact path="/signup" render={() => <SignUpForm />} />
+            <Route exact path="/" render={() => <PostsPage />} />
             <Route
               exact
               path="/feed"
               render={() => (
-                <Layout>
-                  <PostsPage
-                    filter={`owner__followed__owner__profile=${profile_id}&`}
-                  />
-                </Layout>
+                <PostsPage
+                  filter={`owner__followed__owner__profile=${profile_id}&`}
+                />
               )}
             />
             <Route
               exact
               path="/liked"
               render={() => (
-                <Layout>
-                  <PostsPage filter={`likes__owner__profile=${profile_id}&`} />
-                </Layout>
+                <PostsPage filter={`likes__owner__profile=${profile_id}&`} />
               )}
             />
             <Route
@@ -96,24 +52,8 @@ function App() {
               path="/posts/:id/edit"
               render={() => <PostEditForm />}
             />
-            <Route
-              exact
-              path="/posts/:id"
-              render={() => (
-                <Layout>
-                  <PostPage />
-                </Layout>
-              )}
-            />
-            <Route
-              exact
-              path="/profiles/:id"
-              render={() => (
-                <Layout>
-                  <ProfilePage />
-                </Layout>
-              )}
-            />
+            <Route exact path="/posts/:id" render={() => <PostPage />} />
+            <Route exact path="/profiles/:id" render={() => <ProfilePage />} />
             <Route
               exact
               path="/profiles/:id/edit"

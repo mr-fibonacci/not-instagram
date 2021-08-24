@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
 import { refreshToken } from "../utils";
-import Content from "./Content";
 import Profile from "./Profile";
+import styles from "../App.module.css";
 
 const PopularProfiles = () => {
   const [profiles, setProfiles] = useState([]);
@@ -21,12 +22,12 @@ const PopularProfiles = () => {
     }
   };
   return (
-    <Content>
+    <Container className={styles.Content}>
       <p> you may also like...</p>
       {profiles.map((profile) => (
         <Profile key={profile.id} {...profile} stats={false} />
       ))}
-    </Content>
+    </Container>
   );
 };
 

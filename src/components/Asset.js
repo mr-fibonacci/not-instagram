@@ -7,7 +7,7 @@ const Asset = ({ children }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "250px",
+        minHeight: "250px",
       }}
     >
       {children}
