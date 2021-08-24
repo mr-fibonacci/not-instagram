@@ -49,20 +49,23 @@ function Comment(props) {
       setShowEditForm={setShowEditForm}
     />
   ) : (
-    <Media style={{ paddingBottom: "15px" }}>
-      <Link to={`/profiles/${profile_id}`}>
-        <Avatar src={profile_image} height={70} />
-      </Link>
-      <Media.Body className="align-self-center">
-        <b>{owner}</b> {content}
-      </Media.Body>
-      {is_owner && !showEditForm && (
-        <MoreDropdown
-          handleEdit={() => setShowEditForm(true)}
-          handleDelete={handleDelete}
-        />
-      )}
-    </Media>
+    <>
+      <hr />
+      <Media>
+        <Link to={`/profiles/${profile_id}`}>
+          <Avatar src={profile_image} height={70} />
+        </Link>
+        <Media.Body className="align-self-center">
+          <b>{owner}</b> {content}
+        </Media.Body>
+        {is_owner && !showEditForm && (
+          <MoreDropdown
+            handleEdit={() => setShowEditForm(true)}
+            handleDelete={handleDelete}
+          />
+        )}
+      </Media>
+    </>
   );
 }
 

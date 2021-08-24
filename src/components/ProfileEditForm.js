@@ -9,7 +9,7 @@ import btnStyles from "./Button.module.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import appStyles from "../App.module.css";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 
 function ProfileForm() {
   const setCurrentUser = useSetCurrentUser();
@@ -82,6 +82,7 @@ function ProfileForm() {
           value={content}
           onChange={handleChange}
           name="content"
+          rows={6}
         />
       </Form.Group>
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">

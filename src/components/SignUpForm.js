@@ -7,7 +7,9 @@ import { NavLink } from "react-router-dom";
 import styles from "./SignInUpForm.module.css";
 import btnStyles from "./Button.module.css";
 import Button from "react-bootstrap/Button";
-import { Col, Container, Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 
 function SignUpForm() {
@@ -43,7 +45,7 @@ function SignUpForm() {
   };
 
   return (
-    <Row style={{ border: "2px black solid", height: "100%" }}>
+    <Row className="h-100">
       <Col className="my-auto p-0 p-md-2" md={6}>
         <Container className={appStyles.Content}>
           <h1 className={styles.Header}>sign up</h1>

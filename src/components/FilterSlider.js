@@ -24,7 +24,7 @@ const FilterSlider = ({ image, image_filter, handleClick }) => {
                   onClick={() => handleClick(imageFilter.value)}
                   className={imageFilter.value}
                 >
-                  <Image style={{ width: "100%" }} src={image} />
+                  <Image className="w-100" src={image} />
                 </figure>
                 #{imageFilter.value}
               </div>

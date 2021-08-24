@@ -79,7 +79,7 @@ function Profile(props) {
   };
   return (
     <>
-      <Media style={{ display: "flex", flexWrap: "wrap" }}>
+      <Media className="d-flex flex-wrap">
         <Link to={`/profiles/${id}`}>
           <Avatar src={image} height={imageSize} />
         </Link>

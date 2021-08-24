@@ -9,7 +9,7 @@ import Col from "react-bootstrap/Col";
 import btnStyles from "./Button.module.css";
 import FilterSlider from "./FilterSlider";
 import appStyles from "../App.module.css";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 
 function PostEditForm() {
   const { id } = useParams();
@@ -98,14 +98,14 @@ function PostEditForm() {
   );
 
   return (
-    <Form style={{ height: "100%" }} onSubmit={handleSubmit}>
-      <Row style={{ height: "100%" }}>
+    <Form className="h-100" onSubmit={handleSubmit}>
+      <Row className="h-100">
         <Col className="my-auto p-0 p-md-2" md={7} lg={8}>
           <Container className={appStyles.Content}>
             <Form.Group>
               {image && (
                 <figure className={image_filter}>
-                  <Image style={{ width: "100%" }} src={image} />
+                  <Image className="w-100" src={image} />
                 </figure>
               )}
               <Form.Label

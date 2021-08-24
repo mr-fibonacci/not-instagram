@@ -45,7 +45,7 @@ function CommentCreateForm(props) {
             as="textarea"
             value={content}
             onChange={handleChange}
-            rows={3}
+            rows={4}
           />
           <button className={styles.Button} disabled={!content} type="submit">
             post

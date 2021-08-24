@@ -10,7 +10,7 @@ import { ReactComponent as Upload } from "../assets/upload.svg";
 import btnStyles from "./Button.module.css";
 import Asset from "./Asset";
 import FilterSlider from "./FilterSlider";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 
 function PostCreateForm() {
@@ -88,11 +88,12 @@ function PostCreateForm() {
               {image ? (
                 <>
                   <figure className={image_filter}>
-                    <Image style={{ width: "100%" }} src={image} />
+                    <Image className="w-100" src={image} />
                   </figure>
                   <Form.Label
                     className={`${btnStyles.Button} ${btnStyles.Blue}`}
                     htmlFor="image-upload"
+                    as="button"
                   >
                     change the image
                   </Form.Label>
@@ -104,7 +105,7 @@ function PostCreateForm() {
                 </>
               ) : (
                 <Form.Label
-                  style={{ display: "flex", justifyContent: "center" }}
+                  className="d-flex justify-content-center"
                   htmlFor="image-upload"
                 >
                   <Asset children={<Upload />} />

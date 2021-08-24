@@ -39,6 +39,7 @@ function CommentEditForm(props) {
             as="textarea"
             value={formContent}
             onChange={handleChange}
+            rows={4}
           />
           <button className={styles.Button} disabled={!content} type="submit">
             save

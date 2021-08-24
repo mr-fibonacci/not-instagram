@@ -109,9 +109,7 @@ function Post(props) {
           <Icon component={Comment} />
         </Link>
         {comments_count}
-        <span style={{ marginLeft: "12px", marginRight: "7px" }}>
-          {image_filter === "normal" ? "#nofilter" : `#${image_filter}`}
-        </span>
+        <span className="mx-2">{`#${image_filter}`}</span>
       </div>
       {content && (
         <Card.Body>

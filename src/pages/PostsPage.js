@@ -11,7 +11,9 @@ import { ReactComponent as NoResults } from "../assets/no-results.svg";
 import styles from "./PostsPage.module.css";
 import Asset from "../components/Asset";
 import Spinner from "react-bootstrap/Spinner";
-import { Col, Container, Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 import PopularProfiles from "../components/PopularProfiles";
 
@@ -40,7 +42,7 @@ function PostsPage({ filter = "" }) {
   };
 
   return (
-    <Row style={{ border: "2px black solid", height: "100%" }}>
+    <Row className="h-100">
       <Col className="p-0 p-md-2" md={8}>
         {hasLoaded ? (
           <>

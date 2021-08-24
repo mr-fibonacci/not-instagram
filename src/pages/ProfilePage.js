@@ -10,7 +10,9 @@ import { fetchMoreData, refreshToken } from "../utils";
 import "./ProfilePage.css";
 import Asset from "../components/Asset";
 import Spinner from "react-bootstrap/Spinner";
-import { Col, Container, Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 import PopularProfiles from "../components/PopularProfiles";
 

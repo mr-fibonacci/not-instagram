@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 import { refreshToken } from "../utils";
 import Profile from "./Profile";
 import styles from "../App.module.css";

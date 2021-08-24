@@ -1,18 +1,8 @@
 import React from "react";
+import styles from "./Asset.module.css";
 
 const Asset = ({ children }) => {
-  return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "250px",
-      }}
-    >
-      {children}
-    </div>
-  );
+  return <div className={styles.Asset}>{children}</div>;
 };
 
 export default Asset;
