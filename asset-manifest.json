@@ -1,23 +1,27 @@
 {
   "files": {
-    "main.css": "/not-instagram/static/css/main.e0fb7bfc.chunk.css",
-    "main.js": "/not-instagram/static/js/main.46ce8304.chunk.js",
-    "main.js.map": "/not-instagram/static/js/main.46ce8304.chunk.js.map",
-    "runtime-main.js": "/not-instagram/static/js/runtime-main.587e5b4a.js",
-    "runtime-main.js.map": "/not-instagram/static/js/runtime-main.587e5b4a.js.map",
-    "static/js/2.7660ac30.chunk.js": "/not-instagram/static/js/2.7660ac30.chunk.js",
-    "static/js/2.7660ac30.chunk.js.map": "/not-instagram/static/js/2.7660ac30.chunk.js.map",
-    "static/js/3.29936774.chunk.js": "/not-instagram/static/js/3.29936774.chunk.js",
-    "static/js/3.29936774.chunk.js.map": "/not-instagram/static/js/3.29936774.chunk.js.map",
+    "main.css": "/not-instagram/static/css/main.4080c276.chunk.css",
+    "main.js": "/not-instagram/static/js/main.9651228e.chunk.js",
+    "main.js.map": "/not-instagram/static/js/main.9651228e.chunk.js.map",
+    "runtime-main.js": "/not-instagram/static/js/runtime-main.503afc9e.js",
+    "runtime-main.js.map": "/not-instagram/static/js/runtime-main.503afc9e.js.map",
+    "static/css/2.2c91f409.chunk.css": "/not-instagram/static/css/2.2c91f409.chunk.css",
+    "static/js/2.1d40bf69.chunk.js": "/not-instagram/static/js/2.1d40bf69.chunk.js",
+    "static/js/2.1d40bf69.chunk.js.map": "/not-instagram/static/js/2.1d40bf69.chunk.js.map",
+    "static/js/3.653cb3be.chunk.js": "/not-instagram/static/js/3.653cb3be.chunk.js",
+    "static/js/3.653cb3be.chunk.js.map": "/not-instagram/static/js/3.653cb3be.chunk.js.map",
     "index.html": "/not-instagram/index.html",
-    "static/css/main.e0fb7bfc.chunk.css.map": "/not-instagram/static/css/main.e0fb7bfc.chunk.css.map",
-    "static/js/2.7660ac30.chunk.js.LICENSE.txt": "/not-instagram/static/js/2.7660ac30.chunk.js.LICENSE.txt",
+    "static/css/2.2c91f409.chunk.css.map": "/not-instagram/static/css/2.2c91f409.chunk.css.map",
+    "static/css/main.4080c276.chunk.css.map": "/not-instagram/static/css/main.4080c276.chunk.css.map",
+    "static/js/2.1d40bf69.chunk.js.LICENSE.txt": "/not-instagram/static/js/2.1d40bf69.chunk.js.LICENSE.txt",
     "static/media/add-post.73052a1d.svg": "/not-instagram/static/media/add-post.73052a1d.svg",
     "static/media/comment.3e71f785.svg": "/not-instagram/static/media/comment.3e71f785.svg",
     "static/media/delete.c227d7e4.svg": "/not-instagram/static/media/delete.c227d7e4.svg",
     "static/media/dots.c4c806e9.svg": "/not-instagram/static/media/dots.c4c806e9.svg",
     "static/media/edit.78d39bb2.svg": "/not-instagram/static/media/edit.78d39bb2.svg",
     "static/media/feed.a8cf3207.svg": "/not-instagram/static/media/feed.a8cf3207.svg",
+    "static/media/filler-logo.789348d6.svg": "/not-instagram/static/media/filler-logo.789348d6.svg",
+    "static/media/filler.07b4a93d.svg": "/not-instagram/static/media/filler.07b4a93d.svg",
     "static/media/heart-red.6f261627.svg": "/not-instagram/static/media/heart-red.6f261627.svg",
     "static/media/heart.395ad223.svg": "/not-instagram/static/media/heart.395ad223.svg",
     "static/media/home.55b90c3e.svg": "/not-instagram/static/media/home.55b90c3e.svg",
@@ -27,12 +31,13 @@
     "static/media/signin.7507493c.svg": "/not-instagram/static/media/signin.7507493c.svg",
     "static/media/signout.77cff9ae.svg": "/not-instagram/static/media/signout.77cff9ae.svg",
     "static/media/signup.c9704a42.svg": "/not-instagram/static/media/signup.c9704a42.svg",
-    "static/media/upload.c9a67f7f.svg": "/not-instagram/static/media/upload.c9a67f7f.svg"
+    "static/media/upload.95df14b0.svg": "/not-instagram/static/media/upload.95df14b0.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.587e5b4a.js",
-    "static/js/2.7660ac30.chunk.js",
-    "static/css/main.e0fb7bfc.chunk.css",
-    "static/js/main.46ce8304.chunk.js"
+    "static/js/runtime-main.503afc9e.js",
+    "static/css/2.2c91f409.chunk.css",
+    "static/js/2.1d40bf69.chunk.js",
+    "static/css/main.4080c276.chunk.css",
+    "static/js/main.9651228e.chunk.js"
   ]
 }
