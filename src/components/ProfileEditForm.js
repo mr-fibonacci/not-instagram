@@ -97,8 +97,8 @@ function ProfileForm() {
         <Col className="my-auto p-0 p-md-2" md={7} lg={6}>
           <Container className={appStyles.Content}>
             {image && (
-              <figure>
-                <Image className="d-block m-auto" src={image} />
+              <figure style={{ textAlign: "center" }}>
+                <Image src={image} fluid />
               </figure>
             )}
             <Form.Label

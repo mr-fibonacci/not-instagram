@@ -18,3 +18,15 @@ input[type="file"] {
   border-radius: 2px;
   border: 1px solid #dadadf;
 }
+.Image {
+  max-height: 40vh;
+  object-fit: contain;
+}
+figure {
+  text-align: center;
+}
+.FillerImage {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}

@@ -21,7 +21,7 @@ function App() {
     <div className={styles.App}>
       <Router>
         <NavBar />
-        <Container className="vh-100" style={{ paddingTop: "81px" }}>
+        <Container style={{ paddingTop: "81px" }}>
           <Switch>
             <Route exact path="/signin" render={() => <SignInForm />} />
             <Route exact path="/signup" render={() => <SignUpForm />} />

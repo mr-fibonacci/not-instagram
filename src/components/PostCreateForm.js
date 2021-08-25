@@ -87,9 +87,11 @@ function PostCreateForm() {
             <Form.Group>
               {image ? (
                 <>
-                  <figure className={image_filter}>
-                    <Image className="w-100" src={image} />
-                  </figure>
+                  <div style={{ width: "100%" }}>
+                    <figure className={image_filter}>
+                      <Image className={appStyles.Image} src={image} />
+                    </figure>
+                  </div>
                   <Form.Label
                     className={`${btnStyles.Button} ${btnStyles.Blue}`}
                     htmlFor="image-upload"
@@ -115,12 +117,14 @@ function PostCreateForm() {
                 id="image-upload"
                 ref={imageFile}
                 accept="image/*"
-                onChange={(e) =>
-                  setPostData({
-                    ...postData,
-                    image: URL.createObjectURL(e.target.files[0]),
-                  })
-                }
+                onChange={(e) => {
+                  if (e.target.files.length) {
+                    setPostData({
+                      ...postData,
+                      image: URL.createObjectURL(e.target.files[0]),
+                    });
+                  }
+                }}
               />
             </Form.Group>
             <div className="d-md-none">{textFields}</div>

@@ -10,6 +10,7 @@ import { useSetCurrentUser } from "../CurrentUserContext";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 
@@ -40,7 +41,7 @@ function SignInForm() {
   };
 
   return (
-    <Row className="h-100">
+    <Row className={styles.Row}>
       <Col className="my-auto p-0 p-md-2" md={6}>
         <Container className={appStyles.Content}>
           <h1 className={styles.Header}>sign in</h1>
@@ -94,8 +95,17 @@ function SignInForm() {
           </NavLink>
         </Container>
       </Col>
-      <Col md={6} className="my-auto d-none d-md-block p-0 p-md-2">
-        filler graphic
+      <Col
+        md={6}
+        className={`my-auto d-none d-md-block p-0 p-md-2`}
+        style={{ height: "320px" }}
+      >
+        <Image
+          className={`${appStyles.FillerImage}`}
+          src={
+            "https://res.cloudinary.com/dgjrrvdbl/image/upload/v1/media/images/pexels-photo-2710131-cropped_cp37ty"
+          }
+        />
       </Col>
     </Row>
   );
