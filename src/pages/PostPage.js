@@ -74,21 +74,24 @@ function PostPage() {
               />
             </>
           )}
-
-          <InfiniteScroll
-            dataLength={comments.results.length}
-            next={() => fetchMoreData(comments, setComments)}
-            hasMore={!!comments.next}
-            loader={<Asset children={<Spinner animation="border" />} />}
-            children={comments.results.map((comment) => (
-              <Comment
-                key={comment.id}
-                setPost={setPost}
-                {...comment}
-                setComments={setComments}
-              />
-            ))}
-          />
+          {comments.results.length ? (
+            <InfiniteScroll
+              dataLength={comments.results.length}
+              next={() => fetchMoreData(comments, setComments)}
+              hasMore={!!comments.next}
+              loader={<Asset children={<Spinner animation="border" />} />}
+              children={comments.results.map((comment) => (
+                <Comment
+                  key={comment.id}
+                  setPost={setPost}
+                  {...comment}
+                  setComments={setComments}
+                />
+              ))}
+            />
+          ) : (
+            "No comments yet, be the first one to comment!"
+          )}
         </Container>
       </Col>
       <Col md={4} className="d-none d-md-block p-0 p-md-2">

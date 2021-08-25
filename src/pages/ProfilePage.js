@@ -105,18 +105,23 @@ function ProfilePage() {
                     }
                     hasMore={!!followedProfiles.next}
                     loader={<Asset children={<Spinner animation="border" />} />}
-                    children={followedProfiles.results.map((profile) => (
-                      <Profile
-                        key={profile.id}
-                        {...profile}
-                        setProfilesMethods={[
-                          setProfile,
-                          setFollowedProfiles,
-                          setFollowingProfiles,
-                        ]}
-                      />
-                    ))}
-                  />
+                  >
+                    {followedProfiles.results.length ? (
+                      followedProfiles.results.map((profile) => (
+                        <Profile
+                          key={profile.id}
+                          {...profile}
+                          setProfilesMethods={[
+                            setProfile,
+                            setFollowedProfiles,
+                            setFollowingProfiles,
+                          ]}
+                        />
+                      ))
+                    ) : (
+                      <Asset children={<NoResults />} />
+                    )}
+                  </InfiniteScroll>
                 </Tab>
                 <Tab eventKey="following" title="following">
                   <InfiniteScroll
@@ -126,18 +131,23 @@ function ProfilePage() {
                     }
                     hasMore={!!followingProfiles.next}
                     loader={<Asset children={<Spinner animation="border" />} />}
-                    children={followingProfiles.results.map((profile) => (
-                      <Profile
-                        key={profile.id}
-                        {...profile}
-                        setProfilesMethods={[
-                          setProfile,
-                          setFollowedProfiles,
-                          setFollowingProfiles,
-                        ]}
-                      />
-                    ))}
-                  />
+                  >
+                    {followingProfiles.results.length ? (
+                      followingProfiles.results.map((profile) => (
+                        <Profile
+                          key={profile.id}
+                          {...profile}
+                          setProfilesMethods={[
+                            setProfile,
+                            setFollowedProfiles,
+                            setFollowingProfiles,
+                          ]}
+                        />
+                      ))
+                    ) : (
+                      <Asset children={<NoResults />} />
+                    )}
+                  </InfiniteScroll>
                 </Tab>
               </Tabs>
             </>
