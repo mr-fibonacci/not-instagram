@@ -15,6 +15,7 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 import PopularProfiles from "../components/PopularProfiles";
+import { ReactComponent as NoResults } from "../assets/no-results.svg";
 
 function ProfilePage() {
   const { id } = useParams();
@@ -82,14 +83,19 @@ function ProfilePage() {
                     next={() => fetchMoreData(profilePosts, setProfilePosts)}
                     hasMore={!!profilePosts.next}
                     loader={<Asset children={<Spinner animation="border" />} />}
-                    children={profilePosts.results.map((post) => (
-                      <Post
-                        key={post.id}
-                        {...post}
-                        setPosts={setProfilePosts}
-                      />
-                    ))}
-                  />
+                  >
+                    {profilePosts.results.length ? (
+                      profilePosts.results.map((post) => (
+                        <Post
+                          key={post.id}
+                          {...post}
+                          setPosts={setProfilePosts}
+                        />
+                      ))
+                    ) : (
+                      <Asset children={<NoResults />} />
+                    )}
+                  </InfiniteScroll>
                 </Tab>
                 <Tab eventKey="followers" title="followers">
                   <InfiniteScroll

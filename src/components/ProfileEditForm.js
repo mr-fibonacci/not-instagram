@@ -10,6 +10,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import appStyles from "../App.module.css";
 import Container from "react-bootstrap/Container";
+import Alert from "react-bootstrap/Alert";
 
 function ProfileForm() {
   const setCurrentUser = useSetCurrentUser();
@@ -20,6 +21,7 @@ function ProfileForm() {
     content: "",
     image: "",
   });
+  const [errors, setErrors] = useState({});
   const { name, content, image } = profileData;
   const imageFile = useRef();
   useEffect(() => {
@@ -54,6 +56,7 @@ function ProfileForm() {
       history.goBack();
     } catch (err) {
       console.log(err);
+      setErrors(err.response?.data);
     }
   };
 
@@ -75,6 +78,11 @@ function ProfileForm() {
           name="name"
         />
       </Form.Group>
+      {errors?.name?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
       <Form.Group>
         <Form.Label>content</Form.Label>
         <Form.Control
@@ -85,6 +93,11 @@ function ProfileForm() {
           rows={6}
         />
       </Form.Group>
+      {errors?.content?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
         save
       </Button>
@@ -101,6 +114,11 @@ function ProfileForm() {
                 <Image src={image} fluid />
               </figure>
             )}
+            {errors?.image?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
             <Form.Label
               className={`${btnStyles.Button} ${btnStyles.Blue}`}
               htmlFor="image-upload"

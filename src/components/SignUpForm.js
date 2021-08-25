@@ -60,12 +60,12 @@ function SignUpForm() {
                 onChange={handleChange}
                 value={username}
               />
-              {errors?.username?.map((message, idx) => (
-                <Alert key={idx} variant="warning">
-                  {message}
-                </Alert>
-              ))}
             </Form.Group>
+            {errors?.username?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
             <Form.Group>
               <Form.Control
                 placeholder="password"
@@ -75,12 +75,12 @@ function SignUpForm() {
                 onChange={handleChange}
                 value={password1}
               />
-              {errors?.password1?.map((message, idx) => (
-                <Alert key={idx} variant="warning">
-                  {message}
-                </Alert>
-              ))}
             </Form.Group>
+            {errors?.password1?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
             <Form.Group>
               <Form.Control
                 placeholder="confirm password"
@@ -90,18 +90,23 @@ function SignUpForm() {
                 onChange={handleChange}
                 value={password2}
               />
-              {errors?.password2?.map((message, idx) => (
-                <Alert key={idx} variant="warning">
-                  {message}
-                </Alert>
-              ))}
             </Form.Group>
+            {errors?.password2?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
             <Button
               type="submit"
               className={`${btnStyles.Button} ${btnStyles.Wide} ${btnStyles.Bright}`}
             >
               sign up
             </Button>
+            {errors?.non_field_errors?.map((message, idx) => (
+              <Alert key={idx} variant="warning" className="mt-3">
+                {message}
+              </Alert>
+            ))}
           </Form>
         </Container>
         <Container className={`mt-3 ${appStyles.Content}`}>

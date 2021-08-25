@@ -101,11 +101,13 @@ function PostCreateForm() {
             <Form.Group>
               {image ? (
                 <>
-                  <div style={{ width: "100%" }}>
-                    <figure className={image_filter}>
-                      <Image className={appStyles.Image} src={image} />
-                    </figure>
-                  </div>
+                  <figure className={image_filter}>
+                    <Image
+                      style={{ objectFit: "cover" }}
+                      className={appStyles.Image}
+                      src={image}
+                    />
+                  </figure>
                   {errors?.image?.map((message, idx) => (
                     <Alert variant="warning" key={idx}>
                       {message}

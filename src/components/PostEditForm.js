@@ -118,7 +118,11 @@ function PostEditForm() {
             <Form.Group>
               {image && (
                 <figure className={image_filter}>
-                  <Image className="w-100" src={image} />
+                  <Image
+                    style={{ objectFit: "cover" }}
+                    className={appStyles.Image}
+                    src={image}
+                  />
                 </figure>
               )}
               {errors?.image?.map((message, idx) => (
