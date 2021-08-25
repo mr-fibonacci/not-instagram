@@ -54,7 +54,7 @@ function Comment(props) {
       <hr />
       <Media>
         <Link to={`/profiles/${profile_id}`}>
-          <Avatar src={profile_image} height={70} />
+          <Avatar src={profile_image} />
         </Link>
         <Media.Body className="align-self-center">
           <b>{owner}</b> {content}
