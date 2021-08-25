@@ -5,6 +5,7 @@
 }
 * {
   box-sizing: border-box;
+  color: #555555;
 }
 a:hover {
   text-decoration: none;
@@ -20,6 +21,7 @@ input[type="file"] {
 }
 .Image {
   max-height: 40vh;
+  max-width: 100%;
   object-fit: contain;
 }
 figure {

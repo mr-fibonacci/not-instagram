@@ -10,6 +10,7 @@ import btnStyles from "./Button.module.css";
 import FilterSlider from "./FilterSlider";
 import appStyles from "../App.module.css";
 import Container from "react-bootstrap/Container";
+import Alert from "react-bootstrap/Alert";
 
 function PostEditForm() {
   const { id } = useParams();
@@ -21,6 +22,7 @@ function PostEditForm() {
     image_filter: "normal",
   });
   const { title, content, image, image_filter } = postData;
+  const [errors, setErrors] = useState({});
   const imageFile = useRef();
   useEffect(() => {
     handleMount();
@@ -54,6 +56,7 @@ function PostEditForm() {
       history.goBack();
     } catch (err) {
       console.log(err.request);
+      setErrors(err.response?.data);
     }
   };
   const handleChange = (event) => {
@@ -81,6 +84,11 @@ function PostEditForm() {
           onChange={handleChange}
         />
       </Form.Group>
+      {errors?.title?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
       <Form.Group>
         <Form.Label>content</Form.Label>
         <Form.Control
@@ -90,6 +98,11 @@ function PostEditForm() {
           value={content}
           onChange={handleChange}
         />
+        {errors?.content?.map((message, idx) => (
+          <Alert variant="warning" key={idx}>
+            {message}
+          </Alert>
+        ))}
       </Form.Group>
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
         save
@@ -108,6 +121,11 @@ function PostEditForm() {
                   <Image className="w-100" src={image} />
                 </figure>
               )}
+              {errors?.image?.map((message, idx) => (
+                <Alert variant="warning" key={idx}>
+                  {message}
+                </Alert>
+              ))}
               <Form.Label
                 className={`${btnStyles.Button} ${btnStyles.Blue}`}
                 htmlFor="image-upload"

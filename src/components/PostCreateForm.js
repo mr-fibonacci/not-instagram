@@ -12,6 +12,7 @@ import Asset from "./Asset";
 import FilterSlider from "./FilterSlider";
 import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
+import Alert from "react-bootstrap/Alert";
 
 function PostCreateForm() {
   const history = useHistory();
@@ -22,6 +23,7 @@ function PostCreateForm() {
     image_filter: "normal",
   });
   const { title, content, image, image_filter } = postData;
+  const [errors, setErrors] = useState({});
   const imageFile = useRef();
 
   const handleSubmit = async (event) => {
@@ -33,10 +35,12 @@ function PostCreateForm() {
     formData.append("image_filter", image_filter);
 
     try {
-      await axios.post("/posts/", formData);
+      const { data } = await axios.post("/posts/", formData);
+      console.log("data", data);
       history.push("/");
     } catch (err) {
-      console.log(err.request);
+      console.log("ERROR", err.request);
+      setErrors(err.response?.data);
     }
   };
   const handleChange = (event) => {
@@ -63,6 +67,11 @@ function PostCreateForm() {
           name="title"
         />
       </Form.Group>
+      {errors?.title?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
       <Form.Group>
         <Form.Label>content</Form.Label>
         <Form.Control
@@ -73,6 +82,11 @@ function PostCreateForm() {
           name="content"
         />
       </Form.Group>
+      {errors?.content?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
         create
       </Button>
@@ -92,6 +106,11 @@ function PostCreateForm() {
                       <Image className={appStyles.Image} src={image} />
                     </figure>
                   </div>
+                  {errors?.image?.map((message, idx) => (
+                    <Alert variant="warning" key={idx}>
+                      {message}
+                    </Alert>
+                  ))}
                   <Form.Label
                     className={`${btnStyles.Button} ${btnStyles.Blue}`}
                     htmlFor="image-upload"
