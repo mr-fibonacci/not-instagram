@@ -7,6 +7,9 @@
   box-sizing: border-box;
   color: #555555;
 }
+a {
+  color: #555555;
+}
 a:hover {
   text-decoration: none;
 }
