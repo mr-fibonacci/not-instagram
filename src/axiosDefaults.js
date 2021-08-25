@@ -18,6 +18,7 @@ const refreshAuthLogic = async (failedRequest) => {
     if (err.response.status === 401) {
       // redirect to login?
       // or Promise.reject()?
+      console.log("intercepted!");
     }
   }
   return Promise.resolve();

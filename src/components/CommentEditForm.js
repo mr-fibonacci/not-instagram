@@ -4,9 +4,17 @@ import Form from "react-bootstrap/Form";
 import styles from "./CommentCreateEditForm.module.css";
 import InputGroup from "react-bootstrap/InputGroup";
 import Avatar from "./Avatar";
+import { Link } from "react-router-dom";
 
 function CommentEditForm(props) {
-  const { id, content, setShowEditForm, setComments, profileImage } = props;
+  const {
+    id,
+    profile_id,
+    content,
+    setShowEditForm,
+    setComments,
+    profileImage,
+  } = props;
   const [formContent, setFormContent] = useState(content);
 
   const handleChange = (event) => {
@@ -33,7 +41,9 @@ function CommentEditForm(props) {
     <Form onSubmit={handleSubmit}>
       <Form.Group>
         <InputGroup>
-          <Avatar src={profileImage} height={70} />
+          <Link to={`/profiles/${profile_id}`}>
+            <Avatar src={profileImage} height={70} />
+          </Link>
           <Form.Control
             className={styles.Form}
             as="textarea"

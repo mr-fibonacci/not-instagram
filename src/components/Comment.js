@@ -43,6 +43,7 @@ function Comment(props) {
   return showEditForm ? (
     <CommentEditForm
       id={id}
+      profile_id={profile_id}
       content={content}
       profileImage={profile_image}
       setComments={setComments}
