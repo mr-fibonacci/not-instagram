@@ -16,6 +16,7 @@ import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 import PopularProfiles from "../components/PopularProfiles";
 import { ReactComponent as NoResults } from "../assets/no-results.svg";
+import { useSetPopularProfilesContext } from "../PopularProfilesContext";
 
 function ProfilePage() {
   const { id } = useParams();
@@ -30,6 +31,7 @@ function ProfilePage() {
   const [followedProfiles, setFollowedProfiles] = useState({
     results: [],
   });
+  const setPopularProfiles = useSetPopularProfilesContext();
 
   const fetchData = async () => {
     // refreshToken
@@ -60,6 +62,66 @@ function ProfilePage() {
     fetchData();
   }, [id]);
 
+  const handleFollow = async (id) => {
+    try {
+      const { data } = await axios.post("/followers/", { followed: id });
+      [
+        setProfile,
+        setFollowingProfiles,
+        setFollowedProfiles,
+        setPopularProfiles,
+      ].forEach((setProfilesMethod) => {
+        setProfilesMethod((prevProfiles) => ({
+          ...prevProfiles,
+          results: prevProfiles.results.map((profile) => {
+            // const is_owner = currentUser?.username === profile.owner;
+            return profile.id === id
+              ? {
+                  ...profile,
+                  followers_count: profile.followers_count + 1,
+                  following_id: data.id,
+                }
+              : profile.is_owner
+              ? { ...profile, following_count: profile.following_count + 1 }
+              : profile;
+          }),
+        }));
+      });
+    } catch (err) {
+      console.log(err.request);
+    }
+  };
+
+  const handleUnfollow = async (profile_id, following_id) => {
+    try {
+      await axios.delete(`/followers/${following_id}/`);
+      [
+        setProfile,
+        setFollowingProfiles,
+        setFollowedProfiles,
+        setPopularProfiles,
+      ].forEach((setProfilesMethod) => {
+        setProfilesMethod((prevProfiles) => ({
+          ...prevProfiles,
+          results: prevProfiles.results.map((profile) => {
+            // const is_owner = currentUser?.username === profile.owner;
+            return profile.id === profile_id
+              ? {
+                  ...profile,
+                  followers_count: profile.followers_count - 1,
+                  following_id: null,
+                }
+              : profile.is_owner
+              ? { ...profile, following_count: profile.following_count - 1 }
+              : profile;
+          }),
+        }));
+      });
+    } catch (err) {
+      console.log(err.request);
+    }
+  };
+
   return (
     <Row>
       <Col className="p-0 p-md-2" md={8}>
@@ -68,11 +130,8 @@ function ProfilePage() {
             <>
               <Profile
                 {...profile.results[0]}
-                setProfilesMethods={[
-                  setProfile,
-                  setFollowedProfiles,
-                  setFollowingProfiles,
-                ]}
+                handleFollow={handleFollow}
+                handleUnfollow={handleUnfollow}
                 imageSize={120}
                 profilePage
               />
@@ -111,11 +170,8 @@ function ProfilePage() {
                         <Profile
                           key={profile.id}
                           {...profile}
-                          setProfilesMethods={[
-                            setProfile,
-                            setFollowedProfiles,
-                            setFollowingProfiles,
-                          ]}
+                          handleFollow={handleFollow}
+                          handleUnfollow={handleUnfollow}
                         />
                       ))
                     ) : (
@@ -137,11 +193,8 @@ function ProfilePage() {
                         <Profile
                           key={profile.id}
                           {...profile}
-                          setProfilesMethods={[
-                            setProfile,
-                            setFollowedProfiles,
-                            setFollowingProfiles,
-                          ]}
+                          handleFollow={handleFollow}
+                          handleUnfollow={handleUnfollow}
                         />
                       ))
                     ) : (
@@ -157,7 +210,10 @@ function ProfilePage() {
         </Container>
       </Col>
       <Col md={4} className="d-none d-md-block p-0 p-md-2">
-        <PopularProfiles />
+        <PopularProfiles
+          handleFollow={handleFollow}
+          handleUnfollow={handleUnfollow}
+        />
       </Col>
     </Row>
   );

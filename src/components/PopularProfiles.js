@@ -1,31 +1,24 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Container from "react-bootstrap/Container";
-import { refreshToken } from "../utils";
 import Profile from "./Profile";
 import styles from "../App.module.css";
+import { usePopularProfilesContext } from "../PopularProfilesContext";
 
-const PopularProfiles = () => {
-  const [profiles, setProfiles] = useState([]);
-
-  useEffect(() => {
-    handleMount();
-  }, []);
-  const handleMount = async () => {
-    // refreshToken
-    await refreshToken();
-    try {
-      const { data } = await axios.get("/profiles?ordering=-followers_count");
-      setProfiles(data.results);
-    } catch (err) {
-      console.log(err.request);
-    }
-  };
+const PopularProfiles = ({ handleFollow, handleUnfollow }) => {
+  const popularProfiles = usePopularProfilesContext();
+  console.log("popular profiles", popularProfiles);
   return (
     <Container className={styles.Content}>
       <p> you may also like...</p>
-      {profiles.map((profile) => (
-        <Profile key={profile.id} {...profile} stats={false} />
+      {popularProfiles.results?.map((profile) => (
+        <Profile
+          key={profile.id}
+          {...profile}
+          stats={false}
+          handleFollow={handleFollow}
+          handleUnfollow={handleUnfollow}
+        />
       ))}
     </Container>
   );

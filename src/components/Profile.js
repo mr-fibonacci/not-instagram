@@ -19,7 +19,8 @@ function Profile(props) {
     image,
     name,
     owner,
-    setProfilesMethods,
+    handleFollow,
+    handleUnfollow,
     imageSize = 50,
     profilePage,
     stats = true,
@@ -29,54 +30,6 @@ function Profile(props) {
   const is_owner = currentUser?.username === owner;
   const handleEdit = () => history.push(`/profiles/${id}/edit`);
   const handleAddPost = () => history.push("/posts/create");
-  const handleFollow = async () => {
-    try {
-      const { data } = await axios.post("/followers/", { followed: id });
-      setProfilesMethods.forEach((setProfilesMethod) => {
-        setProfilesMethod((prevProfiles) => ({
-          ...prevProfiles,
-          results: prevProfiles.results.map((profile) => {
-            const is_owner = currentUser?.username === profile.owner;
-            return profile.id === id
-              ? {
-                  ...profile,
-                  followers_count: profile.followers_count + 1,
-                  following_id: data.id,
-                }
-              : is_owner
-              ? { ...profile, following_count: profile.following_count + 1 }
-              : profile;
-          }),
-        }));
-      });
-    } catch (err) {
-      console.log(err.request);
-    }
-  };
-  const handleUnfollow = async () => {
-    try {
-      await axios.delete(`/followers/${following_id}/`);
-      setProfilesMethods.forEach((setProfilesMethod) => {
-        setProfilesMethod((prevProfiles) => ({
-          ...prevProfiles,
-          results: prevProfiles.results.map((profile) => {
-            const is_owner = currentUser?.username === profile.owner;
-            return profile.id === id
-              ? {
-                  ...profile,
-                  followers_count: profile.followers_count - 1,
-                  following_id: null,
-                }
-              : is_owner
-              ? { ...profile, following_count: profile.following_count - 1 }
-              : profile;
-          }),
-        }));
-      });
-    } catch (err) {
-      console.log(err.request);
-    }
-  };
   return (
     <>
       <Media className="d-flex flex-wrap">
@@ -110,7 +63,7 @@ function Profile(props) {
               (following_id ? (
                 <Button
                   className={`${styles.Button} ${styles.BlackOutline}`}
-                  onClick={handleUnfollow}
+                  onClick={() => handleUnfollow(id, following_id)}
                 >
                   unfollow
                 </Button>
@@ -118,7 +71,7 @@ function Profile(props) {
                 !is_owner && (
                   <Button
                     className={`${styles.Button} ${styles.Black}`}
-                    onClick={handleFollow}
+                    onClick={() => handleFollow(id)}
                   >
                     follow
                   </Button>
