@@ -17,6 +17,7 @@ import appStyles from "../App.module.css";
 import PopularProfiles from "../components/PopularProfiles";
 import { ReactComponent as NoResults } from "../assets/no-results.svg";
 import { useSetPopularProfilesContext } from "../PopularProfilesContext";
+import { useCurrentUser } from "../CurrentUserContext";
 
 function ProfilePage() {
   const { id } = useParams();
@@ -31,8 +32,9 @@ function ProfilePage() {
   const [followedProfiles, setFollowedProfiles] = useState({
     results: [],
   });
+  const [currentUserProfile, setCurrentUserProfile] = useState(null);
   const setPopularProfiles = useSetPopularProfilesContext();
-
+  const currentUser = useCurrentUser();
   const fetchData = async () => {
     // refreshToken
     await refreshToken();
@@ -48,6 +50,12 @@ function ProfilePage() {
         axios.get(`/profiles/?owner__followed__owner__profile=${id}`),
         axios.get(`/profiles/?owner__following__followed__profile=${id}`),
       ]);
+      if (currentUser) {
+        const { data: currentUserProfile } = await axios.get(
+          `/profiles/${currentUser.profile_id}/`
+        );
+        setCurrentUserProfile(currentUserProfile);
+      }
       setProfile({ results: [profile] });
       setProfilePosts(profilePosts);
       setFollowingProfiles(followingProfiles);
@@ -67,6 +75,18 @@ function ProfilePage() {
       const { data } = await axios.post("/followers/", {
         followed: clickedProfile.id,
       });
+      if (profile.results[0]?.id === clickedProfile.id) {
+        setFollowedProfiles((prevState) => ({
+          ...prevState,
+          results: [currentUserProfile, ...prevState.results],
+        }));
+      }
+      if (profile.results[0]?.id === currentUserProfile.id) {
+        setFollowingProfiles((prevState) => ({
+          ...prevState,
+          results: [clickedProfile, ...prevState.results],
+        }));
+      }
       [
         setProfile,
         setFollowingProfiles,
@@ -97,6 +117,22 @@ function ProfilePage() {
   const handleUnfollow = async (clickedProfile) => {
     try {
       await axios.delete(`/followers/${clickedProfile.following_id}/`);
+      if (profile.results[0]?.id === clickedProfile.id) {
+        setFollowedProfiles((prevState) => ({
+          ...prevState,
+          results: prevState.results.filter(
+            (profile) => profile.id !== currentUserProfile.id
+          ),
+        }));
+      }
+      if (profile.results[0]?.id === currentUserProfile.id) {
+        setFollowingProfiles((prevState) => ({
+          ...prevState,
+          results: prevState.results.filter(
+            (profile) => profile.id !== clickedProfile.id
+          ),
+        }));
+      }
       [
         setProfile,
         setFollowingProfiles,
