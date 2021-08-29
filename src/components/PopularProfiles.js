@@ -14,7 +14,7 @@ const PopularProfiles = ({ handleFollow, handleUnfollow }) => {
       {popularProfiles.results?.map((profile) => (
         <Profile
           key={profile.id}
-          {...profile}
+          profile={profile}
           stats={false}
           handleFollow={handleFollow}
           handleUnfollow={handleUnfollow}

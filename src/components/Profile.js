@@ -10,6 +10,14 @@ import styles from "./Button.module.css";
 
 function Profile(props) {
   const {
+    profile,
+    handleFollow,
+    handleUnfollow,
+    imageSize = 50,
+    profilePage,
+    stats = true,
+  } = props;
+  const {
     id,
     content,
     posts_count,
@@ -19,12 +27,7 @@ function Profile(props) {
     image,
     name,
     owner,
-    handleFollow,
-    handleUnfollow,
-    imageSize = 50,
-    profilePage,
-    stats = true,
-  } = props;
+  } = profile;
   const history = useHistory();
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
@@ -63,7 +66,7 @@ function Profile(props) {
               (following_id ? (
                 <Button
                   className={`${styles.Button} ${styles.BlackOutline}`}
-                  onClick={() => handleUnfollow(id, following_id)}
+                  onClick={() => handleUnfollow(profile)}
                 >
                   unfollow
                 </Button>
@@ -71,7 +74,7 @@ function Profile(props) {
                 !is_owner && (
                   <Button
                     className={`${styles.Button} ${styles.Black}`}
-                    onClick={() => handleFollow(id)}
+                    onClick={() => handleFollow(profile)}
                   >
                     follow
                   </Button>

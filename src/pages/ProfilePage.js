@@ -62,9 +62,11 @@ function ProfilePage() {
     fetchData();
   }, [id]);
 
-  const handleFollow = async (id) => {
+  const handleFollow = async (clickedProfile) => {
     try {
-      const { data } = await axios.post("/followers/", { followed: id });
+      const { data } = await axios.post("/followers/", {
+        followed: clickedProfile.id,
+      });
       [
         setProfile,
         setFollowingProfiles,
@@ -75,7 +77,7 @@ function ProfilePage() {
           ...prevProfiles,
           results: prevProfiles.results.map((profile) => {
             // const is_owner = currentUser?.username === profile.owner;
-            return profile.id === id
+            return profile.id === clickedProfile.id
               ? {
                   ...profile,
                   followers_count: profile.followers_count + 1,
@@ -92,9 +94,9 @@ function ProfilePage() {
     }
   };
 
-  const handleUnfollow = async (profile_id, following_id) => {
+  const handleUnfollow = async (clickedProfile) => {
     try {
-      await axios.delete(`/followers/${following_id}/`);
+      await axios.delete(`/followers/${clickedProfile.following_id}/`);
       [
         setProfile,
         setFollowingProfiles,
@@ -105,7 +107,7 @@ function ProfilePage() {
           ...prevProfiles,
           results: prevProfiles.results.map((profile) => {
             // const is_owner = currentUser?.username === profile.owner;
-            return profile.id === profile_id
+            return profile.id === clickedProfile.id
               ? {
                   ...profile,
                   followers_count: profile.followers_count - 1,
@@ -129,7 +131,7 @@ function ProfilePage() {
           {hasLoaded ? (
             <>
               <Profile
-                {...profile.results[0]}
+                profile={profile.results[0]}
                 handleFollow={handleFollow}
                 handleUnfollow={handleUnfollow}
                 imageSize={120}
@@ -169,7 +171,7 @@ function ProfilePage() {
                       followedProfiles.results.map((profile) => (
                         <Profile
                           key={profile.id}
-                          {...profile}
+                          profile={profile}
                           handleFollow={handleFollow}
                           handleUnfollow={handleUnfollow}
                         />
@@ -192,7 +194,7 @@ function ProfilePage() {
                       followingProfiles.results.map((profile) => (
                         <Profile
                           key={profile.id}
-                          {...profile}
+                          profile={profile}
                           handleFollow={handleFollow}
                           handleUnfollow={handleUnfollow}
                         />
