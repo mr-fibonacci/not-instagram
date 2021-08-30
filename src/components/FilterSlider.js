@@ -15,6 +15,7 @@ const FilterSlider = ({ image, image_filter, handleClick }) => {
         slidesPerView={3}
         spaceBetween={10}
         freeMode={true}
+        style={{ marginLeft: "-10px", marginRight: "-10px" }}
       >
         {image &&
           IMAGE_FILTERS.map((imageFilter) => (

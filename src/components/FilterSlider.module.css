@@ -1,5 +1,6 @@
 .FilterSlider {
   text-align: center;
+  /* lower specificity :-(
   margin-left: -20px;
-  margin-right: -20px;
+  margin-right: -20px; */
 }
