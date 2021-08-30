@@ -34,13 +34,57 @@ function Profile(props) {
   const handleEdit = () => history.push(`/profiles/${id}/edit`);
   const handleAddPost = () => history.push("/posts/create");
   return (
-    <>
-      <Media className="d-flex flex-wrap">
-        <Link to={`/profiles/${id}`}>
+    <div className="d-flex my-2  text-center flex-wrap justify-content-center">
+      <Link className="align-self-center " to={`/profiles/${id}`}>
+        <Avatar src={image} height={imageSize} />
+      </Link>
+      <div
+        className="d-flex flex-column  flex-fill justify-content-center"
+        // style={{ minWidth: "150px" }}
+      >
+        <div className="">{owner}</div>
+        {stats && (
+          <div className=" d-none d-sm-block">
+            posts: {posts_count} followers: {followers_count} following:{" "}
+            {following_count}
+          </div>
+        )}
+      </div>
+      <div
+        className=" d-flex align-items-center justify-content-center"
+        style={{ minWidth: "90px" }}
+      >
+        {is_owner && profilePage ? (
+          <MoreDropdown handleEdit={handleEdit} handleAdd={handleAddPost} />
+        ) : (
+          <div>
+            {currentUser &&
+              (following_id ? (
+                <Button
+                  className={`${styles.Button} ${styles.BlackOutline}`}
+                  onClick={() => handleUnfollow(profile)}
+                >
+                  unfollow
+                </Button>
+              ) : (
+                !is_owner && (
+                  <Button
+                    className={`${styles.Button} ${styles.Black}`}
+                    onClick={() => handleFollow(profile)}
+                  >
+                    follow
+                  </Button>
+                )
+              ))}
+          </div>
+        )}
+      </div>
+      {/* <Media className="d-flex flex-wrap my-2">
+        <Link className="align-self-center" to={`/profiles/${id}`}>
           <Avatar src={image} height={imageSize} />
         </Link>
-        <Media.Body>
-          <h5>{owner}</h5>
+        <Media.Body className="d-flex justify-content-around">
+          <h5 className="align-self-center">{owner}</h5>
           {stats && (
             <div className="d-flex text-center">
               <div className="m-2">
@@ -82,8 +126,8 @@ function Profile(props) {
               ))}
           </>
         )}
-      </Media>
-    </>
+      </Media> */}
+    </div>
   );
 }
 
