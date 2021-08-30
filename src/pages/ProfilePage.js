@@ -18,6 +18,11 @@ import PopularProfiles from "../components/PopularProfiles";
 import { ReactComponent as NoResults } from "../assets/no-results.svg";
 import { useSetPopularProfilesContext } from "../PopularProfilesContext";
 import { useCurrentUser } from "../CurrentUserContext";
+import { Image, Button } from "react-bootstrap";
+import MoreDropdown from "../components/MoreDropdown";
+import btnStyles from "../components/Button.module.css";
+import styles from "../components/Profile.module.css";
+import { useHistory } from "react-router-dom";
 
 function ProfilePage() {
   const { id } = useParams();
@@ -35,6 +40,7 @@ function ProfilePage() {
   const [currentUserProfile, setCurrentUserProfile] = useState(null);
   const setPopularProfiles = useSetPopularProfilesContext();
   const currentUser = useCurrentUser();
+  const history = useHistory();
   const fetchData = async () => {
     // refreshToken
     await refreshToken();
@@ -65,7 +71,8 @@ function ProfilePage() {
       console.log(err.request);
     }
   };
-
+  const handleEdit = () => history.push(`/profiles/${id}/edit`);
+  const handleAddPost = () => history.push("/posts/create");
   useEffect(() => {
     fetchData();
   }, [id]);
@@ -166,13 +173,65 @@ function ProfilePage() {
         <Container className={appStyles.Content}>
           {hasLoaded ? (
             <>
-              <Profile
-                profile={profile.results[0]}
-                handleFollow={handleFollow}
-                handleUnfollow={handleUnfollow}
-                imageSize={120}
-                profilePage
-              />
+              {profile.results[0].is_owner && (
+                <MoreDropdown
+                  handleEdit={handleEdit}
+                  handleAdd={handleAddPost}
+                />
+              )}
+              <div className="d-flex flex-column flex-lg-row align-items-center justify-content-lg-center text-center">
+                <Image
+                  roundedCircle
+                  style={{
+                    objectFit: "cover",
+                    height: "200px",
+                    width: "200px",
+                    margin: "4px",
+                  }}
+                  src={profile.results[0].image}
+                />
+                <div className="d-flex flex-column align-items-center m-1">
+                  <h3 className="m-2">{profile.results[0].owner}</h3>
+                  <div>{profile.results[0].content}</div>
+                  <div className="d-flex text-center">
+                    <div className="m-2">
+                      <div>{profile.results[0].posts_count}</div>
+                      <div>posts</div>
+                    </div>
+                    <div className="m-2">
+                      <div>{profile.results[0].followers_count}</div>
+                      <div>followers</div>
+                    </div>
+                    <div className="m-2">
+                      <div>{profile.results[0].following_count}</div>
+                      <div>following</div>
+                    </div>
+                  </div>
+                </div>
+                {!profile.results[0].is_owner && (
+                  <>
+                    {currentUser &&
+                      (profile.results[0].following_id ? (
+                        <Button
+                          className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
+                          onClick={() => handleUnfollow(profile.results[0])}
+                        >
+                          unfollow
+                        </Button>
+                      ) : (
+                        !profile.results[0].is_owner && (
+                          <Button
+                            className={`${btnStyles.Button} ${btnStyles.Black}`}
+                            onClick={() => handleFollow(profile.results[0])}
+                          >
+                            follow
+                          </Button>
+                        )
+                      ))}
+                  </>
+                )}
+              </div>
+              <hr />
               <Tabs variant="pills">
                 <Tab eventKey="posts" title="posts">
                   <InfiniteScroll

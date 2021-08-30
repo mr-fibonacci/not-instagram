@@ -6,7 +6,8 @@ import { Link, useHistory } from "react-router-dom";
 import { useCurrentUser } from "../CurrentUserContext";
 import Avatar from "./Avatar";
 import MoreDropdown from "./MoreDropdown";
-import styles from "./Button.module.css";
+import btnStyles from "./Button.module.css";
+import styles from "./Profile.module.css";
 
 function Profile(props) {
   const {
@@ -34,17 +35,21 @@ function Profile(props) {
   const handleEdit = () => history.push(`/profiles/${id}/edit`);
   const handleAddPost = () => history.push("/posts/create");
   return (
-    <div className="d-flex my-2  text-center flex-wrap justify-content-center">
-      <Link className="align-self-center " to={`/profiles/${id}`}>
+    <div className="d-flex my-2  text-center justify-content-around">
+      <Link className="align-self-center" to={`/profiles/${id}`}>
         <Avatar src={image} height={imageSize} />
       </Link>
       <div
-        className="d-flex flex-column  flex-fill justify-content-center"
-        // style={{ minWidth: "150px" }}
+        className={`d-flex flex-column justify-content-center ${
+          !stats && "flex-fill"
+        }`}
+        style={{ wordBreak: "break-all" }}
       >
-        <div className="">{owner}</div>
+        <div>
+          <b>{owner}</b>
+        </div>
         {stats && (
-          <div className=" d-none d-sm-block">
+          <div className={styles.Stats}>
             posts: {posts_count} followers: {followers_count} following:{" "}
             {following_count}
           </div>
@@ -61,7 +66,7 @@ function Profile(props) {
             {currentUser &&
               (following_id ? (
                 <Button
-                  className={`${styles.Button} ${styles.BlackOutline}`}
+                  className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
                   onClick={() => handleUnfollow(profile)}
                 >
                   unfollow
@@ -69,7 +74,7 @@ function Profile(props) {
               ) : (
                 !is_owner && (
                   <Button
-                    className={`${styles.Button} ${styles.Black}`}
+                    className={`${btnStyles.Button} ${btnStyles.Black}`}
                     onClick={() => handleFollow(profile)}
                   >
                     follow
@@ -79,54 +84,6 @@ function Profile(props) {
           </div>
         )}
       </div>
-      {/* <Media className="d-flex flex-wrap my-2">
-        <Link className="align-self-center" to={`/profiles/${id}`}>
-          <Avatar src={image} height={imageSize} />
-        </Link>
-        <Media.Body className="d-flex justify-content-around">
-          <h5 className="align-self-center">{owner}</h5>
-          {stats && (
-            <div className="d-flex text-center">
-              <div className="m-2">
-                <div>{posts_count}</div>
-                <div>posts</div>
-              </div>
-              <div className="m-2">
-                <div>{followers_count}</div>
-                <div>followers</div>
-              </div>
-              <div className="m-2">
-                <div>{following_count}</div>
-                <div>following</div>
-              </div>
-            </div>
-          )}
-        </Media.Body>
-        {is_owner && profilePage ? (
-          <MoreDropdown handleEdit={handleEdit} handleAdd={handleAddPost} />
-        ) : (
-          <>
-            {currentUser &&
-              (following_id ? (
-                <Button
-                  className={`${styles.Button} ${styles.BlackOutline}`}
-                  onClick={() => handleUnfollow(profile)}
-                >
-                  unfollow
-                </Button>
-              ) : (
-                !is_owner && (
-                  <Button
-                    className={`${styles.Button} ${styles.Black}`}
-                    onClick={() => handleFollow(profile)}
-                  >
-                    follow
-                  </Button>
-                )
-              ))}
-          </>
-        )}
-      </Media> */}
     </div>
   );
 }

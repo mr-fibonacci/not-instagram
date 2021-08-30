@@ -8,6 +8,7 @@ import Icon from "./Icon";
 
 const ThreeDots = React.forwardRef(({ onClick }, ref) => (
   <img
+    style={{ position: "absolute", right: "0px" }}
     role="button"
     alt="more options"
     src={dots}
