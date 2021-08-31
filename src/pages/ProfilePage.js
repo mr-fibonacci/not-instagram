@@ -16,13 +16,17 @@ import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 import PopularProfiles from "../components/PopularProfiles";
 import { ReactComponent as NoResults } from "../assets/no-results.svg";
-import { useSetPopularProfilesContext } from "../PopularProfilesContext";
+import {
+  usePopularProfilesContext,
+  useSetPopularProfilesContext,
+} from "../PopularProfilesContext";
 import { useCurrentUser } from "../CurrentUserContext";
 import { Image, Button } from "react-bootstrap";
 import MoreDropdown from "../components/MoreDropdown";
 import btnStyles from "../components/Button.module.css";
 import styles from "../components/Profile.module.css";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 function ProfilePage() {
   const { id } = useParams();
@@ -38,6 +42,7 @@ function ProfilePage() {
     results: [],
   });
   const [currentUserProfile, setCurrentUserProfile] = useState(null);
+  const popularProfiles = usePopularProfilesContext();
   const setPopularProfiles = useSetPopularProfilesContext();
   const currentUser = useCurrentUser();
   const history = useHistory();
@@ -170,6 +175,31 @@ function ProfilePage() {
   return (
     <Row>
       <Col className="p-0 p-md-2" md={8}>
+        <Container
+          className={`${appStyles.Content} d-block d-md-none text-center mb-3`}
+        >
+          <div className="my-1">you may also like...</div>
+          <Swiper slidesPerView={4}>
+            {popularProfiles.results.map((profile) => (
+              <SwiperSlide key={profile.id}>
+                <Link to={`/profiles/${profile.id}`}>
+                  <div className="d-flex flex-column align-items-center">
+                    <Image
+                      roundedCircle
+                      style={{
+                        width: "64px",
+                        height: "64px",
+                        objectFit: "cover",
+                      }}
+                      src={profile.image}
+                    />
+                    {profile.owner}
+                  </div>
+                </Link>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </Container>
         <Container className={appStyles.Content}>
           {hasLoaded ? (
             <>
@@ -231,6 +261,33 @@ function ProfilePage() {
                   </>
                 )}
               </div>
+              {/* <div className="d-block d-md-none text-center">
+                <hr />
+                suggestions for you
+                <hr />
+                <Swiper
+                  slidesPerView={3}
+                >
+                  {popularProfiles.results.map((profile) => (
+                    <SwiperSlide key={profile.id}>
+                      <Link to={`/profiles/${profile.id}`}>
+                        <div className="d-flex flex-column align-items-center">
+                          <Image
+                            roundedCircle
+                            style={{
+                              width: "90px",
+                              height: "90px",
+                              objectFit: "cover",
+                            }}
+                            src={profile.image}
+                          />
+                          {profile.owner}
+                        </div>
+                      </Link>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </div> */}
               <hr />
               <Tabs variant="pills">
                 <Tab eventKey="posts" title="posts">
