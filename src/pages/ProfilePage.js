@@ -14,7 +14,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
-import PopularProfiles from "../components/PopularProfiles";
 import { ReactComponent as NoResults } from "../assets/no-results.svg";
 import { useCurrentUser } from "../CurrentUserContext";
 import { Image, Button } from "react-bootstrap";
@@ -25,9 +24,11 @@ import { Link, useHistory } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 function ProfilePage() {
+  console.log("render");
   const { id } = useParams();
   const [hasLoaded, setHasLoaded] = useState(false);
-  const [profile, setProfile] = useState({ results: [] });
+  const [profile, setProfile] = useState(null);
+  const [currentUserProfile, setCurrentUserProfile] = useState(null);
   const [profilePosts, setProfilePosts] = useState({
     results: [],
   });
@@ -40,7 +41,7 @@ function ProfilePage() {
   const [popularProfiles, setPopularProfiles] = useState({
     results: [],
   });
-  const [currentUserProfile, setCurrentUserProfile] = useState({ results: [] });
+
   const currentUser = useCurrentUser();
   const history = useHistory();
   const fetchData = async () => {
@@ -64,9 +65,9 @@ function ProfilePage() {
         const { data: currentUserProfile } = await axios.get(
           `/profiles/${currentUser.profile_id}/`
         );
-        setCurrentUserProfile({ results: [currentUserProfile] });
+        setCurrentUserProfile(currentUserProfile);
       }
-      setProfile({ results: [profile] });
+      setProfile(profile);
       setProfilePosts(profilePosts);
       setFollowingProfiles(followingProfiles);
       setFollowedProfiles(followedProfiles);
@@ -83,62 +84,75 @@ function ProfilePage() {
   }, [id]);
 
   const handleFollow = async (clickedProfile) => {
+    const followHelper = (profile, clickedProfile, following_id) => {
+      return profile.id === clickedProfile.id
+        ? {
+            ...profile,
+            followers_count: profile.followers_count + 1,
+            following_id,
+          }
+        : profile.is_owner
+        ? { ...profile, following_count: profile.following_count + 1 }
+        : profile;
+    };
     try {
       const { data } = await axios.post("/followers/", {
         followed: clickedProfile.id,
       });
-      if (profile.results[0]?.id === clickedProfile.id) {
+      if (profile?.id === clickedProfile.id) {
         setFollowedProfiles((prevState) => ({
           ...prevState,
-          results: [currentUserProfile.results[0], ...prevState.results],
+          results: [currentUserProfile, ...prevState.results],
         }));
       }
-      if (profile.results[0]?.id === currentUserProfile.results[0]?.id) {
+      if (profile?.id === currentUserProfile?.id) {
         setFollowingProfiles((prevState) => ({
           ...prevState,
           results: [clickedProfile, ...prevState.results],
         }));
       }
-      [
-        setProfile,
-        setFollowingProfiles,
-        setFollowedProfiles,
-        setPopularProfiles,
-        setCurrentUserProfile,
-      ].forEach((setProfilesMethod) => {
-        setProfilesMethod((prevProfiles) => ({
-          ...prevProfiles,
-          results: prevProfiles.results.map((profile) => {
-            // const is_owner = currentUser?.username === profile.owner;
-            return profile.id === clickedProfile.id
-              ? {
-                  ...profile,
-                  followers_count: profile.followers_count + 1,
-                  following_id: data.id,
-                }
-              : profile.is_owner
-              ? { ...profile, following_count: profile.following_count + 1 }
-              : profile;
-          }),
-        }));
-      });
+      setProfile((profile) => followHelper(profile, clickedProfile, data.id));
+      setCurrentUserProfile((profile) =>
+        followHelper(profile, clickedProfile, data.id)
+      );
+      [setFollowingProfiles, setFollowedProfiles, setPopularProfiles].forEach(
+        (setProfilesMethod) => {
+          setProfilesMethod((prevProfiles) => ({
+            ...prevProfiles,
+            results: prevProfiles.results.map((profile) =>
+              followHelper(profile, clickedProfile, data.id)
+            ),
+          }));
+        }
+      );
     } catch (err) {
       console.log(err.request);
     }
   };
 
   const handleUnfollow = async (clickedProfile) => {
+    const unfollowHelper = (profile, clickedProfile) => {
+      return profile.id === clickedProfile.id
+        ? {
+            ...profile,
+            followers_count: profile.followers_count - 1,
+            following_id: null,
+          }
+        : profile.is_owner
+        ? { ...profile, following_count: profile.following_count - 1 }
+        : profile;
+    };
     try {
       await axios.delete(`/followers/${clickedProfile.following_id}/`);
-      if (profile.results[0]?.id === clickedProfile.id) {
+      if (profile?.id === clickedProfile.id) {
         setFollowedProfiles((prevState) => ({
           ...prevState,
           results: prevState.results.filter(
-            (profile) => profile.id !== currentUserProfile.results[0]?.id
+            (profile) => profile.id !== currentUserProfile?.id
           ),
         }));
       }
-      if (profile.results[0]?.id === currentUserProfile.results[0]?.id) {
+      if (profile?.id === currentUserProfile?.id) {
         setFollowingProfiles((prevState) => ({
           ...prevState,
           results: prevState.results.filter(
@@ -146,29 +160,20 @@ function ProfilePage() {
           ),
         }));
       }
-      [
-        setProfile,
-        setFollowingProfiles,
-        setFollowedProfiles,
-        setPopularProfiles,
-        setCurrentUserProfile,
-      ].forEach((setProfilesMethod) => {
-        setProfilesMethod((prevProfiles) => ({
-          ...prevProfiles,
-          results: prevProfiles.results.map((profile) => {
-            // const is_owner = currentUser?.username === profile.owner;
-            return profile.id === clickedProfile.id
-              ? {
-                  ...profile,
-                  followers_count: profile.followers_count - 1,
-                  following_id: null,
-                }
-              : profile.is_owner
-              ? { ...profile, following_count: profile.following_count - 1 }
-              : profile;
-          }),
-        }));
-      });
+      setProfile((profile) => unfollowHelper(profile, clickedProfile));
+      setCurrentUserProfile((profile) =>
+        unfollowHelper(profile, clickedProfile)
+      );
+      [setFollowingProfiles, setFollowedProfiles, setPopularProfiles].forEach(
+        (setProfilesMethod) => {
+          setProfilesMethod((prevProfiles) => ({
+            ...prevProfiles,
+            results: prevProfiles.results.map((profile) =>
+              unfollowHelper(profile, clickedProfile)
+            ),
+          }));
+        }
+      );
     } catch (err) {
       console.log(err.request);
     }
@@ -205,7 +210,7 @@ function ProfilePage() {
         <Container className={appStyles.Content}>
           {hasLoaded ? (
             <>
-              {profile.results[0].is_owner && (
+              {profile.is_owner && (
                 <MoreDropdown
                   handleEdit={handleEdit}
                   handleAdd={handleAddPost}
@@ -221,42 +226,42 @@ function ProfilePage() {
                       width: "200px",
                       margin: "4px",
                     }}
-                    src={profile.results[0].image}
+                    src={profile.image}
                   />
                 </div>
                 <div className="d-flex flex-column align-items-center m-1">
-                  <h3 className="m-2">{profile.results[0].owner}</h3>
-                  <div>{profile.results[0].content}</div>
+                  <h3 className="m-2">{profile.owner}</h3>
+                  <div>{profile.content}</div>
                   <div className="d-flex text-center">
                     <div className="m-2">
-                      <div>{profile.results[0].posts_count}</div>
+                      <div>{profile.posts_count}</div>
                       <div>posts</div>
                     </div>
                     <div className="m-2">
-                      <div>{profile.results[0].followers_count}</div>
+                      <div>{profile.followers_count}</div>
                       <div>followers</div>
                     </div>
                     <div className="m-2">
-                      <div>{profile.results[0].following_count}</div>
+                      <div>{profile.following_count}</div>
                       <div>following</div>
                     </div>
                   </div>
                 </div>
-                {!profile.results[0].is_owner && (
+                {!profile.is_owner && (
                   <>
                     {currentUser &&
-                      (profile.results[0].following_id ? (
+                      (profile.following_id ? (
                         <Button
                           className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
-                          onClick={() => handleUnfollow(profile.results[0])}
+                          onClick={() => handleUnfollow(profile)}
                         >
                           unfollow
                         </Button>
                       ) : (
-                        !profile.results[0].is_owner && (
+                        !profile.is_owner && (
                           <Button
                             className={`${btnStyles.Button} ${btnStyles.Black}`}
-                            onClick={() => handleFollow(profile.results[0])}
+                            onClick={() => handleFollow(profile)}
                           >
                             follow
                           </Button>
