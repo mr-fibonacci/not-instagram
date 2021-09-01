@@ -210,16 +210,18 @@ function ProfilePage() {
                 />
               )}
               <div className="d-flex flex-column flex-lg-row align-items-center justify-content-lg-center text-center">
-                <Image
-                  roundedCircle
-                  style={{
-                    objectFit: "cover",
-                    height: "200px",
-                    width: "200px",
-                    margin: "4px",
-                  }}
-                  src={profile.results[0].image}
-                />
+                <div>
+                  <Image
+                    roundedCircle
+                    style={{
+                      objectFit: "cover",
+                      height: "200px",
+                      width: "200px",
+                      margin: "4px",
+                    }}
+                    src={profile.results[0].image}
+                  />
+                </div>
                 <div className="d-flex flex-column align-items-center m-1">
                   <h3 className="m-2">{profile.results[0].owner}</h3>
                   <div>{profile.results[0].content}</div>

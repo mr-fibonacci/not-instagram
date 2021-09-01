@@ -15,7 +15,6 @@ function Profile(props) {
     handleFollow,
     handleUnfollow,
     imageSize = 50,
-    profilePage,
     stats = true,
   } = props;
   const {
@@ -32,10 +31,8 @@ function Profile(props) {
   const history = useHistory();
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
-  const handleEdit = () => history.push(`/profiles/${id}/edit`);
-  const handleAddPost = () => history.push("/posts/create");
   return (
-    <div className="d-flex my-2  text-center justify-content-around">
+    <div className="d-flex my-2  text-center justify-content-between">
       <Link className="align-self-center" to={`/profiles/${id}`}>
         <Avatar src={image} height={imageSize} />
       </Link>
@@ -59,30 +56,26 @@ function Profile(props) {
         className=" d-flex align-items-center justify-content-center"
         style={{ minWidth: "90px" }}
       >
-        {is_owner && profilePage ? (
-          <MoreDropdown handleEdit={handleEdit} handleAdd={handleAddPost} />
-        ) : (
-          <div>
-            {currentUser &&
-              (following_id ? (
+        <div>
+          {currentUser &&
+            (following_id ? (
+              <Button
+                className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
+                onClick={() => handleUnfollow(profile)}
+              >
+                unfollow
+              </Button>
+            ) : (
+              !is_owner && (
                 <Button
-                  className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
-                  onClick={() => handleUnfollow(profile)}
+                  className={`${btnStyles.Button} ${btnStyles.Black}`}
+                  onClick={() => handleFollow(profile)}
                 >
-                  unfollow
+                  follow
                 </Button>
-              ) : (
-                !is_owner && (
-                  <Button
-                    className={`${btnStyles.Button} ${btnStyles.Black}`}
-                    onClick={() => handleFollow(profile)}
-                  >
-                    follow
-                  </Button>
-                )
-              ))}
-          </div>
-        )}
+              )
+            ))}
+        </div>
       </div>
     </div>
   );
