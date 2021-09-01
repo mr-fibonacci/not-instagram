@@ -25,25 +25,30 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 function ProfilePage() {
   console.log("render");
+
+  const history = useHistory();
   const { id } = useParams();
   const [hasLoaded, setHasLoaded] = useState(false);
-  const [profile, setProfile] = useState(null);
-  const [currentUserProfile, setCurrentUserProfile] = useState(null);
-  const [profilePosts, setProfilePosts] = useState({
-    results: [],
-  });
-  const [followingProfiles, setFollowingProfiles] = useState({
-    results: [],
-  });
-  const [followedProfiles, setFollowedProfiles] = useState({
-    results: [],
-  });
-  const [popularProfiles, setPopularProfiles] = useState({
-    results: [],
-  });
 
   const currentUser = useCurrentUser();
-  const history = useHistory();
+
+  const [state, setState] = useState({
+    profile: null,
+    currentUserProfile: null,
+    followingProfiles: { results: [] },
+    followedProfiles: { results: [] },
+    popularProfiles: { results: [] },
+    profilePosts: { results: [] },
+  });
+  const {
+    profile,
+    currentUserProfile,
+    followingProfiles,
+    followedProfiles,
+    popularProfiles,
+    profilePosts,
+  } = state;
+
   const fetchData = async () => {
     // refreshToken
     await refreshToken();
@@ -65,14 +70,20 @@ function ProfilePage() {
         const { data: currentUserProfile } = await axios.get(
           `/profiles/${currentUser.profile_id}/`
         );
-        setCurrentUserProfile(currentUserProfile);
+        setState((prevState) => ({
+          ...prevState,
+          currentUserProfile,
+        }));
       }
-      setProfile(profile);
-      setProfilePosts(profilePosts);
-      setFollowingProfiles(followingProfiles);
-      setFollowedProfiles(followedProfiles);
-      setPopularProfiles(popularProfiles);
       setHasLoaded(true);
+      setState((prevState) => ({
+        ...prevState,
+        profile,
+        profilePosts,
+        followingProfiles,
+        followedProfiles,
+        popularProfiles,
+      }));
     } catch (err) {
       console.log(err.request);
     }
@@ -100,31 +111,53 @@ function ProfilePage() {
         followed: clickedProfile.id,
       });
       if (profile?.id === clickedProfile.id) {
-        setFollowedProfiles((prevState) => ({
+        setState((prevState) => ({
           ...prevState,
-          results: [currentUserProfile, ...prevState.results],
+          followedProfiles: {
+            ...prevState.followedProfiles,
+            results: [
+              currentUserProfile,
+              ...prevState.followedProfiles.results,
+            ],
+          },
         }));
       }
       if (profile?.id === currentUserProfile?.id) {
-        setFollowingProfiles((prevState) => ({
+        setState((prevState) => ({
           ...prevState,
-          results: [clickedProfile, ...prevState.results],
+          followingProfiles: {
+            ...prevState.followingProfiles,
+            results: [clickedProfile, ...prevState.followingProfiles.results],
+          },
         }));
       }
-      setProfile((profile) => followHelper(profile, clickedProfile, data.id));
-      setCurrentUserProfile((profile) =>
-        followHelper(profile, clickedProfile, data.id)
-      );
-      [setFollowingProfiles, setFollowedProfiles, setPopularProfiles].forEach(
-        (setProfilesMethod) => {
-          setProfilesMethod((prevProfiles) => ({
-            ...prevProfiles,
-            results: prevProfiles.results.map((profile) =>
-              followHelper(profile, clickedProfile, data.id)
-            ),
-          }));
-        }
-      );
+      setState((prevState) => ({
+        ...prevState,
+        profile: followHelper(profile, clickedProfile, data.id),
+        currentUserProfile: followHelper(
+          prevState.currentUserProfile,
+          clickedProfile,
+          data.id
+        ),
+        followingProfiles: {
+          ...prevState.followingProfiles,
+          results: prevState.followingProfiles.results.map((profile) =>
+            followHelper(profile, clickedProfile, data.id)
+          ),
+        },
+        followedProfiles: {
+          ...prevState.followedProfiles,
+          results: prevState.followedProfiles.results.map((profile) =>
+            followHelper(profile, clickedProfile, data.id)
+          ),
+        },
+        popularProfiles: {
+          ...prevState.popularProfiles,
+          results: prevState.popularProfiles.results.map((profile) =>
+            followHelper(profile, clickedProfile, data.id)
+          ),
+        },
+      }));
     } catch (err) {
       console.log(err.request);
     }
@@ -145,35 +178,55 @@ function ProfilePage() {
     try {
       await axios.delete(`/followers/${clickedProfile.following_id}/`);
       if (profile?.id === clickedProfile.id) {
-        setFollowedProfiles((prevState) => ({
+        setState((prevState) => ({
           ...prevState,
-          results: prevState.results.filter(
-            (profile) => profile.id !== currentUserProfile?.id
-          ),
+          followedProfiles: {
+            ...prevState.followedProfiles,
+            results: prevState.followedProfiles.results.filter(
+              (profile) => profile.id !== currentUserProfile?.id
+            ),
+          },
         }));
       }
       if (profile?.id === currentUserProfile?.id) {
-        setFollowingProfiles((prevState) => ({
+        setState((prevState) => ({
           ...prevState,
-          results: prevState.results.filter(
-            (profile) => profile.id !== clickedProfile.id
-          ),
+          followingProfiles: {
+            ...prevState.followingProfiles,
+            results: prevState.followingProfiles.results.filter(
+              (profile) => profile.id !== clickedProfile.id
+            ),
+          },
         }));
       }
-      setProfile((profile) => unfollowHelper(profile, clickedProfile));
-      setCurrentUserProfile((profile) =>
-        unfollowHelper(profile, clickedProfile)
-      );
-      [setFollowingProfiles, setFollowedProfiles, setPopularProfiles].forEach(
-        (setProfilesMethod) => {
-          setProfilesMethod((prevProfiles) => ({
-            ...prevProfiles,
-            results: prevProfiles.results.map((profile) =>
+      setState((prevState) => {
+        return {
+          ...prevState,
+          profile: unfollowHelper(profile, clickedProfile),
+          currentUserProfile: unfollowHelper(
+            prevState.currentUserProfile,
+            clickedProfile
+          ),
+          followingProfiles: {
+            ...prevState.followingProfiles,
+            results: prevState.followingProfiles.results.map((profile) =>
               unfollowHelper(profile, clickedProfile)
             ),
-          }));
-        }
-      );
+          },
+          followedProfiles: {
+            ...prevState,
+            results: prevState.followedProfiles.results.map((profile) =>
+              unfollowHelper(profile, clickedProfile)
+            ),
+          },
+          popularProfiles: {
+            ...prevState.popularProfiles,
+            results: prevState.popularProfiles.results.map((profile) =>
+              unfollowHelper(profile, clickedProfile)
+            ),
+          },
+        };
+      });
     } catch (err) {
       console.log(err.request);
     }
@@ -187,7 +240,7 @@ function ProfilePage() {
         >
           <div className="my-1">you may also like...</div>
           <Swiper slidesPerView={4}>
-            {popularProfiles.results.map((profile) => (
+            {popularProfiles?.results?.map((profile) => (
               <SwiperSlide key={profile.id}>
                 <Link to={`/profiles/${profile.id}`}>
                   <div className="d-flex flex-column align-items-center">
@@ -210,7 +263,7 @@ function ProfilePage() {
         <Container className={appStyles.Content}>
           {hasLoaded ? (
             <>
-              {profile.is_owner && (
+              {profile?.is_owner && (
                 <MoreDropdown
                   handleEdit={handleEdit}
                   handleAdd={handleAddPost}
@@ -226,31 +279,31 @@ function ProfilePage() {
                       width: "200px",
                       margin: "4px",
                     }}
-                    src={profile.image}
+                    src={profile?.image}
                   />
                 </div>
                 <div className="d-flex flex-column align-items-center m-1">
-                  <h3 className="m-2">{profile.owner}</h3>
-                  <div>{profile.content}</div>
+                  <h3 className="m-2">{profile?.owner}</h3>
+                  <div>{profile?.content}</div>
                   <div className="d-flex text-center">
                     <div className="m-2">
-                      <div>{profile.posts_count}</div>
+                      <div>{profile?.posts_count}</div>
                       <div>posts</div>
                     </div>
                     <div className="m-2">
-                      <div>{profile.followers_count}</div>
+                      <div>{profile?.followers_count}</div>
                       <div>followers</div>
                     </div>
                     <div className="m-2">
-                      <div>{profile.following_count}</div>
+                      <div>{profile?.following_count}</div>
                       <div>following</div>
                     </div>
                   </div>
                 </div>
-                {!profile.is_owner && (
+                {!profile?.is_owner && (
                   <>
                     {currentUser &&
-                      (profile.following_id ? (
+                      (profile?.following_id ? (
                         <Button
                           className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
                           onClick={() => handleUnfollow(profile)}
@@ -258,7 +311,7 @@ function ProfilePage() {
                           unfollow
                         </Button>
                       ) : (
-                        !profile.is_owner && (
+                        !profile?.is_owner && (
                           <Button
                             className={`${btnStyles.Button} ${btnStyles.Black}`}
                             onClick={() => handleFollow(profile)}
@@ -270,13 +323,11 @@ function ProfilePage() {
                   </>
                 )}
               </div>
-              {/* <div className="d-block d-md-none text-center">
+              <div className="d-block d-md-none text-center">
                 <hr />
                 suggestions for you
                 <hr />
-                <Swiper
-                  slidesPerView={3}
-                >
+                <Swiper slidesPerView={3}>
                   {popularProfiles.results.map((profile) => (
                     <SwiperSlide key={profile.id}>
                       <Link to={`/profiles/${profile.id}`}>
@@ -296,18 +347,18 @@ function ProfilePage() {
                     </SwiperSlide>
                   ))}
                 </Swiper>
-              </div> */}
+              </div>
               <hr />
               <Tabs variant="pills">
-                <Tab eventKey="posts" title="posts">
+                {/* <Tab eventKey="posts" title="posts">
                   <InfiniteScroll
-                    dataLength={profilePosts.results.length}
+                    dataLength={profilePosts?.results.length}
                     next={() => fetchMoreData(profilePosts, setProfilePosts)}
                     hasMore={!!profilePosts.next}
                     loader={<Asset children={<Spinner animation="border" />} />}
                   >
-                    {profilePosts.results.length ? (
-                      profilePosts.results.map((post) => (
+                    {profilePosts?.results.length ? (
+                      profilePosts?.results.map((post) => (
                         <Post
                           key={post.id}
                           {...post}
@@ -318,18 +369,18 @@ function ProfilePage() {
                       <Asset children={<NoResults />} />
                     )}
                   </InfiniteScroll>
-                </Tab>
+                </Tab> */}
                 <Tab eventKey="followers" title="followers">
                   <InfiniteScroll
-                    dataLength={followedProfiles.results.length}
-                    next={() =>
-                      fetchMoreData(followedProfiles, setFollowedProfiles)
-                    }
+                    dataLength={followedProfiles?.results.length}
+                    // next={() =>
+                    //   fetchMoreData(followedProfiles, setFollowedProfiles)
+                    // }
                     hasMore={!!followedProfiles.next}
                     loader={<Asset children={<Spinner animation="border" />} />}
                   >
-                    {followedProfiles.results.length ? (
-                      followedProfiles.results.map((profile) => (
+                    {followedProfiles?.results.length ? (
+                      followedProfiles?.results.map((profile) => (
                         <Profile
                           key={profile.id}
                           profile={profile}
@@ -344,15 +395,15 @@ function ProfilePage() {
                 </Tab>
                 <Tab eventKey="following" title="following">
                   <InfiniteScroll
-                    dataLength={followingProfiles.results.length}
-                    next={() =>
-                      fetchMoreData(followingProfiles, setFollowingProfiles)
-                    }
+                    dataLength={followingProfiles?.results.length}
+                    // next={() =>
+                    //   fetchMoreData(followingProfiles, setFollowingProfiles)
+                    // }
                     hasMore={!!followingProfiles.next}
                     loader={<Asset children={<Spinner animation="border" />} />}
                   >
-                    {followingProfiles.results.length ? (
-                      followingProfiles.results.map((profile) => (
+                    {followingProfiles?.results.length ? (
+                      followingProfiles?.results.map((profile) => (
                         <Profile
                           key={profile.id}
                           profile={profile}
@@ -375,7 +426,7 @@ function ProfilePage() {
       <Col md={4} className="d-none d-md-block p-0 p-md-2">
         <Container className={styles.Content}>
           <p>you may also like...</p>
-          {popularProfiles.results.map((profile) => (
+          {popularProfiles?.results?.map((profile) => (
             <Profile
               key={profile.id}
               profile={profile}
