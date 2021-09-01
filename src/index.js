@@ -3,14 +3,11 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { CurrentUserProvider } from "./CurrentUserContext";
-import { PopularProfilesContextProvider } from "./PopularProfilesContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <CurrentUserProvider>
-      <PopularProfilesContextProvider>
-        <App />
-      </PopularProfilesContextProvider>
+      <App />
     </CurrentUserProvider>
   </React.StrictMode>,
   document.getElementById("root")

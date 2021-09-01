@@ -1,24 +1,32 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Profile from "./Profile";
 import styles from "../App.module.css";
-import {
-  usePopularProfilesContext,
-  useSetPopularProfilesContext,
-} from "../PopularProfilesContext";
+import { refreshToken } from "../utils";
 
-const PopularProfiles = ({ handleFollow, handleUnfollow }) => {
-  const popularProfiles = usePopularProfilesContext();
-  const setPopularProfilesContext = useSetPopularProfilesContext();
-  console.log("popular profiles", popularProfiles);
-
-  const follow = async (clickedProfile) => {
+const PopularProfiles = () => {
+  const [popularProfiles, setPopularProfiles] = useState({ results: [] });
+  useEffect(() => {
+    handleMount();
+  }, []);
+  const handleMount = async () => {
+    // refreshToken
+    await refreshToken();
+    try {
+      const { data } = await axios.get("/profiles/?ordering=-followers_count");
+      setPopularProfiles(data);
+      console.log("data", data);
+    } catch (err) {
+      console.log(err.request);
+    }
+  };
+  const handleFollow = async (clickedProfile) => {
     try {
       const { data } = await axios.post("/followers/", {
         followed: clickedProfile.id,
       });
-      setPopularProfilesContext((prevProfiles) => ({
+      setPopularProfiles((prevProfiles) => ({
         ...prevProfiles,
         results: prevProfiles.results.map((profile) => {
           return profile.id === clickedProfile.id
@@ -36,10 +44,10 @@ const PopularProfiles = ({ handleFollow, handleUnfollow }) => {
       console.log(err.request);
     }
   };
-  const unfollow = async (clickedProfile) => {
+  const handleUnfollow = async (clickedProfile) => {
     try {
       await axios.delete(`/followers/${clickedProfile.following_id}/`);
-      setPopularProfilesContext((prevProfiles) => ({
+      setPopularProfiles((prevProfiles) => ({
         ...prevProfiles,
         results: prevProfiles.results.map((profile) => {
           // const is_owner = currentUser?.username === profile.owner;
@@ -66,8 +74,8 @@ const PopularProfiles = ({ handleFollow, handleUnfollow }) => {
           key={profile.id}
           profile={profile}
           stats={false}
-          handleFollow={handleFollow || follow}
-          handleUnfollow={handleUnfollow || unfollow}
+          handleFollow={handleFollow}
+          handleUnfollow={handleUnfollow}
         />
       ))}
     </Container>

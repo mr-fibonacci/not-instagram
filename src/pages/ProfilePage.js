@@ -16,15 +16,11 @@ import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 import PopularProfiles from "../components/PopularProfiles";
 import { ReactComponent as NoResults } from "../assets/no-results.svg";
-import {
-  usePopularProfilesContext,
-  useSetPopularProfilesContext,
-} from "../PopularProfilesContext";
 import { useCurrentUser } from "../CurrentUserContext";
 import { Image, Button } from "react-bootstrap";
 import MoreDropdown from "../components/MoreDropdown";
 import btnStyles from "../components/Button.module.css";
-import styles from "../components/Profile.module.css";
+import styles from "../App.module.css";
 import { Link, useHistory } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -41,9 +37,10 @@ function ProfilePage() {
   const [followedProfiles, setFollowedProfiles] = useState({
     results: [],
   });
+  const [popularProfiles, setPopularProfiles] = useState({
+    results: [],
+  });
   const [currentUserProfile, setCurrentUserProfile] = useState(null);
-  const popularProfiles = usePopularProfilesContext();
-  const setPopularProfiles = useSetPopularProfilesContext();
   const currentUser = useCurrentUser();
   const history = useHistory();
   const fetchData = async () => {
@@ -55,11 +52,13 @@ function ProfilePage() {
         { data: profilePosts },
         { data: followingProfiles },
         { data: followedProfiles },
+        { data: popularProfiles },
       ] = await Promise.all([
         axios.get(`/profiles/${id}/`),
         axios.get(`/posts/?owner__profile=${id}`),
         axios.get(`/profiles/?owner__followed__owner__profile=${id}`),
         axios.get(`/profiles/?owner__following__followed__profile=${id}`),
+        axios.get("/profiles/?ordering=-followers_count"),
       ]);
       if (currentUser) {
         const { data: currentUserProfile } = await axios.get(
@@ -71,6 +70,7 @@ function ProfilePage() {
       setProfilePosts(profilePosts);
       setFollowingProfiles(followingProfiles);
       setFollowedProfiles(followedProfiles);
+      setPopularProfiles(popularProfiles);
       setHasLoaded(true);
     } catch (err) {
       console.log(err.request);
@@ -366,10 +366,18 @@ function ProfilePage() {
         </Container>
       </Col>
       <Col md={4} className="d-none d-md-block p-0 p-md-2">
-        <PopularProfiles
-          handleFollow={handleFollow}
-          handleUnfollow={handleUnfollow}
-        />
+        <Container className={styles.Content}>
+          <p>you may also like...</p>
+          {popularProfiles.results.map((profile) => (
+            <Profile
+              key={profile.id}
+              profile={profile}
+              stats={false}
+              handleFollow={handleFollow}
+              handleUnfollow={handleUnfollow}
+            />
+          ))}
+        </Container>
       </Col>
     </Row>
   );
