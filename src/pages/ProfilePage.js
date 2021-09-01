@@ -40,7 +40,7 @@ function ProfilePage() {
   const [popularProfiles, setPopularProfiles] = useState({
     results: [],
   });
-  const [currentUserProfile, setCurrentUserProfile] = useState(null);
+  const [currentUserProfile, setCurrentUserProfile] = useState({ results: [] });
   const currentUser = useCurrentUser();
   const history = useHistory();
   const fetchData = async () => {
@@ -64,7 +64,7 @@ function ProfilePage() {
         const { data: currentUserProfile } = await axios.get(
           `/profiles/${currentUser.profile_id}/`
         );
-        setCurrentUserProfile(currentUserProfile);
+        setCurrentUserProfile({ results: [currentUserProfile] });
       }
       setProfile({ results: [profile] });
       setProfilePosts(profilePosts);
@@ -90,10 +90,10 @@ function ProfilePage() {
       if (profile.results[0]?.id === clickedProfile.id) {
         setFollowedProfiles((prevState) => ({
           ...prevState,
-          results: [currentUserProfile, ...prevState.results],
+          results: [currentUserProfile.results[0], ...prevState.results],
         }));
       }
-      if (profile.results[0]?.id === currentUserProfile.id) {
+      if (profile.results[0]?.id === currentUserProfile.results[0]?.id) {
         setFollowingProfiles((prevState) => ({
           ...prevState,
           results: [clickedProfile, ...prevState.results],
@@ -104,6 +104,7 @@ function ProfilePage() {
         setFollowingProfiles,
         setFollowedProfiles,
         setPopularProfiles,
+        setCurrentUserProfile,
       ].forEach((setProfilesMethod) => {
         setProfilesMethod((prevProfiles) => ({
           ...prevProfiles,
@@ -133,11 +134,11 @@ function ProfilePage() {
         setFollowedProfiles((prevState) => ({
           ...prevState,
           results: prevState.results.filter(
-            (profile) => profile.id !== currentUserProfile.id
+            (profile) => profile.id !== currentUserProfile.results[0]?.id
           ),
         }));
       }
-      if (profile.results[0]?.id === currentUserProfile.id) {
+      if (profile.results[0]?.id === currentUserProfile.results[0]?.id) {
         setFollowingProfiles((prevState) => ({
           ...prevState,
           results: prevState.results.filter(
@@ -150,6 +151,7 @@ function ProfilePage() {
         setFollowingProfiles,
         setFollowedProfiles,
         setPopularProfiles,
+        setCurrentUserProfile,
       ].forEach((setProfilesMethod) => {
         setProfilesMethod((prevProfiles) => ({
           ...prevProfiles,
