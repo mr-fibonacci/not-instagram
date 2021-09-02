@@ -269,61 +269,60 @@ function ProfilePage() {
                   handleAdd={handleAddPost}
                 />
               )}
-              <div className="d-flex flex-column flex-lg-row align-items-center justify-content-lg-center text-center">
-                <div>
+
+              <Row>
+                <Col lg={3} className="text-center text-lg-left">
                   <Image
+                    className="ProfileImage"
                     roundedCircle
-                    style={{
-                      objectFit: "cover",
-                      height: "200px",
-                      width: "200px",
-                      margin: "4px",
-                    }}
                     src={profile?.image}
                   />
-                </div>
-                <div className="d-flex flex-column align-items-center m-1">
+                </Col>
+                <Col lg={6} className="text-center">
                   <h3 className="m-2">{profile?.owner}</h3>
-                  <div>{profile?.content}</div>
-                  <div className="d-flex text-center">
-                    <div className="m-2">
+
+                  <Row className="text-center justify-content-center no-gutters">
+                    <Col xs={3} className="my-2">
                       <div>{profile?.posts_count}</div>
                       <div>posts</div>
-                    </div>
-                    <div className="m-2">
+                    </Col>
+                    <Col xs={3} className="my-2">
                       <div>{profile?.followers_count}</div>
                       <div>followers</div>
-                    </div>
-                    <div className="m-2">
+                    </Col>
+                    <Col xs={3} className="my-2">
                       <div>{profile?.following_count}</div>
                       <div>following</div>
-                    </div>
-                  </div>
-                </div>
-                {!profile?.is_owner && (
-                  <>
-                    {currentUser &&
-                      (profile?.following_id ? (
-                        <Button
-                          className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
-                          onClick={() => handleUnfollow(profile)}
-                        >
-                          unfollow
-                        </Button>
-                      ) : (
-                        !profile?.is_owner && (
+                    </Col>
+                  </Row>
+                </Col>
+                <Col lg={3} className="text-center text-lg-right">
+                  {!profile?.is_owner && (
+                    <>
+                      {currentUser &&
+                        (profile?.following_id ? (
                           <Button
-                            className={`${btnStyles.Button} ${btnStyles.Black}`}
-                            onClick={() => handleFollow(profile)}
+                            className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
+                            onClick={() => handleUnfollow(profile)}
                           >
-                            follow
+                            unfollow
                           </Button>
-                        )
-                      ))}
-                  </>
-                )}
-              </div>
-              <div className="d-block d-md-none text-center">
+                        ) : (
+                          !profile?.is_owner && (
+                            <Button
+                              className={`${btnStyles.Button} ${btnStyles.Black}`}
+                              onClick={() => handleFollow(profile)}
+                            >
+                              follow
+                            </Button>
+                          )
+                        ))}
+                    </>
+                  )}
+                </Col>
+                <Col className="text-center p-3">{profile?.content}</Col>
+              </Row>
+              {/* <div className="d-block d-md-none text-center">
                 <hr />
                 suggestions for you
                 <hr />
@@ -347,7 +346,7 @@ function ProfilePage() {
                     </SwiperSlide>
                   ))}
                 </Swiper>
-              </div>
+              </div> */}
               <hr />
               <Tabs variant="pills">
                 {/* <Tab eventKey="posts" title="posts">
