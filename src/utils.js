@@ -13,6 +13,7 @@ export const fetchMoreData = async (resource, setResource) => {
     const { data } = await axios.get(resource.next);
     setResource((prevResource) => ({
       ...prevResource,
+      next: data.next,
       results: data.results.reduce((acc, cur) => {
         return acc.some((result) => result.id === cur.id) ? acc : [...acc, cur];
       }, prevResource.results),
