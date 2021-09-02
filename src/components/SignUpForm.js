@@ -31,7 +31,7 @@ function SignUpForm() {
         signUpData
       );
       console.log(data);
-      history.push("/signin");
+      history.push({ pathname: "/signin", state: { from: "signup" } });
     } catch (err) {
       console.log(err.response?.data);
       setErrors(err.response?.data);

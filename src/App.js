@@ -3,7 +3,7 @@ import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
 import NavBar from "./components/NavBar";
 import "./axiosDefaults";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PostPage from "./pages/PostPage";
 import PostCreateForm from "./components/PostCreateForm";
 import ProfilePage from "./pages/ProfilePage";
@@ -23,7 +23,11 @@ function App() {
         <NavBar />
         <Container style={{ paddingTop: "81px" }}>
           <Switch>
-            <Route exact path="/signin" render={() => <SignInForm />} />
+            <Route
+              exact
+              path="/signin"
+              render={(props) => <SignInForm {...props} />}
+            />
             <Route exact path="/signup" render={() => <SignUpForm />} />
             <Route exact path="/" render={() => <PostsPage />} />
             <Route
