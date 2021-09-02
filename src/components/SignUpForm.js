@@ -48,7 +48,10 @@ function SignUpForm() {
   return (
     <Row className={styles.Row}>
       <Col className="my-auto p-0 p-md-2" md={6}>
-        <Container className={appStyles.Content}>
+        <Container
+          className={appStyles.Content}
+          style={{ padding: "30px 10px" }}
+        >
           <h1 className={styles.Header}>sign up</h1>
           <Form onSubmit={(e) => handleSubmit(e)}>
             <Form.Group>
@@ -123,7 +126,7 @@ function SignUpForm() {
         <Image
           className={`${appStyles.FillerImage}`}
           src={
-            "https://res.cloudinary.com/dgjrrvdbl/image/upload/v1/media/images/pexels-photo-2710131-cropped_cp37ty"
+            "https://res.cloudinary.com/drlqahj5d/image/upload/v1630595819/hero2_ylztrr.jpg"
           }
         />
       </Col>

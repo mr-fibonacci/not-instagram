@@ -5,10 +5,11 @@ import { ReactComponent as Edit } from "../assets/edit.svg";
 import { ReactComponent as Delete } from "../assets/delete.svg";
 import Dropdown from "react-bootstrap/Dropdown";
 import Icon from "./Icon";
+import styles from "./MoreDropdown.module.css";
 
 const ThreeDots = React.forwardRef(({ onClick }, ref) => (
   <img
-    style={{ position: "absolute", right: "0px" }}
+    style={{ position: "absolute", right: "0px", zIndex: 99 }}
     role="button"
     alt="more options"
     src={dots}
@@ -26,20 +27,20 @@ function MoreDropdown({ handleAdd, handleEdit, handleDelete }) {
     <Dropdown drop="left">
       <Dropdown.Toggle as={ThreeDots} />
       <Dropdown.Menu>
-        <Dropdown.Item onClick={handleEdit}>
+        <Dropdown.Item className={styles.DropdownItem} onClick={handleEdit}>
           <Icon component={Edit} />
-          Edit
+          {/* Edit */}
         </Dropdown.Item>
         {handleAdd && (
-          <Dropdown.Item onClick={handleAdd}>
+          <Dropdown.Item className={styles.DropdownItem} onClick={handleAdd}>
             <Icon component={Add} />
-            Add a post
+            {/* Add a post */}
           </Dropdown.Item>
         )}
         {handleDelete && (
-          <Dropdown.Item onClick={handleDelete}>
+          <Dropdown.Item className={styles.DropdownItem} onClick={handleDelete}>
             <Icon component={Delete} />
-            Delete
+            {/* Delete */}
           </Dropdown.Item>
         )}
       </Dropdown.Menu>
