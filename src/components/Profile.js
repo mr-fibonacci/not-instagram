@@ -33,7 +33,7 @@ function Profile(props) {
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
   return (
-    <Row className="my-2">
+    <div className="my-2 d-flex">
       <div>
         <Link className="align-self-center" to={`/profiles/${id}`}>
           <Avatar src={image} height={imageSize} />
@@ -70,7 +70,7 @@ function Profile(props) {
             )
           ))}
       </div>
-    </Row>
+    </div>
   );
 }
 
