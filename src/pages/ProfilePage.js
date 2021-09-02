@@ -234,9 +234,9 @@ function ProfilePage() {
 
   return (
     <Row>
-      <Col className="p-0 p-md-2" md={8}>
+      <Col className="p-0 p-lg-2" lg={8}>
         <Container
-          className={`${appStyles.Content} d-block d-md-none text-center mb-3`}
+          className={`${appStyles.Content} d-block d-lg-none text-center mb-3`}
         >
           <div className="my-1">you may also like...</div>
           <Swiper slidesPerView={4}>
@@ -378,18 +378,20 @@ function ProfilePage() {
                     hasMore={!!followedProfiles.next}
                     loader={<Asset children={<Spinner animation="border" />} />}
                   >
-                    {followedProfiles?.results.length ? (
-                      followedProfiles?.results.map((profile) => (
-                        <Profile
-                          key={profile.id}
-                          profile={profile}
-                          handleFollow={handleFollow}
-                          handleUnfollow={handleUnfollow}
-                        />
-                      ))
-                    ) : (
-                      <Asset children={<NoResults />} />
-                    )}
+                    <Container fluid>
+                      {followedProfiles?.results.length ? (
+                        followedProfiles?.results.map((profile) => (
+                          <Profile
+                            key={profile.id}
+                            profile={profile}
+                            handleFollow={handleFollow}
+                            handleUnfollow={handleUnfollow}
+                          />
+                        ))
+                      ) : (
+                        <Asset children={<NoResults />} />
+                      )}
+                    </Container>
                   </InfiniteScroll>
                 </Tab>
                 <Tab eventKey="following" title="following">
@@ -401,18 +403,20 @@ function ProfilePage() {
                     hasMore={!!followingProfiles.next}
                     loader={<Asset children={<Spinner animation="border" />} />}
                   >
-                    {followingProfiles?.results.length ? (
-                      followingProfiles?.results.map((profile) => (
-                        <Profile
-                          key={profile.id}
-                          profile={profile}
-                          handleFollow={handleFollow}
-                          handleUnfollow={handleUnfollow}
-                        />
-                      ))
-                    ) : (
-                      <Asset children={<NoResults />} />
-                    )}
+                    <Container fluid>
+                      {followingProfiles?.results.length ? (
+                        followingProfiles?.results.map((profile) => (
+                          <Profile
+                            key={profile.id}
+                            profile={profile}
+                            handleFollow={handleFollow}
+                            handleUnfollow={handleUnfollow}
+                          />
+                        ))
+                      ) : (
+                        <Asset children={<NoResults />} />
+                      )}
+                    </Container>
                   </InfiniteScroll>
                 </Tab>
               </Tabs>
@@ -422,7 +426,7 @@ function ProfilePage() {
           )}
         </Container>
       </Col>
-      <Col md={4} className="d-none d-md-block p-0 p-md-2">
+      <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
         <Container className={styles.Content}>
           <p>you may also like...</p>
           {popularProfiles?.results?.map((profile) => (

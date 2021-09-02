@@ -8,13 +8,14 @@ import Avatar from "./Avatar";
 import MoreDropdown from "./MoreDropdown";
 import btnStyles from "./Button.module.css";
 import styles from "./Profile.module.css";
+import { Col, Row } from "react-bootstrap";
 
 function Profile(props) {
   const {
     profile,
     handleFollow,
     handleUnfollow,
-    imageSize = 50,
+    imageSize = 45,
     stats = true,
   } = props;
   const {
@@ -32,16 +33,13 @@ function Profile(props) {
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
   return (
-    <div className="d-flex my-2  text-center justify-content-between">
-      <Link className="align-self-center" to={`/profiles/${id}`}>
-        <Avatar src={image} height={imageSize} />
-      </Link>
-      <div
-        className={`d-flex flex-column justify-content-center ${
-          !stats && "flex-fill"
-        }`}
-        style={{ wordBreak: "break-all" }}
-      >
+    <Row className="my-2">
+      <div>
+        <Link className="align-self-center" to={`/profiles/${id}`}>
+          <Avatar src={image} height={imageSize} />
+        </Link>
+      </div>
+      <div className="ml-3" style={{ wordBreak: "break-all" }}>
         <div>
           <b>{owner}</b>
         </div>
@@ -52,32 +50,27 @@ function Profile(props) {
           </div>
         )}
       </div>
-      <div
-        className=" d-flex align-items-center justify-content-center"
-        style={{ minWidth: "90px" }}
-      >
-        <div>
-          {currentUser &&
-            (following_id ? (
+      <div className="text-right ml-auto">
+        {currentUser &&
+          (following_id ? (
+            <Button
+              className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
+              onClick={() => handleUnfollow(profile)}
+            >
+              unfollow
+            </Button>
+          ) : (
+            !is_owner && (
               <Button
-                className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
-                onClick={() => handleUnfollow(profile)}
+                className={`${btnStyles.Button} ${btnStyles.Black}`}
+                onClick={() => handleFollow(profile)}
               >
-                unfollow
+                follow
               </Button>
-            ) : (
-              !is_owner && (
-                <Button
-                  className={`${btnStyles.Button} ${btnStyles.Black}`}
-                  onClick={() => handleFollow(profile)}
-                >
-                  follow
-                </Button>
-              )
-            ))}
-        </div>
+            )
+          ))}
       </div>
-    </div>
+    </Row>
   );
 }
 

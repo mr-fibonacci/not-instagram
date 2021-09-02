@@ -29,6 +29,7 @@ input[type="file"] {
 }
 figure {
   text-align: center;
+  display: inline-block;
 }
 .FillerImage {
   object-fit: cover;

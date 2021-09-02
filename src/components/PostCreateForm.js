@@ -57,7 +57,7 @@ function PostCreateForm() {
   };
 
   const textFields = (
-    <>
+    <div className="text-center">
       <Form.Group>
         <Form.Label>title</Form.Label>
         <Form.Control
@@ -90,15 +90,23 @@ function PostCreateForm() {
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
         create
       </Button>
-    </>
+    </div>
   );
 
   return (
-    <Form className="h-100" onSubmit={handleSubmit}>
-      <Row className="h-100">
-        <Col className="my-auto p-0 p-md-2" md={7} lg={8}>
-          <Container className={appStyles.Content}>
-            <Form.Group>
+    <Form onSubmit={handleSubmit}>
+      <Row>
+        <Col className="p-0 p-md-2" md={7} lg={8}>
+          <Container
+            style={{
+              minHeight: "352px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            className={appStyles.Content}
+          >
+            <Form.Group className="text-center">
               {image ? (
                 <>
                   <figure className={image_filter}>
@@ -116,6 +124,11 @@ function PostCreateForm() {
                   <Form.Label
                     className={`${btnStyles.Button} ${btnStyles.Blue}`}
                     htmlFor="image-upload"
+                    style={{
+                      display: "block",
+                      maxWidth: "190px",
+                      margin: "10px auto",
+                    }}
                   >
                     change the image
                   </Form.Label>
@@ -151,7 +164,7 @@ function PostCreateForm() {
             <div className="d-md-none">{textFields}</div>
           </Container>
         </Col>
-        <Col md={5} lg={4} className="my-auto d-none d-md-block p-0 p-md-2">
+        <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
           <Container className={appStyles.Content}>{textFields}</Container>
         </Col>
       </Row>
