@@ -109,14 +109,15 @@ function Post(props) {
         {comments_count}
         <span className="mx-2">{`#${image_filter}`}</span>
       </div>
-      {content && (
-        <Card.Body>
-          <Card.Title className="text-center">{title}</Card.Title>
+
+      <Card.Body>
+        {title && <Card.Title className="text-center">{title}</Card.Title>}
+        {content && (
           <Card.Text>
             <b>{owner}</b> {content}
           </Card.Text>
-        </Card.Body>
-      )}
+        )}
+      </Card.Body>
     </Card>
   );
 }

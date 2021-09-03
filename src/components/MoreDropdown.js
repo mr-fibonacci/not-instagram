@@ -24,7 +24,7 @@ const ThreeDots = React.forwardRef(({ onClick }, ref) => (
 
 function MoreDropdown({ handleAdd, handleEdit, handleDelete }) {
   return (
-    <Dropdown drop="left">
+    <Dropdown className="ml-auto" drop="left">
       <Dropdown.Toggle as={ThreeDots} />
       <Dropdown.Menu>
         <Dropdown.Item className={styles.DropdownItem} onClick={handleEdit}>
