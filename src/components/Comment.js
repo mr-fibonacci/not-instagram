@@ -57,7 +57,7 @@ function Comment(props) {
           <Avatar src={profile_image} />
         </Link>
         <Media.Body className="align-self-center">
-          <b>{owner}</b> {content}
+          <b style={{ color: "#2142b2" }}>{owner}</b> {content}
         </Media.Body>
         {is_owner && !showEditForm && (
           <MoreDropdown

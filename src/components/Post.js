@@ -90,33 +90,28 @@ function Post(props) {
         )}
       </Link>
 
-      <div className={styles.PostBar}>
-        {is_owner ? (
-          <Icon component={HeartRed} />
-        ) : like_id ? (
-          <span onClick={handleUnlike}>
-            <Icon component={HeartRed} />
-          </span>
-        ) : (
-          <span onClick={handleLike}>
-            <Icon component={Heart} />
-          </span>
-        )}
-        {likes_count}
-        <Link to={`/posts/${id}`}>
-          <Icon component={Comment} />
-        </Link>
-        {comments_count}
-        <span className="mx-2">{`#${image_filter}`}</span>
-      </div>
-
       <Card.Body>
         {title && <Card.Title className="text-center">{title}</Card.Title>}
-        {content && (
-          <Card.Text>
-            <b>{owner}</b> {content}
-          </Card.Text>
-        )}
+        {content && <Card.Text>{content}</Card.Text>}
+        <div className={styles.PostBar}>
+          {is_owner ? (
+            <Icon component={HeartRed} />
+          ) : like_id ? (
+            <span onClick={handleUnlike}>
+              <Icon component={HeartRed} />
+            </span>
+          ) : (
+            <span onClick={handleLike}>
+              <Icon component={Heart} />
+            </span>
+          )}
+          {likes_count}
+          <Link to={`/posts/${id}`}>
+            <Icon component={Comment} />
+          </Link>
+          {comments_count}
+          <span className="mx-2">{`#${image_filter}`}</span>
+        </div>
       </Card.Body>
     </Card>
   );
