@@ -126,12 +126,14 @@ function PostEditForm() {
                   {message}
                 </Alert>
               ))}
-              <Form.Label
-                className={`${btnStyles.Button} ${btnStyles.Blue}`}
-                htmlFor="image-upload"
-              >
-                change the image
-              </Form.Label>
+              <div>
+                <Form.Label
+                  className={`${btnStyles.Button} ${btnStyles.Blue}`}
+                  htmlFor="image-upload"
+                >
+                  change the image
+                </Form.Label>
+              </div>
               <FilterSlider
                 image={image}
                 image_filter={image_filter}

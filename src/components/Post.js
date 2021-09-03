@@ -74,9 +74,7 @@ function Post(props) {
             <Avatar src={profile_image} height={45} />
             {owner}
           </Link>
-          <Media.Body className="align-self-center" align="center">
-            <h5>{title}</h5>
-          </Media.Body>
+
           {is_owner && postPage && (
             <MoreDropdown handleEdit={handleEdit} handleDelete={handleDelete} />
           )}
@@ -113,6 +111,7 @@ function Post(props) {
       </div>
       {content && (
         <Card.Body>
+          <Card.Title className="text-center">{title}</Card.Title>
           <Card.Text>
             <b>{owner}</b> {content}
           </Card.Text>

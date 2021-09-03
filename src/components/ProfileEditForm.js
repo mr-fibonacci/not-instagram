@@ -68,23 +68,14 @@ function ProfileForm() {
   };
 
   const textFields = (
-    <>
-      <Form.Group>
-        <Form.Label>name</Form.Label>
-        <Form.Control
-          type="text"
-          value={name}
-          onChange={handleChange}
-          name="name"
-        />
-      </Form.Group>
+    <div className="text-center">
       {errors?.name?.map((message, idx) => (
         <Alert variant="warning" key={idx}>
           {message}
         </Alert>
       ))}
       <Form.Group>
-        <Form.Label>content</Form.Label>
+        <Form.Label>bio</Form.Label>
         <Form.Control
           as="textarea"
           value={content}
@@ -101,45 +92,49 @@ function ProfileForm() {
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
         save
       </Button>
-    </>
+    </div>
   );
 
   return (
-    <Form className="h-100" onSubmit={handleSubmit}>
-      <Row className="h-100">
-        <Col className="my-auto p-0 p-md-2" md={7} lg={6}>
+    <Form onSubmit={handleSubmit}>
+      <Row>
+        <Col className="p-0 p-md-2" md={7} lg={6}>
           <Container className={appStyles.Content}>
-            {image && (
-              <figure style={{ textAlign: "center" }}>
-                <Image src={image} fluid />
-              </figure>
-            )}
-            {errors?.image?.map((message, idx) => (
-              <Alert variant="warning" key={idx}>
-                {message}
-              </Alert>
-            ))}
-            <Form.Label
-              className={`${btnStyles.Button} ${btnStyles.Blue}`}
-              htmlFor="image-upload"
-            >
-              change the image
-            </Form.Label>
-            <Form.File
-              id="image-upload"
-              ref={imageFile}
-              accept="image/*"
-              onChange={(e) =>
-                setProfileData({
-                  ...profileData,
-                  image: URL.createObjectURL(e.target.files[0]),
-                })
-              }
-            />
+            <Form.Group className="text-center">
+              {image && (
+                <figure>
+                  <Image src={image} fluid />
+                </figure>
+              )}
+              {errors?.image?.map((message, idx) => (
+                <Alert variant="warning" key={idx}>
+                  {message}
+                </Alert>
+              ))}
+              <div>
+                <Form.Label
+                  className={`${btnStyles.Button} ${btnStyles.Blue} my-auto`}
+                  htmlFor="image-upload"
+                >
+                  change the image
+                </Form.Label>
+              </div>
+              <Form.File
+                id="image-upload"
+                ref={imageFile}
+                accept="image/*"
+                onChange={(e) =>
+                  setProfileData({
+                    ...profileData,
+                    image: URL.createObjectURL(e.target.files[0]),
+                  })
+                }
+              />
+            </Form.Group>
             <div className="d-md-none">{textFields}</div>
           </Container>
         </Col>
-        <Col md={5} lg={6} className="my-auto d-none d-md-block p-0 p-md-2">
+        <Col md={5} lg={6} className="d-none d-md-block p-0 p-md-2">
           <Container className={appStyles.Content}>{textFields}</Container>
         </Col>
       </Row>
