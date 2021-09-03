@@ -13,6 +13,7 @@ import FilterSlider from "./FilterSlider";
 import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 import Alert from "react-bootstrap/Alert";
+import styles from "./PostCreateEditForm.module.css";
 
 function PostCreateForm() {
   const history = useHistory();
@@ -97,24 +98,12 @@ function PostCreateForm() {
     <Form onSubmit={handleSubmit}>
       <Row>
         <Col className="p-0 p-md-2" md={7} lg={8}>
-          <Container
-            style={{
-              minHeight: "352px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            className={appStyles.Content}
-          >
+          <Container className={`${appStyles.Content} ${styles.Container}`}>
             <Form.Group className="text-center">
               {image ? (
                 <>
                   <figure className={image_filter}>
-                    <Image
-                      style={{ objectFit: "cover" }}
-                      className={appStyles.Image}
-                      src={image}
-                    />
+                    <Image className={appStyles.Image} src={image} />
                   </figure>
                   {errors?.image?.map((message, idx) => (
                     <Alert variant="warning" key={idx}>
@@ -124,11 +113,6 @@ function PostCreateForm() {
                   <Form.Label
                     className={`${btnStyles.Button} ${btnStyles.Blue}`}
                     htmlFor="image-upload"
-                    style={{
-                      display: "block",
-                      maxWidth: "190px",
-                      margin: "10px auto",
-                    }}
                   >
                     change the image
                   </Form.Label>
@@ -140,7 +124,7 @@ function PostCreateForm() {
                 </>
               ) : (
                 <Form.Label
-                  className="d-flex justify-content-center"
+                  className="d-flex justify-content-center mt-4"
                   htmlFor="image-upload"
                 >
                   <Asset children={<Upload />} />

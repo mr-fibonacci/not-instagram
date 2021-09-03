@@ -74,7 +74,7 @@ function PostEditForm() {
   };
 
   const textFields = (
-    <>
+    <div className="text-center">
       <Form.Group>
         <Form.Label>title</Form.Label>
         <Form.Control
@@ -107,22 +107,18 @@ function PostEditForm() {
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
         save
       </Button>
-    </>
+    </div>
   );
 
   return (
-    <Form className="h-100" onSubmit={handleSubmit}>
-      <Row className="h-100">
-        <Col className="my-auto p-0 p-md-2" md={7} lg={8}>
+    <Form onSubmit={handleSubmit}>
+      <Row>
+        <Col className="p-0 p-md-2" md={7} lg={8}>
           <Container className={appStyles.Content}>
-            <Form.Group>
+            <Form.Group className="text-center">
               {image && (
                 <figure className={image_filter}>
-                  <Image
-                    style={{ objectFit: "cover" }}
-                    className={appStyles.Image}
-                    src={image}
-                  />
+                  <Image className={appStyles.Image} src={image} />
                 </figure>
               )}
               {errors?.image?.map((message, idx) => (
@@ -156,7 +152,7 @@ function PostEditForm() {
             <div className="d-md-none">{textFields}</div>
           </Container>
         </Col>
-        <Col md={5} lg={4} className="my-auto d-none d-md-block p-0 p-md-2">
+        <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
           <Container className={appStyles.Content}>{textFields}</Container>
         </Col>
       </Row>

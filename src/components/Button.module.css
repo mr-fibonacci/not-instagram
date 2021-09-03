@@ -7,6 +7,7 @@
 .Button:hover {
   opacity: 0.8;
   border-color: transparent;
+  cursor: pointer;
 }
 
 .Wide {
