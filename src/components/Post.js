@@ -82,7 +82,7 @@ function Post(props) {
       </Card.Body>
       <Link to={`/posts/${id}`}>
         {image_filter === "normal" ? (
-          <Card.Img src={image} />
+          <Card.Img alt={title} src={image} />
         ) : (
           <figure className={image_filter}>
             <Image alt={title} className={styles.PostImage} src={image} />
@@ -95,19 +95,19 @@ function Post(props) {
         {content && <Card.Text>{content}</Card.Text>}
         <div className={styles.PostBar}>
           {is_owner ? (
-            <Icon component={HeartRed} />
+            <Icon label="like" component={HeartRed} />
           ) : like_id ? (
             <span onClick={handleUnlike}>
-              <Icon component={HeartRed} />
+              <Icon label="like" component={HeartRed} />
             </span>
           ) : (
             <span onClick={handleLike}>
-              <Icon component={Heart} />
+              <Icon label="like" component={Heart} />
             </span>
           )}
           {likes_count}
           <Link to={`/posts/${id}`}>
-            <Icon component={Comment} />
+            <Icon label="comment" component={Comment} />
           </Link>
           {comments_count}
           <span className="mx-2">{`#${image_filter}`}</span>

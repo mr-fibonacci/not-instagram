@@ -28,18 +28,18 @@ function MoreDropdown({ handleAdd, handleEdit, handleDelete }) {
       <Dropdown.Toggle as={ThreeDots} />
       <Dropdown.Menu>
         <Dropdown.Item className={styles.DropdownItem} onClick={handleEdit}>
-          <Icon component={Edit} />
+          <Icon label="edit" component={Edit} />
           {/* Edit */}
         </Dropdown.Item>
         {handleAdd && (
           <Dropdown.Item className={styles.DropdownItem} onClick={handleAdd}>
-            <Icon component={Add} />
+            <Icon label="add" component={Add} />
             {/* Add a post */}
           </Dropdown.Item>
         )}
         {handleDelete && (
           <Dropdown.Item className={styles.DropdownItem} onClick={handleDelete}>
-            <Icon component={Delete} />
+            <Icon label="delete" component={Delete} />
             {/* Delete */}
           </Dropdown.Item>
         )}

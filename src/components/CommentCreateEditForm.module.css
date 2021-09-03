@@ -1,10 +1,14 @@
 .Form {
   border: none;
-  border-bottom: 2px #2ed9ff solid;
+  border-bottom: 2px #00d1ff solid;
 }
 
 .Button {
   border: none;
-  background-color: transparent;
-  color: #2ed9ff;
+  background-color: #2142b2;
+  color: #00d1ff;
+  border-radius: 100px;
+  padding: 4px 10px;
+  min-width: 75px;
+  margin: 5px;
 }

@@ -51,17 +51,19 @@ function CommentEditForm(props) {
             onChange={handleChange}
             rows={4}
           />
-          <button className={styles.Button} disabled={!content} type="submit">
-            save
-          </button>
-          <button
-            className={styles.Button}
-            onClick={() => setShowEditForm(false)}
-          >
-            cancel
-          </button>
         </InputGroup>
       </Form.Group>
+      <div className="text-right">
+        <button className={styles.Button} disabled={!content} type="submit">
+          save
+        </button>
+        <button
+          className={styles.Button}
+          onClick={() => setShowEditForm(false)}
+        >
+          cancel
+        </button>
+      </div>
     </Form>
   );
 }

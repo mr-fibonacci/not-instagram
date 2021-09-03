@@ -68,7 +68,7 @@ const PopularProfiles = () => {
   };
   return (
     <Container className={styles.Content}>
-      <p> you may also like...</p>
+      <p>Most followed profiles.</p>
       {popularProfiles.results?.map((profile) => (
         <Profile
           key={profile.id}

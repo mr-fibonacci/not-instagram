@@ -238,7 +238,7 @@ function ProfilePage() {
         <Container
           className={`${appStyles.Content} d-block d-lg-none text-center mb-3`}
         >
-          <div className="my-1">you may also like...</div>
+          <div className="my-1">Most followed profiles.</div>
           <Swiper slidesPerView={4}>
             {popularProfiles?.results?.map((profile) => (
               <SwiperSlide key={profile.id}>
@@ -428,7 +428,7 @@ function ProfilePage() {
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
         <Container className={styles.Content}>
-          <p>you may also like...</p>
+          <p>Most followed profiles.</p>
           {popularProfiles?.results?.map((profile) => (
             <Profile
               key={profile.id}
