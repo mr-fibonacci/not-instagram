@@ -1,8 +1,10 @@
 .Button {
+  font-size: 0.8rem;
   align-self: center;
   border-radius: 100px;
   border-color: transparent;
-  padding: 6px 12px;
+  padding: 4px 10px;
+  min-width: 75px;
 }
 .Button:hover {
   opacity: 0.8;
