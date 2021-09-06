@@ -320,7 +320,9 @@ function ProfilePage() {
                     </>
                   )}
                 </Col>
-                <Col className="text-center p-3">{profile?.content}</Col>
+                {profile?.content && (
+                  <Col className="text-center p-3">{profile.content}</Col>
+                )}
               </Row>
               {/* <div className="d-block d-md-none text-center">
                 <hr />

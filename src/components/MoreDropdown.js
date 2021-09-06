@@ -9,7 +9,7 @@ import styles from "./MoreDropdown.module.css";
 
 const ThreeDots = React.forwardRef(({ onClick }, ref) => (
   <img
-    style={{ position: "absolute", right: "0px", zIndex: 99 }}
+    // style={{ position: "absolute", right: "0px", zIndex: 99 }}
     role="button"
     alt="more options"
     src={dots}

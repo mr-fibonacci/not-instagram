@@ -16,6 +16,7 @@ function Comment(props) {
     content,
     setComments,
     setPost,
+    updated_at,
   } = props;
   const [showEditForm, setShowEditForm] = useState(false);
   const currentUser = useCurrentUser();
@@ -57,7 +58,11 @@ function Comment(props) {
           <Avatar src={profile_image} />
         </Link>
         <Media.Body className="align-self-center">
-          <b style={{ color: "#2142b2" }}>{owner}</b> {content}
+          <b style={{ color: "#2142b2" }}>{owner}</b>
+          <span style={{ fontWeight: "lighter", color: "#c1c1c5" }}>
+            {updated_at}
+          </span>
+          <p>{content}</p>
         </Media.Body>
         {is_owner && !showEditForm && (
           <MoreDropdown

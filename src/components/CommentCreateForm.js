@@ -48,7 +48,7 @@ function CommentCreateForm(props) {
             as="textarea"
             value={content}
             onChange={handleChange}
-            rows={4}
+            rows={2}
           />
         </InputGroup>
       </Form.Group>
