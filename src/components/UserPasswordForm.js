@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import btnStyles from "./Button.module.css";
 import Alert from "react-bootstrap/Alert";
 
-const UserPassword = () => {
+const UserPasswordForm = () => {
   const [userData, setUserData] = useState({
     new_password1: "",
     new_password2: "",
@@ -86,4 +86,4 @@ const UserPassword = () => {
   );
 };
 
-export default UserPassword;
+export default UserPasswordForm;

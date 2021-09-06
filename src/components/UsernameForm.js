@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import btnStyles from "./Button.module.css";
 
-const User = () => {
+const UsernameForm = () => {
   const [username, setUsername] = useState("");
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,4 +33,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default UsernameForm;

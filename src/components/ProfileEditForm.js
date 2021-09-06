@@ -11,8 +11,8 @@ import Col from "react-bootstrap/Col";
 import appStyles from "../App.module.css";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
-import User from "../components/User";
-import UserPassword from "../components/UserPassword";
+import UsernameForm from "../components/UsernameForm";
+import UserPasswordForm from "../components/UserPasswordForm";
 
 function ProfileForm() {
   const setCurrentUser = useSetCurrentUser();
@@ -133,15 +133,15 @@ function ProfileForm() {
             </Button>
           </Form>
           <div className="d-md-none">
-            <User />
-            <UserPassword />
+            <UsernameForm />
+            <UserPasswordForm />
           </div>
         </Container>
       </Col>
       <Col md={5} lg={6} className="d-none d-md-block p-0 p-md-2 text-center">
         <Container className={appStyles.Content}>
-          <User />
-          <UserPassword />
+          <UsernameForm />
+          <UserPasswordForm />
         </Container>
       </Col>
     </Row>
