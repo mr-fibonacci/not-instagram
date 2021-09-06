@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import btnStyles from "./Button.module.css";
+import Alert from "react-bootstrap/Alert";
 
 const UserPassword = () => {
   const [userData, setUserData] = useState({
@@ -10,6 +12,7 @@ const UserPassword = () => {
     old_password: "",
   });
   const { new_password1, new_password2, old_password } = userData;
+  const [errors, setErrors] = useState({});
   const handleChange = (event) => {
     setUserData({
       ...userData,
@@ -26,11 +29,13 @@ const UserPassword = () => {
       console.log("change user name data", data);
     } catch (err) {
       console.log(err.request);
+      setErrors(err.response?.data);
     }
   };
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group>
+        <Form.Label>new password</Form.Label>
         <Form.Control
           placeholder="new password"
           type="text"
@@ -39,7 +44,13 @@ const UserPassword = () => {
           name="new_password1"
         />
       </Form.Group>
+      {errors?.new_password1?.map((message, idx) => (
+        <Alert key={idx} variant="warning">
+          {message}
+        </Alert>
+      ))}
       <Form.Group>
+        <Form.Label>confirm password</Form.Label>
         <Form.Control
           placeholder="confirm new password"
           type="text"
@@ -48,7 +59,13 @@ const UserPassword = () => {
           name="new_password2"
         />
       </Form.Group>
+      {errors?.new_password2?.map((message, idx) => (
+        <Alert key={idx} variant="warning">
+          {message}
+        </Alert>
+      ))}
       <Form.Group>
+        <Form.Label>old password</Form.Label>
         <Form.Control
           placeholder="old password"
           type="text"
@@ -57,7 +74,14 @@ const UserPassword = () => {
           name="old_password"
         />
       </Form.Group>
-      <Button type="submit">update password</Button>
+      {errors?.old_password?.map((message, idx) => (
+        <Alert key={idx} variant="warning">
+          {message}
+        </Alert>
+      ))}
+      <Button type="submit" className={`${btnStyles.Button} ${btnStyles.Blue}`}>
+        save
+      </Button>
     </Form>
   );
 };

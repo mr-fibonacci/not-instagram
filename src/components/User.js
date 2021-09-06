@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import btnStyles from "./Button.module.css";
 
 const User = () => {
   const [username, setUsername] = useState("");
@@ -15,8 +16,9 @@ const User = () => {
     }
   };
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} className="my-2">
       <Form.Group>
+        <Form.Label>change username</Form.Label>
         <Form.Control
           placeholder="username"
           type="text"
@@ -24,7 +26,9 @@ const User = () => {
           onChange={(event) => setUsername(event.target.value)}
         />
       </Form.Group>
-      <Button type="submit">change username</Button>
+      <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
+        save
+      </Button>
     </Form>
   );
 };

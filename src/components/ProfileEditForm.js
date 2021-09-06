@@ -11,6 +11,8 @@ import Col from "react-bootstrap/Col";
 import appStyles from "../App.module.css";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
+import User from "../components/User";
+import UserPassword from "../components/UserPassword";
 
 function ProfileForm() {
   const setCurrentUser = useSetCurrentUser();
@@ -67,40 +69,12 @@ function ProfileForm() {
     });
   };
 
-  const textFields = (
-    <div className="text-center">
-      {errors?.name?.map((message, idx) => (
-        <Alert variant="warning" key={idx}>
-          {message}
-        </Alert>
-      ))}
-      <Form.Group>
-        <Form.Label>bio</Form.Label>
-        <Form.Control
-          as="textarea"
-          value={content}
-          onChange={handleChange}
-          name="content"
-          rows={6}
-        />
-      </Form.Group>
-      {errors?.content?.map((message, idx) => (
-        <Alert variant="warning" key={idx}>
-          {message}
-        </Alert>
-      ))}
-      <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
-        save
-      </Button>
-    </div>
-  );
-
   return (
-    <Form onSubmit={handleSubmit}>
-      <Row>
-        <Col className="p-0 p-md-2" md={7} lg={6}>
-          <Container className={appStyles.Content}>
-            <Form.Group className="text-center">
+    <Row>
+      <Col className="p-0 p-md-2 text-center" md={7} lg={6}>
+        <Container className={appStyles.Content}>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group>
               {image && (
                 <figure>
                   <Image src={image} fluid />
@@ -131,14 +105,46 @@ function ProfileForm() {
                 }
               />
             </Form.Group>
-            <div className="d-md-none">{textFields}</div>
-          </Container>
-        </Col>
-        <Col md={5} lg={6} className="d-none d-md-block p-0 p-md-2">
-          <Container className={appStyles.Content}>{textFields}</Container>
-        </Col>
-      </Row>
-    </Form>
+            {errors?.name?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
+            <Form.Group>
+              <Form.Label>bio</Form.Label>
+              <Form.Control
+                as="textarea"
+                value={content}
+                onChange={handleChange}
+                name="content"
+                rows={6}
+              />
+            </Form.Group>
+            {errors?.content?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
+            <Button
+              className={`${btnStyles.Button} ${btnStyles.Blue}`}
+              type="submit"
+            >
+              save
+            </Button>
+          </Form>
+          <div className="d-md-none">
+            <User />
+            <UserPassword />
+          </div>
+        </Container>
+      </Col>
+      <Col md={5} lg={6} className="d-none d-md-block p-0 p-md-2 text-center">
+        <Container className={appStyles.Content}>
+          <User />
+          <UserPassword />
+        </Container>
+      </Col>
+    </Row>
   );
 }
 
