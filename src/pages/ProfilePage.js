@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 import Post from "../components/Post";
 import Profile from "../components/Profile";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchMoreData, refreshToken } from "../utils";
+import { fetchMoreData, fetchMoreDataState, refreshToken } from "../utils";
 import "./ProfilePage.css";
 import Asset from "../components/Asset";
 import Spinner from "react-bootstrap/Spinner";
@@ -324,31 +324,6 @@ function ProfilePage() {
                   <Col className="text-center p-3">{profile.content}</Col>
                 )}
               </Row>
-              {/* <div className="d-block d-md-none text-center">
-                <hr />
-                suggestions for you
-                <hr />
-                <Swiper slidesPerView={3}>
-                  {popularProfiles.results.map((profile) => (
-                    <SwiperSlide key={profile.id}>
-                      <Link to={`/profiles/${profile.id}`}>
-                        <div className="d-flex flex-column align-items-center">
-                          <Image
-                            roundedCircle
-                            style={{
-                              width: "90px",
-                              height: "90px",
-                              objectFit: "cover",
-                            }}
-                            src={profile.image}
-                          />
-                          {profile.owner}
-                        </div>
-                      </Link>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div> */}
               <hr />
               <Tabs variant="pills">
                 {/* <Tab eventKey="posts" title="posts">
@@ -374,9 +349,13 @@ function ProfilePage() {
                 <Tab eventKey="followers" title="followers">
                   <InfiniteScroll
                     dataLength={followedProfiles?.results.length}
-                    // next={() =>
-                    //   fetchMoreData(followedProfiles, setFollowedProfiles)
-                    // }
+                    next={() =>
+                      fetchMoreDataState(
+                        followedProfiles.next,
+                        "followedProfiles",
+                        useState
+                      )
+                    }
                     hasMore={!!followedProfiles.next}
                     loader={<Asset children={<Spinner animation="border" />} />}
                   >
@@ -398,10 +377,14 @@ function ProfilePage() {
                 </Tab>
                 <Tab eventKey="following" title="following">
                   <InfiniteScroll
-                    dataLength={followingProfiles?.results.length}
-                    // next={() =>
-                    //   fetchMoreData(followingProfiles, setFollowingProfiles)
-                    // }
+                    dataLength={followingProfiles?.results?.length}
+                    next={() =>
+                      fetchMoreDataState(
+                        followingProfiles.next,
+                        "followingProfiles",
+                        setState
+                      )
+                    }
                     hasMore={!!followingProfiles.next}
                     loader={<Asset children={<Spinner animation="border" />} />}
                   >

@@ -23,6 +23,29 @@ export const fetchMoreData = async (resource, setResource) => {
   }
 };
 
+export const fetchMoreDataState = async (url, attr, setState) => {
+  try {
+    const { data } = await axios.get(
+      url
+      // followingProfiles.next
+    );
+    setState((prevState) => ({
+      ...prevState,
+      [attr]: {
+        ...prevState.followingProfiles,
+        next: data.results.next,
+        results: data?.results.reduce((acc, cur) => {
+          return acc.some((result) => result.id === cur.id)
+            ? acc
+            : [...acc, cur];
+        }, prevState[attr].results),
+      },
+    }));
+  } catch (err) {
+    console.log(err.request);
+  }
+};
+
 export const IMAGE_FILTERS = [
   { name: "1977", value: "_1977" },
   { name: "Brannan", value: "brannan" },
