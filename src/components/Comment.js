@@ -57,8 +57,8 @@ function Comment(props) {
         <Link to={`/profiles/${profile_id}`}>
           <Avatar src={profile_image} />
         </Link>
-        <Media.Body className="align-self-center">
-          <b style={{ color: "#2142b2" }}>{owner}</b>
+        <Media.Body className="align-self-center ml-2">
+          <b style={{ color: "#2142b2" }}>{owner}</b>{" "}
           <span style={{ fontWeight: "lighter", color: "#c1c1c5" }}>
             {updated_at}
           </span>

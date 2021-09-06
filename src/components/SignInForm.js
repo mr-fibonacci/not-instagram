@@ -14,7 +14,7 @@ import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 
-function SignInForm(props) {
+function SignInForm() {
   const setCurrentUser = useSetCurrentUser();
   const history = useHistory();
   const [errors, setErrors] = useState({});
@@ -28,7 +28,8 @@ function SignInForm(props) {
     try {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
       setCurrentUser(data.user);
-      if (props.location.state.from === "signup") {
+
+      if (history.location.state?.from === "signup") {
         history.push("/");
       } else {
         history.goBack();
