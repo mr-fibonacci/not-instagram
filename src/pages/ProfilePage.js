@@ -263,13 +263,6 @@ function ProfilePage() {
         <Container className={appStyles.Content}>
           {hasLoaded ? (
             <>
-              {profile?.is_owner && (
-                <MoreDropdown
-                  handleEdit={handleEdit}
-                  handleAdd={handleAddPost}
-                />
-              )}
-
               <Row>
                 <Col lg={3} className="text-center text-lg-left">
                   <Image
@@ -297,6 +290,12 @@ function ProfilePage() {
                   </Row>
                 </Col>
                 <Col lg={3} className="text-center text-lg-right">
+                  {profile?.is_owner && (
+                    <MoreDropdown
+                      handleEdit={handleEdit}
+                      handleAdd={handleAddPost}
+                    />
+                  )}
                   {!profile?.is_owner && (
                     <>
                       {currentUser &&
