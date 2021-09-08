@@ -71,7 +71,7 @@ function ProfileForm() {
 
   return (
     <Row>
-      <Col className="p-0 p-md-2 text-center" md={7} lg={6}>
+      <Col className="py-2 p-0 p-md-2 text-center" md={7} lg={6}>
         <Container className={appStyles.Content}>
           <Form onSubmit={handleSubmit}>
             <Form.Group>

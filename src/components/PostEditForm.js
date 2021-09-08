@@ -113,7 +113,7 @@ function PostEditForm() {
   return (
     <Form onSubmit={handleSubmit}>
       <Row>
-        <Col className="p-0 p-md-2" md={7} lg={8}>
+        <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
           <Container className={appStyles.Content}>
             <Form.Group className="text-center">
               {image && (

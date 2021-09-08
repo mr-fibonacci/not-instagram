@@ -22,6 +22,8 @@ import btnStyles from "../components/Button.module.css";
 import styles from "../App.module.css";
 import { Link, useHistory } from "react-router-dom";
 import PopularProfiles from "../components/PopularProfiles";
+import Icon from "../components/Icon";
+import { ReactComponent as Edit } from "../assets/edit.svg";
 
 function ProfilePage() {
   console.log("render");
@@ -245,16 +247,15 @@ function ProfilePage() {
 
   return (
     <Row>
-      <Col className="p-0 p-lg-2" lg={8}>
+      <Col className="py-2 p-0 p-lg-2" lg={8}>
         <PopularProfiles mobile={true} />
         <Container className={appStyles.Content}>
           {hasLoaded ? (
             <>
               {profile?.is_owner && (
-                <MoreDropdown
-                  handleEdit={handleEdit}
-                  handleAdd={handleAddPost}
-                />
+                <div className="float-right" onClick={handleEdit}>
+                  <Icon component={Edit} />
+                </div>
               )}
 
               <Row noGutters className="px-3">

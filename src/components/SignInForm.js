@@ -47,7 +47,7 @@ function SignInForm() {
 
   return (
     <Row className={styles.Row}>
-      <Col className="my-auto p-0 p-md-2" md={6}>
+      <Col className="my-auto py-2 p-0 p-md-2" md={6}>
         <Container
           className={appStyles.Content}
           style={{ padding: "30px 10px" }}
