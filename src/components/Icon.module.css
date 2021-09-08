@@ -7,6 +7,10 @@
   display: block;
 }
 
+.Icon:hover {
+  cursor: pointer;
+}
+
 .Icon:hover path {
   fill: #2142b2;
 }

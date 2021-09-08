@@ -66,15 +66,7 @@ function ProfilePage() {
         axios.get(`/profiles/?owner__following__followed__profile=${id}`),
         axios.get("/profiles/?ordering=-followers_count"),
       ]);
-      if (currentUser) {
-        const { data: currentUserProfile } = await axios.get(
-          `/profiles/${currentUser.profile_id}/`
-        );
-        setState((prevState) => ({
-          ...prevState,
-          currentUserProfile,
-        }));
-      }
+
       setHasLoaded(true);
       setState((prevState) => ({
         ...prevState,
@@ -93,6 +85,23 @@ function ProfilePage() {
   useEffect(() => {
     fetchData();
   }, [id]);
+  const fetchCurrentUserProfile = async () => {
+    try {
+      const { data: currentUserProfile } = await axios.get(
+        `/profiles/${currentUser.profile_id}/`
+      );
+      console.log("currentUserProfile:", currentUserProfile);
+      setState((prevState) => ({
+        ...prevState,
+        currentUserProfile,
+      }));
+    } catch (err) {
+      console.log(err.request);
+    }
+  };
+  useEffect(() => {
+    fetchCurrentUserProfile();
+  }, [currentUser]);
 
   const handleFollow = async (clickedProfile) => {
     const followHelper = (profile, clickedProfile, following_id) => {
