@@ -43,9 +43,10 @@ function PostsPage({ filter = "" }) {
 
   return (
     <Row className="h-100">
-      <Col className="p-0 p-md-2" md={8}>
+      <Col className="p-0 p-lg-2" lg={8}>
         {hasLoaded ? (
           <>
+            <PopularProfiles mobile />
             <Form
               className={styles.SearchBar}
               onSubmit={(event) => event.preventDefault()}
@@ -79,7 +80,7 @@ function PostsPage({ filter = "" }) {
           </Container>
         )}
       </Col>
-      <Col md={4} className="d-none d-md-block p-0 p-md-2">
+      <Col md={4} className="d-none d-lg-block p-0 p-lg-2">
         <PopularProfiles />
       </Col>
     </Row>

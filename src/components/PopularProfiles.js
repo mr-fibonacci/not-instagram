@@ -4,8 +4,12 @@ import Container from "react-bootstrap/Container";
 import Profile from "./Profile";
 import styles from "../App.module.css";
 import { refreshToken } from "../utils";
+import { Swiper, SwiperSlide } from "swiper/react";
+import appStyles from "../App.module.css";
+import Image from "react-bootstrap/Image";
+import { Link } from "react-router-dom";
 
-const PopularProfiles = () => {
+const PopularProfiles = ({ mobile }) => {
   const [popularProfiles, setPopularProfiles] = useState({ results: [] });
   useEffect(() => {
     handleMount();
@@ -66,7 +70,33 @@ const PopularProfiles = () => {
       console.log(err.request);
     }
   };
-  return (
+  return mobile ? (
+    <Container
+      className={`${appStyles.Content} d-block d-lg-none text-center mb-3`}
+    >
+      <div className="my-1">Most followed profiles.</div>
+      <Swiper slidesPerView={4}>
+        {popularProfiles?.results?.map((profile) => (
+          <SwiperSlide key={profile.id}>
+            <Link to={`/profiles/${profile.id}`}>
+              <div className="d-flex flex-column align-items-center">
+                <Image
+                  roundedCircle
+                  style={{
+                    width: "64px",
+                    height: "64px",
+                    objectFit: "cover",
+                  }}
+                  src={profile.image}
+                />
+                {profile.owner}
+              </div>
+            </Link>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </Container>
+  ) : (
     <Container className={styles.Content}>
       <p>Most followed profiles.</p>
       {popularProfiles.results?.map((profile) => (

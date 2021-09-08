@@ -21,7 +21,7 @@ import MoreDropdown from "../components/MoreDropdown";
 import btnStyles from "../components/Button.module.css";
 import styles from "../App.module.css";
 import { Link, useHistory } from "react-router-dom";
-import { Swiper, SwiperSlide } from "swiper/react";
+import PopularProfiles from "../components/PopularProfiles";
 
 function ProfilePage() {
   console.log("render");
@@ -246,31 +246,7 @@ function ProfilePage() {
   return (
     <Row>
       <Col className="p-0 p-lg-2" lg={8}>
-        <Container
-          className={`${appStyles.Content} d-block d-lg-none text-center mb-3`}
-        >
-          <div className="my-1">Most followed profiles.</div>
-          <Swiper slidesPerView={4}>
-            {popularProfiles?.results?.map((profile) => (
-              <SwiperSlide key={profile.id}>
-                <Link to={`/profiles/${profile.id}`}>
-                  <div className="d-flex flex-column align-items-center">
-                    <Image
-                      roundedCircle
-                      style={{
-                        width: "64px",
-                        height: "64px",
-                        objectFit: "cover",
-                      }}
-                      src={profile.image}
-                    />
-                    {profile.owner}
-                  </div>
-                </Link>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </Container>
+        <PopularProfiles mobile={true} />
         <Container className={appStyles.Content}>
           {hasLoaded ? (
             <>
