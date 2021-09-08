@@ -2,10 +2,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
 import btnStyles from "./Button.module.css";
 
 const UsernameForm = () => {
   const [username, setUsername] = useState("");
+  const [errors, setErrors] = useState({});
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -13,6 +15,7 @@ const UsernameForm = () => {
       console.log("change user name data", data);
     } catch (err) {
       console.log(err.request);
+      setErrors(err.response?.data);
     }
   };
   return (
@@ -26,6 +29,11 @@ const UsernameForm = () => {
           onChange={(event) => setUsername(event.target.value)}
         />
       </Form.Group>
+      {errors?.username?.map((message, idx) => (
+        <Alert key={idx} variant="warning">
+          {message}
+        </Alert>
+      ))}
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
         save
       </Button>

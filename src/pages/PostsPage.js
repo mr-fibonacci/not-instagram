@@ -46,7 +46,10 @@ function PostsPage({ filter = "" }) {
       <Col className="p-0 p-md-2" md={8}>
         {hasLoaded ? (
           <>
-            <Form className={styles.SearchBar}>
+            <Form
+              className={styles.SearchBar}
+              onSubmit={(event) => event.preventDefault()}
+            >
               <FormControl
                 onChange={(e) => setQuery(e.target.value)}
                 type="text"
