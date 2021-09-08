@@ -5,10 +5,15 @@
 
 .Button {
   border: none;
-  background-color: #2142b2;
-  color: #00d1ff;
+  background-color: #242a3d;
+  color: white;
   border-radius: 100px;
   padding: 4px 10px;
   min-width: 75px;
   margin: 5px;
+}
+.Button:hover {
+  cursor: pointer;
+  color: #242a3d;
+  background-color: aliceblue;
 }
