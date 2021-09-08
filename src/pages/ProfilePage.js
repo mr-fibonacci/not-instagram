@@ -32,22 +32,23 @@ function ProfilePage() {
 
   const currentUser = useCurrentUser();
 
-  const [state, setState] = useState({
+  const [profileState, setProfileState] = useState({
     profile: null,
     currentUserProfile: null,
     followingProfiles: { results: [] },
     followedProfiles: { results: [] },
     popularProfiles: { results: [] },
-    profilePosts: { results: [] },
+    // profilePosts: { results: [] },
   });
+  const [profilePosts, setProfilePosts] = useState({ results: [] });
   const {
     profile,
     currentUserProfile,
     followingProfiles,
     followedProfiles,
     popularProfiles,
-    profilePosts,
-  } = state;
+    // profilePosts,
+  } = profileState;
 
   const fetchData = async () => {
     // refreshToken
@@ -68,14 +69,15 @@ function ProfilePage() {
       ]);
 
       setHasLoaded(true);
-      setState((prevState) => ({
+      setProfileState((prevState) => ({
         ...prevState,
         profile,
-        profilePosts,
+        // profilePosts,
         followingProfiles,
         followedProfiles,
         popularProfiles,
       }));
+      setProfilePosts(profilePosts);
     } catch (err) {
       console.log(err.request);
     }
@@ -91,7 +93,7 @@ function ProfilePage() {
         `/profiles/${currentUser.profile_id}/`
       );
       console.log("currentUserProfile:", currentUserProfile);
-      setState((prevState) => ({
+      setProfileState((prevState) => ({
         ...prevState,
         currentUserProfile,
       }));
@@ -120,7 +122,7 @@ function ProfilePage() {
         followed: clickedProfile.id,
       });
       if (profile?.id === clickedProfile.id) {
-        setState((prevState) => ({
+        setProfileState((prevState) => ({
           ...prevState,
           followedProfiles: {
             ...prevState.followedProfiles,
@@ -132,7 +134,7 @@ function ProfilePage() {
         }));
       }
       if (profile?.id === currentUserProfile?.id) {
-        setState((prevState) => ({
+        setProfileState((prevState) => ({
           ...prevState,
           followingProfiles: {
             ...prevState.followingProfiles,
@@ -140,7 +142,7 @@ function ProfilePage() {
           },
         }));
       }
-      setState((prevState) => ({
+      setProfileState((prevState) => ({
         ...prevState,
         profile: followHelper(profile, clickedProfile, data.id),
         currentUserProfile: followHelper(
@@ -187,7 +189,7 @@ function ProfilePage() {
     try {
       await axios.delete(`/followers/${clickedProfile.following_id}/`);
       if (profile?.id === clickedProfile.id) {
-        setState((prevState) => ({
+        setProfileState((prevState) => ({
           ...prevState,
           followedProfiles: {
             ...prevState.followedProfiles,
@@ -198,7 +200,7 @@ function ProfilePage() {
         }));
       }
       if (profile?.id === currentUserProfile?.id) {
-        setState((prevState) => ({
+        setProfileState((prevState) => ({
           ...prevState,
           followingProfiles: {
             ...prevState.followingProfiles,
@@ -208,7 +210,7 @@ function ProfilePage() {
           },
         }));
       }
-      setState((prevState) => {
+      setProfileState((prevState) => {
         return {
           ...prevState,
           profile: unfollowHelper(profile, clickedProfile),
@@ -338,13 +340,7 @@ function ProfilePage() {
                 <Tab eventKey="posts" title="posts">
                   <InfiniteScroll
                     dataLength={profilePosts?.results.length}
-                    next={() =>
-                      fetchMoreDataState(
-                        profilePosts.next,
-                        "profilePosts",
-                        setState
-                      )
-                    }
+                    next={() => fetchMoreData(profilePosts, setProfilePosts)}
                     hasMore={!!profilePosts.next}
                     loader={<Asset children={<Spinner animation="border" />} />}
                   >
@@ -353,7 +349,7 @@ function ProfilePage() {
                         <Post
                           key={post.id}
                           {...post}
-                          // setPosts={setProfilePosts}
+                          setPosts={setProfilePosts}
                         />
                       ))
                     ) : (
@@ -368,7 +364,7 @@ function ProfilePage() {
                       fetchMoreDataState(
                         followedProfiles.next,
                         "followedProfiles",
-                        setState
+                        setProfileState
                       )
                     }
                     hasMore={!!followedProfiles.next}
@@ -397,7 +393,7 @@ function ProfilePage() {
                       fetchMoreDataState(
                         followingProfiles.next,
                         "followingProfiles",
-                        setState
+                        setProfileState
                       )
                     }
                     hasMore={!!followingProfiles.next}
