@@ -15,7 +15,7 @@ function Profile(props) {
     profile,
     handleFollow,
     handleUnfollow,
-    imageSize = 45,
+    imageSize = 55,
     stats = true,
   } = props;
   const {
@@ -33,7 +33,7 @@ function Profile(props) {
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
   return (
-    <div className="my-2 d-flex align-items-center">
+    <div className="my-3 d-flex align-items-center">
       <div>
         <Link className="align-self-center" to={`/profiles/${id}`}>
           <Avatar src={image} height={imageSize} />

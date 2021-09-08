@@ -25,15 +25,13 @@ export const fetchMoreData = async (resource, setResource) => {
 
 export const fetchMoreDataState = async (url, attr, setState) => {
   try {
-    const { data } = await axios.get(
-      url
-      // followingProfiles.next
-    );
+    const { data } = await axios.get(url);
+    console.log("more data", data);
     setState((prevState) => ({
       ...prevState,
       [attr]: {
-        ...prevState.followingProfiles,
-        next: data.results.next,
+        ...prevState[attr],
+        next: data.next,
         results: data?.results.reduce((acc, cur) => {
           return acc.some((result) => result.id === cur.id)
             ? acc

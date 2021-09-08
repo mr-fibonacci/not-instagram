@@ -270,7 +270,7 @@ function ProfilePage() {
                 />
               )}
 
-              <Row>
+              <Row noGutters className="px-3">
                 <Col lg={3} className="text-center text-lg-left">
                   <Image
                     className="ProfileImage"
@@ -326,10 +326,16 @@ function ProfilePage() {
               </Row>
               <hr />
               <Tabs variant="pills">
-                {/* <Tab eventKey="posts" title="posts">
+                <Tab eventKey="posts" title="posts">
                   <InfiniteScroll
                     dataLength={profilePosts?.results.length}
-                    next={() => fetchMoreData(profilePosts, setProfilePosts)}
+                    next={() =>
+                      fetchMoreDataState(
+                        profilePosts.next,
+                        "profilePosts",
+                        setState
+                      )
+                    }
                     hasMore={!!profilePosts.next}
                     loader={<Asset children={<Spinner animation="border" />} />}
                   >
@@ -338,14 +344,14 @@ function ProfilePage() {
                         <Post
                           key={post.id}
                           {...post}
-                          setPosts={setProfilePosts}
+                          // setPosts={setProfilePosts}
                         />
                       ))
                     ) : (
                       <Asset children={<NoResults />} />
                     )}
                   </InfiniteScroll>
-                </Tab> */}
+                </Tab>
                 <Tab eventKey="followers" title="followers">
                   <InfiniteScroll
                     dataLength={followedProfiles?.results.length}
@@ -353,7 +359,7 @@ function ProfilePage() {
                       fetchMoreDataState(
                         followedProfiles.next,
                         "followedProfiles",
-                        useState
+                        setState
                       )
                     }
                     hasMore={!!followedProfiles.next}

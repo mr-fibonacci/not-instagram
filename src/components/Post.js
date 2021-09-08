@@ -71,7 +71,7 @@ function Post(props) {
       <Card.Body>
         <Media>
           <Link to={`/profiles/${profile_id}`}>
-            <Avatar src={profile_image} height={45} />
+            <Avatar src={profile_image} height={55} />
             {owner}
           </Link>
 
