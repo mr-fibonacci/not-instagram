@@ -54,7 +54,8 @@ function PostPage() {
 
   return (
     <Row className="h-100">
-      <Col className="p-0 p-md-2" md={8}>
+      <Col className="p-0 p-lg-2" lg={8}>
+        <PopularProfiles mobile />
         <Post
           {...post.results[0]}
           setPosts={setPost}
@@ -94,7 +95,7 @@ function PostPage() {
           )}
         </Container>
       </Col>
-      <Col md={4} className="d-none d-md-block p-0 p-md-2">
+      <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
         <PopularProfiles />
       </Col>
     </Row>
