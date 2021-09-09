@@ -75,10 +75,15 @@ function Post(props) {
             <Avatar src={profile_image} height={55} />
             {owner}
           </Link>
-          <span>{updated_at}</span>
-          {is_owner && postPage && (
-            <MoreDropdown handleEdit={handleEdit} handleDelete={handleDelete} />
-          )}
+          <div className="d-flex">
+            <span>{updated_at}</span>
+            {is_owner && postPage && (
+              <MoreDropdown
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />
+            )}
+          </div>
         </Media>
       </Card.Body>
       <Link to={`/posts/${id}`}>

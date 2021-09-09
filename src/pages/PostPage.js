@@ -64,7 +64,7 @@ function PostPage() {
           postPage
         />
         <Container className={appStyles.Content}>
-          {currentUser && (
+          {currentUser ? (
             <>
               <CommentCreateForm
                 profile_id={currentUser.profile_id}
@@ -74,7 +74,10 @@ function PostPage() {
                 setComments={setComments}
               />
             </>
+          ) : (
+            "comments"
           )}
+
           {comments.results.length ? (
             <InfiniteScroll
               dataLength={comments.results.length}

@@ -8,9 +8,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import appStyles from "../App.module.css";
 import Image from "react-bootstrap/Image";
 import { Link } from "react-router-dom";
+import Asset from "./Asset";
+import { Spinner } from "react-bootstrap";
 
 const PopularProfiles = ({ mobile }) => {
   const [popularProfiles, setPopularProfiles] = useState({ results: [] });
+  const [hasLoaded, setHasLoaded] = useState(false);
   useEffect(() => {
     handleMount();
   }, []);
@@ -21,6 +24,7 @@ const PopularProfiles = ({ mobile }) => {
       const { data } = await axios.get("/profiles/?ordering=-followers_count");
       setPopularProfiles(data);
       console.log("data", data);
+      setHasLoaded(true);
     } catch (err) {
       console.log(err.request);
     }
@@ -70,7 +74,9 @@ const PopularProfiles = ({ mobile }) => {
       console.log(err.request);
     }
   };
-  return mobile ? (
+  return !hasLoaded ? (
+    <Asset children={<Spinner animation="border" />} />
+  ) : mobile ? (
     <Container
       className={`${appStyles.Content} d-block d-lg-none text-center mb-3`}
     >
