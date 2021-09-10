@@ -60,7 +60,7 @@ function PostCreateForm() {
   const textFields = (
     <div className="text-center">
       <Form.Group>
-        <Form.Label>title</Form.Label>
+        <Form.Label>Title</Form.Label>
         <Form.Control
           type="text"
           value={title}
@@ -74,7 +74,7 @@ function PostCreateForm() {
         </Alert>
       ))}
       <Form.Group>
-        <Form.Label>content</Form.Label>
+        <Form.Label>Content</Form.Label>
         <Form.Control
           as="textarea"
           rows={6}
@@ -88,6 +88,12 @@ function PostCreateForm() {
           {message}
         </Alert>
       ))}
+      <Button
+        className={`${btnStyles.Button} ${btnStyles.Blue}`}
+        onClick={() => history.goBack()}
+      >
+        cancel
+      </Button>
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
         create
       </Button>
@@ -115,7 +121,7 @@ function PostCreateForm() {
                       className={`${btnStyles.Button} ${btnStyles.Blue}`}
                       htmlFor="image-upload"
                     >
-                      change the image
+                      Change the image
                     </Form.Label>
                   </div>
                   <FilterSlider

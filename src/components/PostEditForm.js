@@ -76,7 +76,7 @@ function PostEditForm() {
   const textFields = (
     <div className="text-center">
       <Form.Group>
-        <Form.Label>title</Form.Label>
+        <Form.Label>Title</Form.Label>
         <Form.Control
           type="text"
           name="title"
@@ -90,7 +90,7 @@ function PostEditForm() {
         </Alert>
       ))}
       <Form.Group>
-        <Form.Label>content</Form.Label>
+        <Form.Label>Content</Form.Label>
         <Form.Control
           as="textarea"
           name="content"
@@ -104,6 +104,12 @@ function PostEditForm() {
           </Alert>
         ))}
       </Form.Group>
+      <Button
+        className={`${btnStyles.Button} ${btnStyles.Blue}`}
+        onClick={() => history.goBack()}
+      >
+        cancel
+      </Button>
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
         save
       </Button>
@@ -131,7 +137,7 @@ function PostEditForm() {
                   className={`${btnStyles.Button} ${btnStyles.Blue}`}
                   htmlFor="image-upload"
                 >
-                  change the image
+                  Change the image
                 </Form.Label>
               </div>
               <FilterSlider

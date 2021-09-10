@@ -5,8 +5,10 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import btnStyles from "./Button.module.css";
 import appStyles from "../App.module.css";
+import { useHistory } from "react-router-dom";
 
 const UsernameForm = () => {
+  const history = useHistory();
   const [username, setUsername] = useState("");
   const [errors, setErrors] = useState({});
   useEffect(() => {
@@ -33,11 +35,11 @@ const UsernameForm = () => {
   };
   return (
     <Row>
-      <Col className="mx-auto" md={6}>
+      <Col className="mx-auto text-center" md={6}>
         <Container className={appStyles.Content}>
           <Form onSubmit={handleSubmit} className="my-2">
             <Form.Group>
-              <Form.Label>change username</Form.Label>
+              <Form.Label>Change username</Form.Label>
               <Form.Control
                 placeholder="username"
                 type="text"
@@ -50,6 +52,12 @@ const UsernameForm = () => {
                 {message}
               </Alert>
             ))}
+            <Button
+              className={`${btnStyles.Button} ${btnStyles.Blue}`}
+              onClick={() => history.goBack()}
+            >
+              cancel
+            </Button>
             <Button
               className={`${btnStyles.Button} ${btnStyles.Blue}`}
               type="submit"

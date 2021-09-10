@@ -5,8 +5,10 @@ import Form from "react-bootstrap/Form";
 import btnStyles from "./Button.module.css";
 import appStyles from "../App.module.css";
 import Alert from "react-bootstrap/Alert";
+import { useHistory } from "react-router-dom";
 
 const UserPasswordForm = () => {
+  const history = useHistory();
   const [userData, setUserData] = useState({
     new_password1: "",
     new_password2: "",
@@ -35,11 +37,11 @@ const UserPasswordForm = () => {
   };
   return (
     <Row>
-      <Col className="mx-auto" md={6}>
+      <Col className="mx-auto text-center" md={6}>
         <Container className={appStyles.Content}>
           <Form onSubmit={handleSubmit}>
             <Form.Group>
-              <Form.Label>new password</Form.Label>
+              <Form.Label>New password</Form.Label>
               <Form.Control
                 placeholder="new password"
                 type="text"
@@ -54,7 +56,7 @@ const UserPasswordForm = () => {
               </Alert>
             ))}
             <Form.Group>
-              <Form.Label>confirm password</Form.Label>
+              <Form.Label>Confirm password</Form.Label>
               <Form.Control
                 placeholder="confirm new password"
                 type="text"
@@ -69,7 +71,7 @@ const UserPasswordForm = () => {
               </Alert>
             ))}
             <Form.Group>
-              <Form.Label>old password</Form.Label>
+              <Form.Label>Old password</Form.Label>
               <Form.Control
                 placeholder="old password"
                 type="text"
@@ -83,6 +85,12 @@ const UserPasswordForm = () => {
                 {message}
               </Alert>
             ))}
+            <Button
+              className={`${btnStyles.Button} ${btnStyles.Blue}`}
+              onClick={() => history.goBack()}
+            >
+              cancel
+            </Button>
             <Button
               type="submit"
               className={`${btnStyles.Button} ${btnStyles.Blue}`}

@@ -72,7 +72,7 @@ function ProfileForm() {
   const textFields = (
     <>
       <Form.Group>
-        <Form.Label>bio</Form.Label>
+        <Form.Label>Bio</Form.Label>
         <Form.Control
           as="textarea"
           value={content}
@@ -87,6 +87,12 @@ function ProfileForm() {
           {message}
         </Alert>
       ))}
+      <Button
+        className={`${btnStyles.Button} ${btnStyles.Blue}`}
+        onClick={() => history.goBack()}
+      >
+        cancel
+      </Button>
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
         save
       </Button>
@@ -114,7 +120,7 @@ function ProfileForm() {
                   className={`${btnStyles.Button} ${btnStyles.Blue} my-auto`}
                   htmlFor="image-upload"
                 >
-                  change the image
+                  Change the image
                 </Form.Label>
               </div>
               <Form.File
