@@ -12,6 +12,7 @@ import styles from "./Post.module.css";
 import Icon from "./Icon";
 import MoreDropdown from "./MoreDropdown";
 import { useCurrentUser } from "../CurrentUserContext";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 function Post(props) {
   const {
@@ -101,15 +102,27 @@ function Post(props) {
         {content && <Card.Text>{content}</Card.Text>}
         <div className={styles.PostBar}>
           {is_owner ? (
-            <Icon label="like" component={HeartRed} />
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>Can't like own posts!</Tooltip>}
+            >
+              <Icon label="like" component={Heart} />
+            </OverlayTrigger>
           ) : like_id ? (
             <span onClick={handleUnlike}>
               <Icon label="like" component={HeartRed} />
             </span>
-          ) : (
+          ) : currentUser ? (
             <span onClick={handleLike}>
               <Icon label="like" component={Heart} />
             </span>
+          ) : (
+            <OverlayTrigger
+              placement="top"
+              overlay={<Tooltip>Log in to like posts!</Tooltip>}
+            >
+              <Icon label="like" component={Heart} />
+            </OverlayTrigger>
           )}
           {likes_count}
           <Link to={`/posts/${id}`}>

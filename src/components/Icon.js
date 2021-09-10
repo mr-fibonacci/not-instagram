@@ -1,9 +1,11 @@
 import React from "react";
 import styles from "./Icon.module.css";
 
-function Icon({ component: Component, text, nav = false, label }) {
+function Icon(props) {
+  const { component: Component, text, nav = false, label } = props;
   return (
     <span
+      {...props}
       aria-label={label}
       className={`${styles.Icon} ${nav ? styles.NavIcon : ""}`}
     >
