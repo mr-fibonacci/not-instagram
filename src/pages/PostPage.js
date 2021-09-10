@@ -74,9 +74,9 @@ function PostPage() {
                 setComments={setComments}
               />
             </>
-          ) : (
-            "comments"
-          )}
+          ) : comments.results.length ? (
+            "Comments"
+          ) : null}
 
           {comments.results.length ? (
             <InfiniteScroll
@@ -93,8 +93,10 @@ function PostPage() {
                 />
               ))}
             />
-          ) : (
+          ) : currentUser ? (
             "No comments yet, be the first one to comment!"
+          ) : (
+            <span>No comments...</span>
           )}
         </Container>
       </Col>
