@@ -13,10 +13,13 @@ import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
+import { useLastLocation } from "react-router-last-location";
 
 function SignInForm() {
   const setCurrentUser = useSetCurrentUser();
   const history = useHistory();
+  const lastLocation = useLastLocation();
+  console.log("last location:", lastLocation);
   const [errors, setErrors] = useState({});
   const [signInData, setSignInData] = useState({
     username: "",
@@ -29,7 +32,7 @@ function SignInForm() {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
       setCurrentUser(data.user);
 
-      if (history.location.state?.from === "signup") {
+      if (lastLocation.pathname === "/signup") {
         history.push("/");
       } else {
         history.goBack();
