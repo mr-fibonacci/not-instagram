@@ -17,7 +17,7 @@ import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 import PopularProfiles from "../components/PopularProfiles";
 
-function PostsPage({ filter = "" }) {
+function PostsPage({ filter = "", message }) {
   const { pathname } = useLocation();
   const [posts, setPosts] = useState({ results: [] });
   const [query, setQuery] = useState("");
@@ -70,7 +70,7 @@ function PostsPage({ filter = "" }) {
               />
             ) : (
               <Container className={appStyles.Content}>
-                <Asset children={<NoResults />} />
+                <Asset children={<NoResults />} message={message} />
               </Container>
             )}
           </>

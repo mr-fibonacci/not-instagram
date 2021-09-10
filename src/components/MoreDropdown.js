@@ -27,17 +27,17 @@ function MoreDropdown({ handleAdd, handleEdit, handleDelete }) {
   return (
     <Dropdown className="ml-auto" drop="left">
       <Dropdown.Toggle as={ThreeDots} />
-      <Dropdown.Menu>
-        <Dropdown.Item className={styles.DropdownItem} onClick={handleEdit}>
-          <Icon label="edit" component={Edit} />
-          {/* Edit */}
-        </Dropdown.Item>
-        {handleAdd && (
-          <Dropdown.Item className={styles.DropdownItem} onClick={handleAdd}>
-            <Icon label="add" component={Add} />
-            {/* Add a post */}
-          </Dropdown.Item>
-        )}
+      <Dropdown.Menu className="text-center">
+        {/* <Dropdown.Item className={styles.DropdownItem} onClick={handleEdit}> */}
+        <Icon label="edit" component={Edit} />
+        {/* Edit */}
+        {/* </Dropdown.Item> */}
+        {/* {handleAdd && (
+          <Dropdown.Item className={styles.DropdownItem} onClick={handleAdd}> */}
+        {/* <Icon label="add" component={Add} /> */}
+        {/* Add a post */}
+        {/* </Dropdown.Item> */}
+        {/* )} */}
         {handleDelete && (
           <Dropdown.Item className={styles.DropdownItem} onClick={handleDelete}>
             <Icon label="delete" component={Delete} />

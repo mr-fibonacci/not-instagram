@@ -33,12 +33,19 @@ function App() {
                 render={(props) => <SignInForm {...props} />}
               />
               <Route exact path="/signup" render={() => <SignUpForm />} />
-              <Route exact path="/" render={() => <PostsPage />} />
+              <Route
+                exact
+                path="/"
+                render={() => (
+                  <PostsPage message="No results found. Adjust the search keyword." />
+                )}
+              />
               <Route
                 exact
                 path="/feed"
                 render={() => (
                   <PostsPage
+                    message="No results found. Adjust the search keyword or follow a user."
                     filter={`owner__followed__owner__profile=${profile_id}&`}
                   />
                 )}
@@ -47,7 +54,10 @@ function App() {
                 exact
                 path="/liked"
                 render={() => (
-                  <PostsPage filter={`likes__owner__profile=${profile_id}&`} />
+                  <PostsPage
+                    message="No results found. Adjust the search keyword or like a post."
+                    filter={`likes__owner__profile=${profile_id}&`}
+                  />
                 )}
               />
               <Route
