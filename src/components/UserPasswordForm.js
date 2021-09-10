@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Container, Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import btnStyles from "./Button.module.css";
+import appStyles from "../App.module.css";
 import Alert from "react-bootstrap/Alert";
 
 const UserPasswordForm = () => {
@@ -33,56 +34,65 @@ const UserPasswordForm = () => {
     }
   };
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group>
-        <Form.Label>new password</Form.Label>
-        <Form.Control
-          placeholder="new password"
-          type="text"
-          value={new_password1}
-          onChange={handleChange}
-          name="new_password1"
-        />
-      </Form.Group>
-      {errors?.new_password1?.map((message, idx) => (
-        <Alert key={idx} variant="warning">
-          {message}
-        </Alert>
-      ))}
-      <Form.Group>
-        <Form.Label>confirm password</Form.Label>
-        <Form.Control
-          placeholder="confirm new password"
-          type="text"
-          value={new_password2}
-          onChange={handleChange}
-          name="new_password2"
-        />
-      </Form.Group>
-      {errors?.new_password2?.map((message, idx) => (
-        <Alert key={idx} variant="warning">
-          {message}
-        </Alert>
-      ))}
-      <Form.Group>
-        <Form.Label>old password</Form.Label>
-        <Form.Control
-          placeholder="old password"
-          type="text"
-          value={old_password}
-          onChange={handleChange}
-          name="old_password"
-        />
-      </Form.Group>
-      {errors?.old_password?.map((message, idx) => (
-        <Alert key={idx} variant="warning">
-          {message}
-        </Alert>
-      ))}
-      <Button type="submit" className={`${btnStyles.Button} ${btnStyles.Blue}`}>
-        save
-      </Button>
-    </Form>
+    <Row>
+      <Col className="mx-auto" md={6}>
+        <Container className={appStyles.Content}>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group>
+              <Form.Label>new password</Form.Label>
+              <Form.Control
+                placeholder="new password"
+                type="text"
+                value={new_password1}
+                onChange={handleChange}
+                name="new_password1"
+              />
+            </Form.Group>
+            {errors?.new_password1?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
+            <Form.Group>
+              <Form.Label>confirm password</Form.Label>
+              <Form.Control
+                placeholder="confirm new password"
+                type="text"
+                value={new_password2}
+                onChange={handleChange}
+                name="new_password2"
+              />
+            </Form.Group>
+            {errors?.new_password2?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
+            <Form.Group>
+              <Form.Label>old password</Form.Label>
+              <Form.Control
+                placeholder="old password"
+                type="text"
+                value={old_password}
+                onChange={handleChange}
+                name="old_password"
+              />
+            </Form.Group>
+            {errors?.old_password?.map((message, idx) => (
+              <Alert key={idx} variant="warning">
+                {message}
+              </Alert>
+            ))}
+            <Button
+              type="submit"
+              className={`${btnStyles.Button} ${btnStyles.Blue}`}
+            >
+              save
+            </Button>
+          </Form>
+        </Container>
+      </Col>
+    </Row>
   );
 };
 

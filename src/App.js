@@ -14,6 +14,8 @@ import PostsPage from "./pages/PostsPage";
 import styles from "./App.module.css";
 import { useCurrentUser } from "./CurrentUserContext";
 import { LastLocationProvider } from "react-router-last-location";
+import UsernameForm from "./components/UsernameForm";
+import UserPasswordForm from "./components/UserPasswordForm";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -68,6 +70,16 @@ function App() {
                 exact
                 path="/profiles/:id/edit"
                 render={() => <ProfileEditForm />}
+              />
+              <Route
+                exact
+                path="/profiles/:id/edit/username"
+                render={() => <UsernameForm />}
+              />
+              <Route
+                exact
+                path="/profiles/:id/edit/password"
+                render={() => <UserPasswordForm />}
               />
             </Switch>
           </Container>

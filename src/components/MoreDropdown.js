@@ -6,6 +6,7 @@ import { ReactComponent as Delete } from "../assets/delete.svg";
 import Dropdown from "react-bootstrap/Dropdown";
 import Icon from "./Icon";
 import styles from "./MoreDropdown.module.css";
+import { useHistory } from "react-router-dom";
 
 const ThreeDots = React.forwardRef(({ onClick }, ref) => (
   <img
@@ -49,3 +50,36 @@ function MoreDropdown({ handleAdd, handleEdit, handleDelete }) {
 }
 
 export default MoreDropdown;
+
+export function ProfileEditDropdown({ id }) {
+  const history = useHistory();
+  return (
+    <Dropdown
+      style={{ position: "absolute", right: "0px", zIndex: 99 }}
+      className="ml-auto px-3"
+      drop="left"
+    >
+      <Dropdown.Toggle as={ThreeDots} />
+      <Dropdown.Menu>
+        <Dropdown.Item
+          // className={styles.DropdownItem}
+          onClick={() => history.push(`/profiles/${id}/edit`)}
+        >
+          edit profile
+        </Dropdown.Item>
+        <Dropdown.Item
+          // className={styles.DropdownItem}
+          onClick={() => history.push(`/profiles/${id}/edit/username`)}
+        >
+          change username
+        </Dropdown.Item>
+        <Dropdown.Item
+          // className={styles.DropdownItem}
+          onClick={() => history.push(`/profiles/${id}/edit/password`)}
+        >
+          change password
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+}

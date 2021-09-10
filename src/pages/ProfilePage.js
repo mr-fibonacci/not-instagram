@@ -17,7 +17,7 @@ import appStyles from "../App.module.css";
 import { ReactComponent as NoResults } from "../assets/no-results.svg";
 import { useCurrentUser } from "../CurrentUserContext";
 import { Image, Button } from "react-bootstrap";
-import MoreDropdown from "../components/MoreDropdown";
+import MoreDropdown, { ProfileEditDropdown } from "../components/MoreDropdown";
 import btnStyles from "../components/Button.module.css";
 import styles from "../App.module.css";
 import { Link, useHistory } from "react-router-dom";
@@ -253,13 +253,14 @@ function ProfilePage() {
           {hasLoaded ? (
             <>
               {profile?.is_owner && (
-                <div
-                  className="px-2"
-                  style={{ position: "absolute", right: "0px", zIndex: 99 }}
-                  onClick={handleEdit}
-                >
-                  <Icon component={Edit} />
-                </div>
+                <ProfileEditDropdown id={profile?.id} />
+                // <div
+                //   className="px-2"
+                //   style={{ position: "absolute", right: "0px", zIndex: 99 }}
+                //   onClick={handleEdit}
+                // >
+                //   <Icon component={Edit} />
+                // </div>
               )}
 
               <Row noGutters className="px-3">

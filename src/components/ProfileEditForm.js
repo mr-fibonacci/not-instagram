@@ -69,11 +69,35 @@ function ProfileForm() {
     });
   };
 
+  const textFields = (
+    <>
+      <Form.Group>
+        <Form.Label>bio</Form.Label>
+        <Form.Control
+          as="textarea"
+          value={content}
+          onChange={handleChange}
+          name="content"
+          rows={7}
+        />
+      </Form.Group>
+
+      {errors?.content?.map((message, idx) => (
+        <Alert variant="warning" key={idx}>
+          {message}
+        </Alert>
+      ))}
+      <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
+        save
+      </Button>
+    </>
+  );
+
   return (
-    <Row>
-      <Col className="py-2 p-0 p-md-2 text-center" md={7} lg={6}>
-        <Container className={appStyles.Content}>
-          <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
+      <Row>
+        <Col className="py-2 p-0 p-md-2 text-center" md={7} lg={6}>
+          <Container className={appStyles.Content}>
             <Form.Group>
               {image && (
                 <figure>
@@ -105,46 +129,20 @@ function ProfileForm() {
                 }
               />
             </Form.Group>
-            {errors?.name?.map((message, idx) => (
+            {/* {errors?.name?.map((message, idx) => (
               <Alert variant="warning" key={idx}>
                 {message}
               </Alert>
-            ))}
-            <Form.Group>
-              <Form.Label>bio</Form.Label>
-              <Form.Control
-                as="textarea"
-                value={content}
-                onChange={handleChange}
-                name="content"
-                rows={6}
-              />
-            </Form.Group>
-            {errors?.content?.map((message, idx) => (
-              <Alert variant="warning" key={idx}>
-                {message}
-              </Alert>
-            ))}
-            <Button
-              className={`${btnStyles.Button} ${btnStyles.Blue}`}
-              type="submit"
-            >
-              save
-            </Button>
-          </Form>
-          <div className="d-md-none">
-            <UsernameForm />
-            <UserPasswordForm />
-          </div>
-        </Container>
-      </Col>
-      <Col md={5} lg={6} className="d-none d-md-block p-0 p-md-2 text-center">
-        <Container className={appStyles.Content}>
-          <UsernameForm />
-          <UserPasswordForm />
-        </Container>
-      </Col>
-    </Row>
+            ))} */}
+
+            <div className="d-md-none">{textFields}</div>
+          </Container>
+        </Col>
+        <Col md={5} lg={6} className="d-none d-md-block p-0 p-md-2 text-center">
+          <Container className={appStyles.Content}>{textFields}</Container>
+        </Col>
+      </Row>{" "}
+    </Form>
   );
 }
 
