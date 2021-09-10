@@ -253,7 +253,11 @@ function ProfilePage() {
           {hasLoaded ? (
             <>
               {profile?.is_owner && (
-                <div className="float-right" onClick={handleEdit}>
+                <div
+                  className="px-1"
+                  style={{ position: "absolute", right: "0px", zIndex: 99 }}
+                  onClick={handleEdit}
+                >
                   <Icon component={Edit} />
                 </div>
               )}
