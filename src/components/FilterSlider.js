@@ -12,7 +12,13 @@ const FilterSlider = ({ image, image_filter, handleClick }) => {
       <p>Swipe to choose a filter.</p>
       <Swiper
         className={styles.FilterSlider}
-        slidesPerView={3}
+        // slidesPerView={3}
+        breakpoints={{
+          200: { slidesPerView: 2.5 },
+          480: { slidesPerView: 3.3 },
+          768: { slidesPerView: 2.5 },
+          1200: { slidesPerView: 3.5 },
+        }}
         spaceBetween={10}
         freeMode={true}
         style={{ marginLeft: "-10px", marginRight: "-10px" }}
