@@ -146,6 +146,7 @@ function PostEditForm() {
                 onChange={(e) =>
                   setPostData({
                     ...postData,
+                    image_filter: "normal",
                     image: URL.createObjectURL(e.target.files[0]),
                   })
                 }

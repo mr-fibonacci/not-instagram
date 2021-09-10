@@ -140,6 +140,7 @@ function PostCreateForm() {
                   if (e.target.files.length) {
                     setPostData({
                       ...postData,
+                      image_filter: "normal",
                       image: URL.createObjectURL(e.target.files[0]),
                     });
                   }
