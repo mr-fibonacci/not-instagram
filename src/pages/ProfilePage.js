@@ -254,7 +254,7 @@ function ProfilePage() {
             <>
               {profile?.is_owner && (
                 <div
-                  className="px-1"
+                  className="px-2"
                   style={{ position: "absolute", right: "0px", zIndex: 99 }}
                   onClick={handleEdit}
                 >
