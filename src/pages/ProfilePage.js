@@ -335,7 +335,10 @@ function ProfilePage() {
                         />
                       ))
                     ) : (
-                      <Asset children={<NoResults />} />
+                      <Asset
+                        children={<NoResults />}
+                        message={`No results found, ${profile?.owner} hasn't posted yet.`}
+                      />
                     )}
                   </InfiniteScroll>
                 </Tab>
@@ -363,7 +366,10 @@ function ProfilePage() {
                           />
                         ))
                       ) : (
-                        <Asset children={<NoResults />} />
+                        <Asset
+                          children={<NoResults />}
+                          message={`No profiles found, no users are following ${profile?.owner} yet.`}
+                        />
                       )}
                     </Container>
                   </InfiniteScroll>
@@ -392,7 +398,10 @@ function ProfilePage() {
                           />
                         ))
                       ) : (
-                        <Asset children={<NoResults />} />
+                        <Asset
+                          children={<NoResults />}
+                          message={`No profiles found, ${profile?.owner} isn't following anyone yet.`}
+                        />
                       )}
                     </Container>
                   </InfiniteScroll>
