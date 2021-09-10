@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
@@ -8,6 +8,18 @@ import btnStyles from "./Button.module.css";
 const UsernameForm = () => {
   const [username, setUsername] = useState("");
   const [errors, setErrors] = useState({});
+  useEffect(() => {
+    handleMount();
+  }, []);
+  const handleMount = async () => {
+    try {
+      const { data } = await axios.get("/dj-rest-auth/user/");
+      console.log(data);
+      setUsername(data.username);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
