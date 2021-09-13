@@ -24,10 +24,14 @@ function PostsPage({ filter = "", message }) {
   const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
-    handleMount();
+    const timer = setTimeout(() => {
+      fetchPosts();
+    }, 1000);
+    return () => clearTimeout(timer);
   }, [query, pathname]);
 
-  const handleMount = async () => {
+  const fetchPosts = async () => {
+    console.log("fetching data");
     // refreshToken
     await refreshToken();
     try {
