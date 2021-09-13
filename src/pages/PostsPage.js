@@ -24,6 +24,7 @@ function PostsPage({ filter = "", message }) {
   const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
+    setHasLoaded(false);
     const timer = setTimeout(() => {
       fetchPosts();
     }, 1000);
@@ -48,20 +49,20 @@ function PostsPage({ filter = "", message }) {
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
+        <PopularProfiles mobile />
+        <Form
+          className={styles.SearchBar}
+          onSubmit={(event) => event.preventDefault()}
+        >
+          <FormControl
+            onChange={(e) => setQuery(e.target.value)}
+            type="text"
+            placeholder="search posts"
+            className="mr-sm-2"
+          />
+        </Form>
         {hasLoaded ? (
           <>
-            <PopularProfiles mobile />
-            <Form
-              className={styles.SearchBar}
-              onSubmit={(event) => event.preventDefault()}
-            >
-              <FormControl
-                onChange={(e) => setQuery(e.target.value)}
-                type="text"
-                placeholder="search posts"
-                className="mr-sm-2"
-              />
-            </Form>
             {posts.results.length ? (
               <InfiniteScroll
                 dataLength={posts.results.length}
