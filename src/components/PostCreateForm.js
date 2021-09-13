@@ -111,11 +111,6 @@ function PostCreateForm() {
                   <figure className={image_filter}>
                     <Image className={appStyles.Image} src={image} />
                   </figure>
-                  {errors?.image?.map((message, idx) => (
-                    <Alert variant="warning" key={idx}>
-                      {message}
-                    </Alert>
-                  ))}
                   <div>
                     <Form.Label
                       className={`${btnStyles.Button} ${btnStyles.Blue}`}
@@ -138,6 +133,11 @@ function PostCreateForm() {
                   <Asset children={<Upload />} />
                 </Form.Label>
               )}
+              {errors?.image?.map((message, idx) => (
+                <Alert variant="warning" key={idx}>
+                  {message}
+                </Alert>
+              ))}
               <Form.File
                 id="image-upload"
                 ref={imageFile}

@@ -23,12 +23,12 @@ function CommentEditForm(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.put(`/comments/${id}/`, { content: formContent });
+      await axios.put(`/comments/${id}/`, { content: formContent.trim() });
       setComments((prevComments) => ({
         ...prevComments,
         results: prevComments.results.map((comment) => {
           return comment.id === id
-            ? { ...comment, content: formContent }
+            ? { ...comment, content: formContent.trim() }
             : comment;
         }),
       }));
@@ -54,7 +54,11 @@ function CommentEditForm(props) {
         </InputGroup>
       </Form.Group>
       <div className="text-right">
-        <button className={styles.Button} disabled={!content} type="submit">
+        <button
+          className={styles.Button}
+          disabled={!content.trim()}
+          type="submit"
+        >
           save
         </button>
         <button
