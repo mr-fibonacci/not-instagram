@@ -14,6 +14,7 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 import PopularProfiles from "../components/PopularProfiles";
+import { axiosReq, axiosRes } from "../axiosDefaults";
 
 function PostPage() {
   const currentUser = useCurrentUser();
@@ -28,7 +29,7 @@ function PostPage() {
   const handleMount = async () => {
     try {
       const [{ data: post }, { data: comments }] = await Promise.all([
-        axios.get(`/posts/${id}`),
+        axiosReq.get(`/posts/${id}`),
         axios.get(`/comments/?post=${id}`),
       ]);
       console.log("post", post);
@@ -45,7 +46,7 @@ function PostPage() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/posts/${id}/`);
+      await axiosRes.delete(`/posts/${id}/`);
       history.goBack();
     } catch (err) {
       console.log(err.request);

@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -6,6 +5,7 @@ import btnStyles from "./Button.module.css";
 import appStyles from "../App.module.css";
 import Alert from "react-bootstrap/Alert";
 import { useHistory } from "react-router-dom";
+import { axiosRes } from "../axiosDefaults";
 
 const UserPasswordForm = () => {
   const history = useHistory();
@@ -25,7 +25,7 @@ const UserPasswordForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post(
+      const { data } = await axiosRes.post(
         "/dj-rest-auth/password/change/",
         userData
       );

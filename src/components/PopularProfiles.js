@@ -1,16 +1,14 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Profile from "./Profile";
 import styles from "../App.module.css";
-import { refreshToken } from "../utils";
 import { Swiper, SwiperSlide } from "swiper/react";
 import appStyles from "../App.module.css";
 import Image from "react-bootstrap/Image";
 import { Link } from "react-router-dom";
 import Asset from "./Asset";
 import { Spinner } from "react-bootstrap";
-import { axiosRes } from "../axiosDefaults";
+import { axiosReq, axiosRes } from "../axiosDefaults";
 
 const PopularProfiles = ({ mobile }) => {
   const [popularProfiles, setPopularProfiles] = useState({ results: [] });
@@ -19,10 +17,10 @@ const PopularProfiles = ({ mobile }) => {
     handleMount();
   }, []);
   const handleMount = async () => {
-    // refreshToken
-    await refreshToken();
     try {
-      const { data } = await axios.get("/profiles/?ordering=-followers_count");
+      const { data } = await axiosReq.get(
+        "/profiles/?ordering=-followers_count"
+      );
       setPopularProfiles(data);
       console.log("data", data);
       setHasLoaded(true);

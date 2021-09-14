@@ -22,9 +22,7 @@ import btnStyles from "../components/Button.module.css";
 import styles from "../App.module.css";
 import { Link, useHistory } from "react-router-dom";
 import PopularProfiles from "../components/PopularProfiles";
-import Icon from "../components/Icon";
-import { ReactComponent as Edit } from "../assets/edit.svg";
-import { axiosRes } from "../axiosDefaults";
+import { axiosReq, axiosRes } from "../axiosDefaults";
 
 function ProfilePage() {
   console.log("render");
@@ -54,8 +52,6 @@ function ProfilePage() {
   } = profileState;
 
   const fetchData = async () => {
-    // refreshToken
-    await refreshToken();
     try {
       const [
         { data: profile },
@@ -64,7 +60,8 @@ function ProfilePage() {
         { data: followedProfiles },
         { data: popularProfiles },
       ] = await Promise.all([
-        axios.get(`/profiles/${id}/`),
+        // refresh the smallest to make it throw
+        axiosReq.get(`/profiles/${id}/`),
         axios.get(`/posts/?owner__profile=${id}`),
         axios.get(`/profiles/?owner__followed__owner__profile=${id}`),
         axios.get(`/profiles/?owner__following__followed__profile=${id}`),

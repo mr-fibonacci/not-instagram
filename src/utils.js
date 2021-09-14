@@ -1,22 +1,8 @@
-import axios from "axios";
-
-// CONVERT TO A HOOK
-export const refreshToken = async () => {
-  try {
-    await axios.post("/dj-rest-auth/token/refresh/");
-    console.log("REFRESH TOKEN");
-  } catch (err) {
-    console.log(err.request);
-    // CHECK IF PREVIOUSCURRENTUSER;
-    // IF SO, SET TO NULL AND REDIRECT
-    // NO, USE AN INTERCEPTOR INSTEAD
-  }
-};
+import { axiosReq } from "./axiosDefaults";
 
 export const fetchMoreData = async (resource, setResource) => {
   try {
-    await refreshToken();
-    const { data } = await axios.get(resource.next);
+    const { data } = await axiosReq.get(resource.next);
     setResource((prevResource) => ({
       ...prevResource,
       next: data.next,
@@ -31,8 +17,7 @@ export const fetchMoreData = async (resource, setResource) => {
 
 export const fetchMoreDataState = async (url, attr, setState) => {
   try {
-    await refreshToken();
-    const { data } = await axios.get(url);
+    const { data } = await axiosReq.get(url);
     console.log("more data", data);
     setState((prevState) => ({
       ...prevState,
