@@ -14,6 +14,7 @@ import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 import Alert from "react-bootstrap/Alert";
 import styles from "./PostCreateEditForm.module.css";
+import { axiosIntercept } from "../axiosDefaults";
 
 function PostCreateForm() {
   const history = useHistory();
@@ -36,7 +37,7 @@ function PostCreateForm() {
     formData.append("image_filter", image_filter);
 
     try {
-      const { data } = await axios.post("/posts/", formData);
+      const { data } = await axiosIntercept.post("/posts/", formData);
       console.log("data", data);
       history.push("/");
     } catch (err) {

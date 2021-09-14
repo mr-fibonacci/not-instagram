@@ -5,6 +5,7 @@ import styles from "./CommentCreateEditForm.module.css";
 import InputGroup from "react-bootstrap/InputGroup";
 import Avatar from "./Avatar";
 import { Link } from "react-router-dom";
+import { axiosIntercept } from "../axiosDefaults";
 
 function CommentEditForm(props) {
   const {
@@ -23,7 +24,9 @@ function CommentEditForm(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.put(`/comments/${id}/`, { content: formContent.trim() });
+      await axiosIntercept.put(`/comments/${id}/`, {
+        content: formContent.trim(),
+      });
       setComments((prevComments) => ({
         ...prevComments,
         results: prevComments.results.map((comment) => {

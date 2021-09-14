@@ -3,7 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import axios from "axios";
 
-import { NavLink, useHistory, withRouter } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import logo from "../assets/logo.svg";
 import { ReactComponent as AddPost } from "../assets/add-post.svg";
@@ -103,4 +103,4 @@ function NavBar() {
   );
 }
 
-export default withRouter(NavBar);
+export default NavBar;

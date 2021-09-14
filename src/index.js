@@ -2,13 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter as Router } from "react-router-dom";
+import { LastLocationProvider } from "react-router-last-location";
 import { CurrentUserProvider } from "./CurrentUserContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <CurrentUserProvider>
-      <App />
-    </CurrentUserProvider>
+    <Router>
+      <LastLocationProvider>
+        <CurrentUserProvider>
+          <App />
+        </CurrentUserProvider>
+      </LastLocationProvider>
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );

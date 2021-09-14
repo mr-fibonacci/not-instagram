@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import styles from "./CommentCreateEditForm.module.css";
 import Avatar from "./Avatar";
 import { Link } from "react-router-dom";
+import { axiosIntercept } from "../axiosDefaults";
 
 function CommentCreateForm(props) {
   const { post, setPost, setComments, profileImage, profile_id } = props;
@@ -17,7 +18,10 @@ function CommentCreateForm(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post("/comments/", { content, post });
+      const { data } = await axiosIntercept.post("/comments/", {
+        content,
+        post,
+      });
       setComments((prevComments) => ({
         ...prevComments,
         results: [data, ...prevComments.results],

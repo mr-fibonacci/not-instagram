@@ -6,6 +6,7 @@ import Alert from "react-bootstrap/Alert";
 import btnStyles from "./Button.module.css";
 import appStyles from "../App.module.css";
 import { useHistory } from "react-router-dom";
+import { axiosIntercept } from "../axiosDefaults";
 
 const UsernameForm = () => {
   const history = useHistory();
@@ -16,7 +17,7 @@ const UsernameForm = () => {
   }, []);
   const handleMount = async () => {
     try {
-      const { data } = await axios.get("/dj-rest-auth/user/");
+      const { data } = await axiosIntercept.get("/dj-rest-auth/user/");
       console.log(data);
       setUsername(data.username);
     } catch (err) {
@@ -26,7 +27,9 @@ const UsernameForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axios.put("/dj-rest-auth/user/", { username });
+      const { data } = await axiosIntercept.put("/dj-rest-auth/user/", {
+        username,
+      });
       console.log("change user name data", data);
     } catch (err) {
       console.log(err.request);

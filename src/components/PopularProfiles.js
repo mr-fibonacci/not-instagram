@@ -10,6 +10,7 @@ import Image from "react-bootstrap/Image";
 import { Link } from "react-router-dom";
 import Asset from "./Asset";
 import { Spinner } from "react-bootstrap";
+import { axiosIntercept } from "../axiosDefaults";
 
 const PopularProfiles = ({ mobile }) => {
   const [popularProfiles, setPopularProfiles] = useState({ results: [] });
@@ -31,7 +32,7 @@ const PopularProfiles = ({ mobile }) => {
   };
   const handleFollow = async (clickedProfile) => {
     try {
-      const { data } = await axios.post("/followers/", {
+      const { data } = await axiosIntercept.post("/followers/", {
         followed: clickedProfile.id,
       });
       setPopularProfiles((prevProfiles) => ({
@@ -54,7 +55,7 @@ const PopularProfiles = ({ mobile }) => {
   };
   const handleUnfollow = async (clickedProfile) => {
     try {
-      await axios.delete(`/followers/${clickedProfile.following_id}/`);
+      await axiosIntercept.delete(`/followers/${clickedProfile.following_id}/`);
       setPopularProfiles((prevProfiles) => ({
         ...prevProfiles,
         results: prevProfiles.results.map((profile) => {

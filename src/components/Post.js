@@ -13,6 +13,7 @@ import Icon from "./Icon";
 import MoreDropdown from "./MoreDropdown";
 import { useCurrentUser } from "../CurrentUserContext";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { axiosIntercept } from "../axiosDefaults";
 
 function Post(props) {
   const {
@@ -38,7 +39,7 @@ function Post(props) {
 
   const handleLike = async () => {
     try {
-      const { data } = await axios.post("/likes/", { post: id });
+      const { data } = await axiosIntercept.post("/likes/", { post: id });
       setPosts((prevPosts) => ({
         ...prevPosts,
         results: prevPosts.results.map((post) => {
@@ -54,7 +55,7 @@ function Post(props) {
 
   const handleUnlike = async () => {
     try {
-      await axios.delete(`/likes/${like_id}/`);
+      await axiosIntercept.delete(`/likes/${like_id}/`);
       setPosts((prevPosts) => ({
         ...prevPosts,
         results: prevPosts.results.map((post) => {

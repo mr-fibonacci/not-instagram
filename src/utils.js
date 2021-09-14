@@ -1,15 +1,20 @@
 import axios from "axios";
 
+// CONVERT TO A HOOK
 export const refreshToken = async () => {
   try {
     await axios.post("/dj-rest-auth/token/refresh/");
+    console.log("REFRESH TOKEN");
   } catch (err) {
-    console.log(err);
+    console.log(err.request);
+    // CHECK IF PREVIOUSCURRENTUSER;
+    // IF SO, SET TO NULL AND REDIRECT
   }
 };
 
 export const fetchMoreData = async (resource, setResource) => {
   try {
+    await refreshToken();
     const { data } = await axios.get(resource.next);
     setResource((prevResource) => ({
       ...prevResource,
@@ -25,6 +30,7 @@ export const fetchMoreData = async (resource, setResource) => {
 
 export const fetchMoreDataState = async (url, attr, setState) => {
   try {
+    await refreshToken();
     const { data } = await axios.get(url);
     console.log("more data", data);
     setState((prevState) => ({

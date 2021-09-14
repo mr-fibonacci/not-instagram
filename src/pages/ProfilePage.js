@@ -24,6 +24,7 @@ import { Link, useHistory } from "react-router-dom";
 import PopularProfiles from "../components/PopularProfiles";
 import Icon from "../components/Icon";
 import { ReactComponent as Edit } from "../assets/edit.svg";
+import { axiosIntercept } from "../axiosDefaults";
 
 function ProfilePage() {
   console.log("render");
@@ -120,7 +121,7 @@ function ProfilePage() {
         : profile;
     };
     try {
-      const { data } = await axios.post("/followers/", {
+      const { data } = await axiosIntercept.post("/followers/", {
         followed: clickedProfile.id,
       });
       if (profile?.id === clickedProfile.id) {
@@ -189,7 +190,7 @@ function ProfilePage() {
         : profile;
     };
     try {
-      await axios.delete(`/followers/${clickedProfile.following_id}/`);
+      await axiosIntercept.delete(`/followers/${clickedProfile.following_id}/`);
       if (profile?.id === clickedProfile.id) {
         setProfileState((prevState) => ({
           ...prevState,
