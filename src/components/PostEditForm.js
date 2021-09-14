@@ -11,7 +11,7 @@ import FilterSlider from "./FilterSlider";
 import appStyles from "../App.module.css";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
-import { axiosIntercept } from "../axiosDefaults";
+import { axiosRes } from "../axiosDefaults";
 
 function PostEditForm() {
   const { id } = useParams();
@@ -53,7 +53,7 @@ function PostEditForm() {
     }
     formData.append("image_filter", image_filter);
     try {
-      await axiosIntercept.put(`/posts/${id}/`, formData);
+      await axiosRes.put(`/posts/${id}/`, formData);
       history.goBack();
     } catch (err) {
       console.log(err.request);

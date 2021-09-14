@@ -13,7 +13,7 @@ import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
 import UsernameForm from "../components/UsernameForm";
 import UserPasswordForm from "../components/UserPasswordForm";
-import { axiosIntercept } from "../axiosDefaults";
+import { axiosRes } from "../axiosDefaults";
 
 function ProfileForm() {
   const setCurrentUser = useSetCurrentUser();
@@ -50,7 +50,7 @@ function ProfileForm() {
       formData.append("image", imageFile?.current?.files[0]);
     }
     try {
-      const { data } = await axiosIntercept.put(`/profiles/${id}/`, formData);
+      const { data } = await axiosRes.put(`/profiles/${id}/`, formData);
       console.log(data);
       setCurrentUser((currentUser) => ({
         ...currentUser,

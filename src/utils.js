@@ -9,6 +9,7 @@ export const refreshToken = async () => {
     console.log(err.request);
     // CHECK IF PREVIOUSCURRENTUSER;
     // IF SO, SET TO NULL AND REDIRECT
+    // NO, USE AN INTERCEPTOR INSTEAD
   }
 };
 

@@ -6,7 +6,7 @@ import CommentEditForm from "./CommentEditForm";
 import Avatar from "./Avatar";
 import MoreDropdown from "./MoreDropdown";
 import { useCurrentUser } from "../CurrentUserContext";
-import { axiosIntercept } from "../axiosDefaults";
+import { axiosRes } from "../axiosDefaults";
 
 function Comment(props) {
   const {
@@ -24,7 +24,7 @@ function Comment(props) {
   const is_owner = currentUser?.username === owner;
   const handleDelete = async () => {
     try {
-      await axiosIntercept.delete(`/comments/${id}/`);
+      await axiosRes.delete(`/comments/${id}/`);
       setPost((prevPost) => ({
         results: [
           {

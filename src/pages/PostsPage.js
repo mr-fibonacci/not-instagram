@@ -16,6 +16,7 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 import PopularProfiles from "../components/PopularProfiles";
+import { axiosReq } from "../axiosDefaults";
 
 function PostsPage({ filter = "", message }) {
   const { pathname } = useLocation();
@@ -34,9 +35,9 @@ function PostsPage({ filter = "", message }) {
   const fetchPosts = async () => {
     console.log("fetching data");
     // refreshToken
-    await refreshToken();
+    // await refreshToken();
     try {
-      const { data: posts } = await axios.get(
+      const { data: posts } = await axiosReq.get(
         `/posts/?${filter}search=${query}`
       );
       setPosts(posts);

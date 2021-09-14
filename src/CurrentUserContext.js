@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { axiosIntercept } from "./axiosDefaults";
+import { axiosReq, axiosRes } from "./axiosDefaults";
 import { useHistory } from "react-router-dom";
 
 const CurrentUserContext = createContext();
@@ -13,7 +13,21 @@ export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const history = useHistory();
   useEffect(() => {
-    const interceptor = axiosIntercept.interceptors.response.use(
+    const reqInterceptor = axiosReq.interceptors.request.use(async (config) => {
+      try {
+        await axios.post("/dj-rest-auth/token/refresh/");
+      } catch (err) {
+        console.log(err.request);
+        setCurrentUser((prevCurrentUser) => {
+          if (prevCurrentUser) {
+            history.push("/signin");
+          }
+          return null;
+        });
+      }
+      return config;
+    });
+    const resInterceptor = axiosRes.interceptors.response.use(
       (response) => response,
       async (error) => {
         console.log("inside interceptor, ERROR STATUS:", error.response.status);
@@ -40,13 +54,14 @@ export const CurrentUserProvider = ({ children }) => {
     );
     handleMount();
     return () => {
-      axiosIntercept.interceptors.response.eject(interceptor);
+      axiosReq.interceptors.response.eject(reqInterceptor);
+      axiosRes.interceptors.response.eject(resInterceptor);
     };
   }, []);
 
   const handleMount = async () => {
     try {
-      const { data } = await axiosIntercept.get("dj-rest-auth/user/");
+      const { data } = await axiosRes.get("dj-rest-auth/user/");
       setCurrentUser(data);
     } catch (err) {
       console.log(err.request);
