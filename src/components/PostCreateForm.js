@@ -106,12 +106,14 @@ function PostCreateForm() {
     <Form onSubmit={handleSubmit}>
       <Row>
         <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
-          <Container className={`${appStyles.Content} ${styles.Container}`}>
+          <Container
+            className={`${appStyles.Content} ${styles.Container} d-flex flex-column justify-content-center`}
+          >
             <Form.Group className="text-center">
               {image ? (
                 <>
                   <figure className={image_filter}>
-                    <Image className={appStyles.Image} src={image} />
+                    <Image className={appStyles.Image} src={image} rounded />
                   </figure>
                   <div>
                     <Form.Label
@@ -129,7 +131,7 @@ function PostCreateForm() {
                 </>
               ) : (
                 <Form.Label
-                  className="d-flex justify-content-center mt-4"
+                  className="d-flex justify-content-center"
                   htmlFor="image-upload"
                 >
                   <Asset children={<Upload />} />

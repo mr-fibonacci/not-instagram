@@ -5,7 +5,7 @@ const Asset = ({ children, message }) => {
   return (
     <div className={styles.Asset}>
       {children}
-      <p className="mt-4">{message}</p>
+      {message && <p className="mt-4">{message}</p>}
     </div>
   );
 };
