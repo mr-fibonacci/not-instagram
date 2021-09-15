@@ -117,7 +117,7 @@ function ProfileForm() {
               ))}
               <div>
                 <Form.Label
-                  className={`${btnStyles.Button} ${btnStyles.Blue} my-auto`}
+                  className={`${btnStyles.Button} ${btnStyles.Blue} btn my-auto`}
                   htmlFor="image-upload"
                 >
                   Change the image

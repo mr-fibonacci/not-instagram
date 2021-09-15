@@ -117,7 +117,7 @@ function PostCreateForm() {
                   </figure>
                   <div>
                     <Form.Label
-                      className={`${btnStyles.Button} ${btnStyles.Blue}`}
+                      className={`${btnStyles.Button} ${btnStyles.Blue} btn`}
                       htmlFor="image-upload"
                     >
                       Change the image
