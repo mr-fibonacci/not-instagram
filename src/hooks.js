@@ -19,3 +19,18 @@ export const useClickOutsideToggle = () => {
 
   return { expanded, setExpanded, ref };
 };
+
+export const useRedirect = () => {
+  const history = useHistory();
+  const handleMount = async () => {
+    try {
+      await axios.post("/dj-rest-auth/token/refresh/");
+      history.goBack();
+    } catch (err) {
+      console.log(err.request);
+    }
+  };
+  useEffect(() => {
+    handleMount();
+  });
+};

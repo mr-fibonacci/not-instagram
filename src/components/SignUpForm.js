@@ -12,8 +12,10 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 import { Image } from "react-bootstrap";
+import { useRedirect } from "../hooks";
 
 function SignUpForm() {
+  useRedirect();
   const history = useHistory();
   const [signUpData, setSignUpData] = useState({
     username: "",

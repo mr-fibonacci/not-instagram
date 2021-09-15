@@ -14,11 +14,13 @@ import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import appStyles from "../App.module.css";
 import { useLastLocation } from "react-router-last-location";
+import { useRedirect } from "../hooks";
 
 function SignInForm() {
   const setCurrentUser = useSetCurrentUser();
   const history = useHistory();
   const lastLocation = useLastLocation();
+  useRedirect();
   console.log("last location:", lastLocation);
   const [errors, setErrors] = useState({});
   const [signInData, setSignInData] = useState({
