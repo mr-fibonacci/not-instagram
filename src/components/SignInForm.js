@@ -20,7 +20,7 @@ function SignInForm() {
   const setCurrentUser = useSetCurrentUser();
   const history = useHistory();
   const lastLocation = useLastLocation();
-  useRedirect();
+  useRedirect(false);
   console.log("last location:", lastLocation);
   const [errors, setErrors] = useState({});
   const [signInData, setSignInData] = useState({

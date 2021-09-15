@@ -33,10 +33,7 @@ function PostEditForm() {
       const { data } = await axiosReq.get(`/posts/${id}/`);
       const { title, content, image, image_filter, is_owner } = data;
       if (!is_owner) {
-        console.log("NOT THE OWNER!");
         history.goBack();
-      } else {
-        console.log("IS OWNER!");
       }
       setPostData({
         title,

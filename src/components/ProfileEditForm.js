@@ -11,8 +11,10 @@ import appStyles from "../App.module.css";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
 import { axiosReq, axiosRes } from "../axiosDefaults";
+import { useProfileRedirect } from "../hooks";
 
 function ProfileForm() {
+  useProfileRedirect();
   const setCurrentUser = useSetCurrentUser();
   const { id } = useParams();
   const history = useHistory();
@@ -31,11 +33,7 @@ function ProfileForm() {
   const handleMount = async () => {
     try {
       const { data } = await axiosReq.get(`/profiles/${id}/`);
-      const { name, content, image, is_owner } = data;
-      console.log("IS_OWNER?", is_owner);
-      if (!is_owner) {
-        history.goBack();
-      }
+      const { name, content, image } = data;
       setProfileData({ name, content, image });
     } catch (err) {
       console.log(err.request);

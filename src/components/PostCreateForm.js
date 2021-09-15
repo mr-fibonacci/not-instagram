@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import React, { useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
@@ -15,8 +14,10 @@ import appStyles from "../App.module.css";
 import Alert from "react-bootstrap/Alert";
 import styles from "./PostCreateEditForm.module.css";
 import { axiosRes } from "../axiosDefaults";
+import { useRedirect } from "../hooks";
 
 function PostCreateForm() {
+  useRedirect();
   const history = useHistory();
   const [postData, setPostData] = useState({
     title: "",
@@ -27,19 +28,6 @@ function PostCreateForm() {
   const { title, content, image, image_filter } = postData;
   const [errors, setErrors] = useState({});
   const imageFile = useRef();
-
-  const handleMount = async () => {
-    try {
-      await axios.post("/dj-rest-auth/token/refresh/");
-    } catch (err) {
-      console.log("token refresh error!");
-      history.goBack();
-    }
-  };
-
-  useEffect(() => {
-    handleMount();
-  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
