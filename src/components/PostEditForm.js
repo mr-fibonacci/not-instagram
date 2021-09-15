@@ -11,7 +11,7 @@ import FilterSlider from "./FilterSlider";
 import appStyles from "../App.module.css";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
-import { axiosRes } from "../axiosDefaults";
+import { axiosReq, axiosRes } from "../axiosDefaults";
 
 function PostEditForm() {
   const { id } = useParams();
@@ -31,8 +31,14 @@ function PostEditForm() {
 
   const handleMount = async () => {
     try {
-      const { data } = await axios.get(`/posts/${id}/`);
-      const { title, content, image, image_filter } = data;
+      const { data } = await axiosReq.get(`/posts/${id}/`);
+      const { title, content, image, image_filter, is_owner } = data;
+      if (!is_owner) {
+        console.log("NOT THE OWNER!");
+        history.goBack();
+      } else {
+        console.log("IS OWNER!");
+      }
       setPostData({
         title,
         content,

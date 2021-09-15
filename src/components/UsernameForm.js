@@ -5,11 +5,12 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import btnStyles from "./Button.module.css";
 import appStyles from "../App.module.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { axiosRes } from "../axiosDefaults";
 
 const UsernameForm = () => {
   const history = useHistory();
+  const { id } = useParams();
   const [username, setUsername] = useState("");
   const [errors, setErrors] = useState({});
   useEffect(() => {
@@ -18,7 +19,10 @@ const UsernameForm = () => {
   const handleMount = async () => {
     try {
       const { data } = await axiosRes.get("/dj-rest-auth/user/");
-      console.log(data);
+      console.log(data, id);
+      if (data.profile_id != id) {
+        history.goBack();
+      }
       setUsername(data.username);
     } catch (err) {
       console.log(err);

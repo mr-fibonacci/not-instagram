@@ -30,14 +30,17 @@ export const CurrentUserProvider = ({ children }) => {
     const resInterceptor = axiosRes.interceptors.response.use(
       (response) => response,
       async (error) => {
-        console.log("inside interceptor, ERROR STATUS:", error.response.status);
-        const config = error.config;
-        console.log("ERROR CONFIG:", error.config);
+        console.log(
+          "inside interceptor, ERROR STATUS:",
+          error.response.status,
+          "ERROR CONFIG:",
+          error.config
+        );
         if (error.response.status === 401) {
-          console.log("TROKL;ASDKFJASL;DKGJSL;ADHG;LASHDKLJFKL;SDF");
+          console.log("ACCESS TOKEN EXPIRED");
           try {
             await axios.post("/dj-rest-auth/token/refresh/");
-            console.log("refreshed");
+            console.log("ACCESS TOKEN REFRESHED");
           } catch (err) {
             console.log("REFRESH TOKEN EXPIRED", err.request);
             setCurrentUser((prevCurrentUser) => {
@@ -47,7 +50,7 @@ export const CurrentUserProvider = ({ children }) => {
               return null;
             });
           }
-          return axios(config);
+          return axios(error.config);
         }
         return Promise.reject(error);
       }

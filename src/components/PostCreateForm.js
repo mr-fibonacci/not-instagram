@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -27,6 +27,19 @@ function PostCreateForm() {
   const { title, content, image, image_filter } = postData;
   const [errors, setErrors] = useState({});
   const imageFile = useRef();
+
+  const handleMount = async () => {
+    try {
+      await axios.post("/dj-rest-auth/token/refresh/");
+    } catch (err) {
+      console.log("token refresh error!");
+      history.goBack();
+    }
+  };
+
+  useEffect(() => {
+    handleMount();
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();

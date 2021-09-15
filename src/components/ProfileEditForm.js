@@ -4,16 +4,14 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import { useHistory, useParams } from "react-router-dom";
-import { useSetCurrentUser } from "../CurrentUserContext";
+import { useCurrentUser, useSetCurrentUser } from "../CurrentUserContext";
 import btnStyles from "./Button.module.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import appStyles from "../App.module.css";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
-import UsernameForm from "../components/UsernameForm";
-import UserPasswordForm from "../components/UserPasswordForm";
-import { axiosRes } from "../axiosDefaults";
+import { axiosReq, axiosRes } from "../axiosDefaults";
 
 function ProfileForm() {
   const setCurrentUser = useSetCurrentUser();
@@ -33,11 +31,15 @@ function ProfileForm() {
 
   const handleMount = async () => {
     try {
-      const { data } = await axios.get(`/profiles/${id}/`);
-      const { name, content, image } = data;
+      const { data } = await axiosReq.get(`/profiles/${id}/`);
+      const { name, content, image, is_owner } = data;
+      console.log("IS_OWNER?", is_owner);
+      if (!is_owner) {
+        history.goBack();
+      }
       setProfileData({ name, content, image });
     } catch (err) {
-      console.log(err);
+      console.log(err.request);
     }
   };
 
