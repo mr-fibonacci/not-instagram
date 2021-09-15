@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Media from "react-bootstrap/Media";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import CommentEditForm from "./CommentEditForm";
 import Avatar from "./Avatar";
 import MoreDropdown from "./MoreDropdown";

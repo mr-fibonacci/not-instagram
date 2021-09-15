@@ -1,14 +1,10 @@
 import React from "react";
-import Media from "react-bootstrap/Media";
 import Button from "react-bootstrap/Button";
-import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useCurrentUser } from "../CurrentUserContext";
 import Avatar from "./Avatar";
-import MoreDropdown from "./MoreDropdown";
 import btnStyles from "./Button.module.css";
 import styles from "./Profile.module.css";
-import { Col, Row } from "react-bootstrap";
 
 function Profile(props) {
   const {
@@ -20,16 +16,13 @@ function Profile(props) {
   } = props;
   const {
     id,
-    content,
     posts_count,
     followers_count,
     following_count,
     following_id,
     image,
-    name,
     owner,
   } = profile;
-  const history = useHistory();
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
   return (

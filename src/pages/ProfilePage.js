@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 import Post from "../components/Post";
 import Profile from "../components/Profile";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchMoreData, fetchMoreDataState, refreshToken } from "../utils";
+import { fetchMoreData, fetchMoreDataState } from "../utils";
 import "./ProfilePage.css";
 import Asset from "../components/Asset";
 import Spinner from "react-bootstrap/Spinner";
@@ -17,17 +17,15 @@ import appStyles from "../App.module.css";
 import { ReactComponent as NoResults } from "../assets/no-results.svg";
 import { useCurrentUser } from "../CurrentUserContext";
 import { Image, Button } from "react-bootstrap";
-import MoreDropdown, { ProfileEditDropdown } from "../components/MoreDropdown";
+import { ProfileEditDropdown } from "../components/MoreDropdown";
 import btnStyles from "../components/Button.module.css";
 import styles from "../App.module.css";
-import { Link, useHistory } from "react-router-dom";
 import PopularProfiles from "../components/PopularProfiles";
 import { axiosReq, axiosRes } from "../axiosDefaults";
 
 function ProfilePage() {
   console.log("render");
 
-  const history = useHistory();
   const { id } = useParams();
   const [hasLoaded, setHasLoaded] = useState(false);
 
@@ -39,7 +37,6 @@ function ProfilePage() {
     followingProfiles: { results: [] },
     followedProfiles: { results: [] },
     popularProfiles: { results: [] },
-    // profilePosts: { results: [] },
   });
   const [profilePosts, setProfilePosts] = useState({ results: [] });
   const {
@@ -48,7 +45,6 @@ function ProfilePage() {
     followingProfiles,
     followedProfiles,
     popularProfiles,
-    // profilePosts,
   } = profileState;
 
   const fetchData = async () => {
@@ -82,8 +78,7 @@ function ProfilePage() {
       console.log(err.request);
     }
   };
-  const handleEdit = () => history.push(`/profiles/${id}/edit`);
-  const handleAddPost = () => history.push("/posts/create");
+
   useEffect(() => {
     fetchData();
   }, [id]);

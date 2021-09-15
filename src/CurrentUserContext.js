@@ -60,7 +60,7 @@ export const CurrentUserProvider = ({ children }) => {
       axiosReq.interceptors.response.eject(reqInterceptor);
       axiosRes.interceptors.response.eject(resInterceptor);
     };
-  }, []);
+  }, [history]);
 
   const handleMount = async () => {
     try {

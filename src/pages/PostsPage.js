@@ -1,11 +1,10 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useLocation } from "react-router";
 import Post from "../components/Post";
-import { fetchMoreData, refreshToken } from "../utils";
+import { fetchMoreData } from "../utils";
 import { ReactComponent as NoResults } from "../assets/no-results.svg";
 
 import styles from "./PostsPage.module.css";

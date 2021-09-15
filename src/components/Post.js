@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Media from "react-bootstrap/Media";

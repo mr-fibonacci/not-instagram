@@ -52,7 +52,7 @@ function NavBar() {
         </NavLink>
         {currentUser && (
           <NavLink to={"/posts/create"}>
-            <Icon component={AddPost} text="add" nav />
+            <Icon component={AddPost} text="add" nav="true" />
           </NavLink>
         )}
         <Navbar.Toggle
@@ -65,16 +65,16 @@ function NavBar() {
             {currentUser ? (
               <>
                 <NavLink exact activeClassName={styles.Active} to={"/"}>
-                  <Icon component={Home} text="home" nav />
+                  <Icon component={Home} text="home" nav="true" />
                 </NavLink>
                 <NavLink activeClassName={styles.Active} to={"/feed"}>
-                  <Icon component={Feed} text="feed" nav />
+                  <Icon component={Feed} text="feed" nav="true" />
                 </NavLink>
                 <NavLink activeClassName={styles.Active} to={"/liked"}>
-                  <Icon component={Heart} text="liked" nav />
+                  <Icon component={Heart} text="liked" nav="true" />
                 </NavLink>
                 <NavLink to="/" onClick={handleSignOut}>
-                  <Icon component={Signout} text="sign out" nav />
+                  <Icon component={Signout} text="sign out" nav="true" />
                 </NavLink>
                 <NavLink
                   activeClassName={styles.Active}
@@ -86,13 +86,13 @@ function NavBar() {
             ) : (
               <>
                 <NavLink exact activeClassName={styles.Active} to={"/"}>
-                  <Icon component={Home} text="home" nav />
+                  <Icon component={Home} text="home" nav="true" />
                 </NavLink>
                 <NavLink activeClassName={styles.Active} to="/signin">
-                  <Icon component={Signin} text="sign in" nav />
+                  <Icon component={Signin} text="sign in" nav="true" />
                 </NavLink>
                 <NavLink activeClassName={styles.Active} to="/signup">
-                  <Icon component={Signup} text="sign up" nav />
+                  <Icon component={Signup} text="sign up" nav="true" />
                 </NavLink>
               </>
             )}

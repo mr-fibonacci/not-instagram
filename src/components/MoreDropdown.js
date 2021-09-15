@@ -1,6 +1,5 @@
 import React from "react";
 import dots from "../assets/dots.svg";
-import { ReactComponent as Add } from "../assets/add-post.svg";
 import { ReactComponent as Edit } from "../assets/edit.svg";
 import { ReactComponent as Delete } from "../assets/delete.svg";
 import Dropdown from "react-bootstrap/Dropdown";

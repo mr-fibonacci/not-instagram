@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import { useHistory, useParams } from "react-router-dom";
-import { useCurrentUser, useSetCurrentUser } from "../CurrentUserContext";
+import { useSetCurrentUser } from "../CurrentUserContext";
 import btnStyles from "./Button.module.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
