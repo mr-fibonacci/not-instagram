@@ -250,17 +250,7 @@ function ProfilePage() {
         <Container className={appStyles.Content}>
           {hasLoaded ? (
             <>
-              {profile?.is_owner && (
-                <ProfileEditDropdown id={profile?.id} />
-                // <div
-                //   className="px-2"
-                //   style={{ position: "absolute", right: "0px", zIndex: 99 }}
-                //   onClick={handleEdit}
-                // >
-                //   <Icon component={Edit} />
-                // </div>
-              )}
-
+              {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
               <Row noGutters className="px-3">
                 <Col lg={3} className="text-center text-lg-left">
                   <Image
@@ -413,16 +403,22 @@ function ProfilePage() {
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
         <Container className={styles.Content}>
-          <p>Most followed profiles.</p>
-          {popularProfiles?.results?.map((profile) => (
-            <Profile
-              key={profile.id}
-              profile={profile}
-              stats={false}
-              handleFollow={handleFollow}
-              handleUnfollow={handleUnfollow}
-            />
-          ))}
+          {hasLoaded ? (
+            <>
+              <p>Most followed profiles.</p>
+              {popularProfiles?.results?.map((profile) => (
+                <Profile
+                  key={profile.id}
+                  profile={profile}
+                  stats={false}
+                  handleFollow={handleFollow}
+                  handleUnfollow={handleUnfollow}
+                />
+              ))}
+            </>
+          ) : (
+            <Asset children={<Spinner animation="border" />} />
+          )}
         </Container>
       </Col>
     </Row>

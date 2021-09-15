@@ -73,43 +73,49 @@ const PopularProfiles = ({ mobile }) => {
       console.log(err.request);
     }
   };
-  return !hasLoaded ? (
-    <Asset children={<Spinner animation="border" />} />
-  ) : mobile ? (
+  return mobile ? (
     <Container
       className={`${appStyles.Content} d-block d-lg-none text-center mb-3`}
     >
-      <div className="my-1">Most followed profiles.</div>
-      <Swiper
-        style={{ marginLeft: "-10px", marginRight: "-10px" }}
-        breakpoints={{
-          200: { slidesPerView: 2.5 },
-          320: { slidesPerView: 3.5 },
-          480: { slidesPerView: 4.5 },
-          576: { slidesPerView: 4.5 },
-          768: { slidesPerView: 5.5 },
-        }}
-      >
-        {popularProfiles?.results?.map((profile) => (
-          <SwiperSlide key={profile.id}>
-            <Link to={`/profiles/${profile.id}`}>
-              <div className="d-flex flex-column align-items-center">
-                <Image
-                  roundedCircle
-                  style={{
-                    width: "64px",
-                    height: "64px",
-                    objectFit: "cover",
-                  }}
-                  src={profile.image}
-                />
-                {profile.owner}
-              </div>
-            </Link>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {!hasLoaded ? (
+        <Asset children={<Spinner animation="border" />} />
+      ) : (
+        <>
+          <div className="my-1">Most followed profiles.</div>
+          <Swiper
+            style={{ marginLeft: "-10px", marginRight: "-10px" }}
+            breakpoints={{
+              200: { slidesPerView: 2.5 },
+              320: { slidesPerView: 3.5 },
+              480: { slidesPerView: 4.5 },
+              576: { slidesPerView: 4.5 },
+              768: { slidesPerView: 5.5 },
+            }}
+          >
+            {popularProfiles?.results?.map((profile) => (
+              <SwiperSlide key={profile.id}>
+                <Link to={`/profiles/${profile.id}`}>
+                  <div className="d-flex flex-column align-items-center">
+                    <Image
+                      roundedCircle
+                      style={{
+                        width: "64px",
+                        height: "64px",
+                        objectFit: "cover",
+                      }}
+                      src={profile.image}
+                    />
+                    {profile.owner}
+                  </div>
+                </Link>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </>
+      )}
     </Container>
+  ) : !hasLoaded ? (
+    <Asset children={<Spinner animation="border" />} />
   ) : (
     <Container className={styles.Content}>
       <p>Most followed profiles.</p>
