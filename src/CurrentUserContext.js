@@ -14,6 +14,7 @@ export const CurrentUserProvider = ({ children }) => {
   const history = useHistory();
   useEffect(() => {
     const reqInterceptor = axiosReq.interceptors.request.use(async (config) => {
+      console.log("inside req interceptor");
       try {
         await axios.post("/dj-rest-auth/token/refresh/");
       } catch (err) {
@@ -24,7 +25,10 @@ export const CurrentUserProvider = ({ children }) => {
           }
           return null;
         });
+        console.log("ERR1!");
+        return config;
       }
+      console.log("ERR2?");
       return config;
     });
     const resInterceptor = axiosRes.interceptors.response.use(

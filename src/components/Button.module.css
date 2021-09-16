@@ -14,13 +14,13 @@
   cursor: pointer;
 }
 .Button:hover:active {
-  background-color: coral !important;
+  background-color: #2142b2 !important;
 }
 .Button:active {
-  background-color: coral !important;
+  background-color: #2142b2 !important;
 }
 .Button:focus {
-  background-color: coral;
+  background-color: #2142b2;
 }
 
 .Wide {

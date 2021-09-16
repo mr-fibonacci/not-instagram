@@ -3,7 +3,7 @@ import styles from "./Avatar.module.css";
 
 function Avatar({ src, height = 45, text }) {
   return (
-    <span style={{ lineHeight: "45px" }}>
+    <span>
       <img
         className={styles.Avatar}
         alt="avatar"
