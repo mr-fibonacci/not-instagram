@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+} from "react";
 import axios from "axios";
 import { axiosReq, axiosRes } from "./axiosDefaults";
 import { useHistory } from "react-router-dom";
@@ -12,8 +18,9 @@ export const useSetCurrentUser = () => useContext(SetCurrentUserContext);
 export const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const history = useHistory();
-  useEffect(() => {
-    const reqInterceptor = axiosReq.interceptors.request.use(async (config) => {
+
+  useMemo(() => {
+    axiosReq.interceptors.request.use(async (config) => {
       console.log("inside req interceptor");
       try {
         await axios.post("/dj-rest-auth/token/refresh/");
@@ -31,7 +38,7 @@ export const CurrentUserProvider = ({ children }) => {
       console.log("ERR2?");
       return config;
     });
-    const resInterceptor = axiosRes.interceptors.response.use(
+    axiosRes.interceptors.response.use(
       (response) => response,
       async (error) => {
         console.log(
@@ -59,12 +66,11 @@ export const CurrentUserProvider = ({ children }) => {
         return Promise.reject(error);
       }
     );
+  }, []);
+
+  useEffect(() => {
     handleMount();
-    return () => {
-      axiosReq.interceptors.response.eject(reqInterceptor);
-      axiosRes.interceptors.response.eject(resInterceptor);
-    };
-  }, [history]);
+  }, []);
 
   const handleMount = async () => {
     try {
