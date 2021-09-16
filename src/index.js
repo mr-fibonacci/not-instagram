@@ -9,11 +9,11 @@ import { CurrentUserProvider } from "./CurrentUserContext";
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <LastLocationProvider>
-        <CurrentUserProvider>
+      <CurrentUserProvider>
+        <LastLocationProvider>
           <App />
-        </CurrentUserProvider>
-      </LastLocationProvider>
+        </LastLocationProvider>
+      </CurrentUserProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById("root")

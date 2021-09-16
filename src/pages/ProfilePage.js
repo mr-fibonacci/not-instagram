@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
@@ -56,12 +55,12 @@ function ProfilePage() {
         { data: followedProfiles },
         { data: popularProfiles },
       ] = await Promise.all([
-        // refresh the smallest to make it throw
+        // all axiosReq
         axiosReq.get(`/profiles/${id}/`),
-        axios.get(`/posts/?owner__profile=${id}`),
-        axios.get(`/profiles/?owner__followed__owner__profile=${id}`),
-        axios.get(`/profiles/?owner__following__followed__profile=${id}`),
-        axios.get("/profiles/?ordering=-followers_count"),
+        axiosReq.get(`/posts/?owner__profile=${id}`),
+        axiosReq.get(`/profiles/?owner__followed__owner__profile=${id}`),
+        axiosReq.get(`/profiles/?owner__following__followed__profile=${id}`),
+        axiosReq.get("/profiles/?ordering=-followers_count"),
       ]);
 
       setHasLoaded(true);
@@ -84,7 +83,7 @@ function ProfilePage() {
   }, [id]);
   const fetchCurrentUserProfile = async () => {
     try {
-      const { data: currentUserProfile } = await axios.get(
+      const { data: currentUserProfile } = await axiosReq.get(
         `/profiles/${currentUser.profile_id}/`
       );
       console.log("currentUserProfile:", currentUserProfile);

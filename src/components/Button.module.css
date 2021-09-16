@@ -13,6 +13,15 @@
   border-color: transparent;
   cursor: pointer;
 }
+.Button:hover:active {
+  background-color: coral !important;
+}
+.Button:active {
+  background-color: coral !important;
+}
+.Button:focus {
+  background-color: coral;
+}
 
 .Wide {
   padding: 10px 50px;
