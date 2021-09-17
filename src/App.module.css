@@ -5,10 +5,10 @@
 }
 * {
   box-sizing: border-box;
-  color: #555555;
 }
 a {
   color: #555555;
+  transition: color ease-in-out 0.3s;
 }
 a:hover {
   text-decoration: none;
@@ -16,6 +16,22 @@ a:hover {
 input[type="file"] {
   display: none;
 }
+
+i {
+  font-size: 1.6rem;
+  padding: 10px;
+  padding-left: 15px;
+  vertical-align: middle;
+}
+
+a.active {
+  color: #2142b2;
+}
+
+a:hover {
+  color: #2142b2;
+}
+
 .Content {
   background-color: #ffffff;
   padding: 10px;

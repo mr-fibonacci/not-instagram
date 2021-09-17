@@ -52,7 +52,7 @@ function NavBar() {
         </NavLink>
         {currentUser && (
           <NavLink to={"/posts/create"}>
-            <Icon component={AddPost} text="add" nav="true" />
+            <i class="far fa-plus-square" /> add post
           </NavLink>
         )}
         <Navbar.Toggle
@@ -61,20 +61,24 @@ function NavBar() {
           onClick={() => setExpanded(!expanded)}
         />
         <Navbar.Collapse className="justify-content-end" id="navbar">
-          <Nav>
+          <Nav className="align-items-md-center">
             {currentUser ? (
               <>
                 <NavLink exact activeClassName={styles.Active} to={"/"}>
-                  <Icon component={Home} text="home" nav="true" />
+                  <i class="fas fa-home" />
+                  home
                 </NavLink>
                 <NavLink activeClassName={styles.Active} to={"/feed"}>
-                  <Icon component={Feed} text="feed" nav="true" />
+                  <i class="fas fa-stream" />
+                  feed
                 </NavLink>
                 <NavLink activeClassName={styles.Active} to={"/liked"}>
-                  <Icon component={Heart} text="liked" nav="true" />
+                  <i class="fas fa-heart" />
+                  liked
                 </NavLink>
-                <NavLink to="/" onClick={handleSignOut}>
-                  <Icon component={Signout} text="sign out" nav="true" />
+                <NavLink exact to="/" onClick={handleSignOut}>
+                  <i class="fas fa-sign-out-alt" />
+                  sign out
                 </NavLink>
                 <NavLink
                   activeClassName={styles.Active}
@@ -86,13 +90,16 @@ function NavBar() {
             ) : (
               <>
                 <NavLink exact activeClassName={styles.Active} to={"/"}>
-                  <Icon component={Home} text="home" nav="true" />
+                  <i class="fas fa-home" />
+                  home
                 </NavLink>
                 <NavLink activeClassName={styles.Active} to="/signin">
-                  <Icon component={Signin} text="sign in" nav="true" />
+                  <i class="fas fa-sign-in-alt" />
+                  sign in
                 </NavLink>
                 <NavLink activeClassName={styles.Active} to="/signup">
-                  <Icon component={Signup} text="sign up" nav="true" />
+                  <i class="fas fa-user-plus" />
+                  sign up
                 </NavLink>
               </>
             )}
