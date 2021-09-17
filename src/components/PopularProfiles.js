@@ -114,20 +114,24 @@ const PopularProfiles = ({ mobile }) => {
         </>
       )}
     </Container>
-  ) : !hasLoaded ? (
-    <Asset children={<Spinner animation="border" />} />
   ) : (
     <Container className={styles.Content}>
-      <p>Most followed profiles.</p>
-      {popularProfiles.results?.map((profile) => (
-        <Profile
-          key={profile.id}
-          profile={profile}
-          stats={false}
-          handleFollow={handleFollow}
-          handleUnfollow={handleUnfollow}
-        />
-      ))}
+      {!hasLoaded ? (
+        <Asset children={<Spinner animation="border" />} />
+      ) : (
+        <>
+          <p>Most followed profiles.</p>
+          {popularProfiles.results?.map((profile) => (
+            <Profile
+              key={profile.id}
+              profile={profile}
+              stats={false}
+              handleFollow={handleFollow}
+              handleUnfollow={handleUnfollow}
+            />
+          ))}
+        </>
+      )}
     </Container>
   );
 };
