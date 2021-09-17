@@ -127,12 +127,14 @@ function ProfileForm() {
                 id="image-upload"
                 ref={imageFile}
                 accept="image/*"
-                onChange={(e) =>
-                  setProfileData({
-                    ...profileData,
-                    image: URL.createObjectURL(e.target.files[0]),
-                  })
-                }
+                onChange={(e) => {
+                  if (e.target.files.length) {
+                    setProfileData({
+                      ...profileData,
+                      image: URL.createObjectURL(e.target.files[0]),
+                    });
+                  }
+                }}
               />
             </Form.Group>
             {/* {errors?.name?.map((message, idx) => (

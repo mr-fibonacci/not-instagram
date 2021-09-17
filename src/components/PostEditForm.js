@@ -152,13 +152,15 @@ function PostEditForm() {
                 id="image-upload"
                 ref={imageFile}
                 accept="image/*"
-                onChange={(e) =>
-                  setPostData({
-                    ...postData,
-                    image_filter: "normal",
-                    image: URL.createObjectURL(e.target.files[0]),
-                  })
-                }
+                onChange={(e) => {
+                  if (e.target.files.length) {
+                    setPostData({
+                      ...postData,
+                      image_filter: "normal",
+                      image: URL.createObjectURL(e.target.files[0]),
+                    });
+                  }
+                }}
               />
             </Form.Group>
             <div className="d-md-none">{textFields}</div>
