@@ -4,11 +4,7 @@ import Media from "react-bootstrap/Media";
 import Image from "react-bootstrap/Image";
 import Avatar from "./Avatar";
 import { Link } from "react-router-dom";
-import { ReactComponent as Heart } from "../assets/heart.svg";
-import { ReactComponent as HeartRed } from "../assets/heart-red.svg";
-import { ReactComponent as Comment } from "../assets/comment.svg";
 import styles from "./Post.module.css";
-import Icon from "./Icon";
 import MoreDropdown from "./MoreDropdown";
 import { useCurrentUser } from "../CurrentUserContext";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
@@ -106,27 +102,27 @@ function Post(props) {
               placement="top"
               overlay={<Tooltip>Can't like own posts!</Tooltip>}
             >
-              <Icon label="like" component={Heart} />
+              <i className="far fa-heart" />
             </OverlayTrigger>
           ) : like_id ? (
             <span onClick={handleUnlike}>
-              <Icon label="like" component={HeartRed} />
+              <i className="fas fa-heart" />
             </span>
           ) : currentUser ? (
             <span onClick={handleLike}>
-              <Icon label="like" component={Heart} />
+              <i className="far fa-heart" />
             </span>
           ) : (
             <OverlayTrigger
               placement="top"
               overlay={<Tooltip>Log in to like posts!</Tooltip>}
             >
-              <Icon label="like" component={Heart} />
+              <i className="far fa-heart" />
             </OverlayTrigger>
           )}
           {likes_count}
           <Link to={`/posts/${id}`}>
-            <Icon label="comment" component={Comment} />
+            <i className="far fa-comments" />
           </Link>
           {comments_count}
           <span className="mx-2">{`#${image_filter}`}</span>

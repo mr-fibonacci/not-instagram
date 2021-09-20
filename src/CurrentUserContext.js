@@ -8,6 +8,7 @@ import React, {
 import axios from "axios";
 import { axiosReq, axiosRes } from "./axiosDefaults";
 import { useHistory } from "react-router-dom";
+// import "./axiosDefaults";
 
 const CurrentUserContext = createContext();
 const SetCurrentUserContext = createContext();
@@ -20,34 +21,43 @@ export const CurrentUserProvider = ({ children }) => {
   const history = useHistory();
 
   useMemo(() => {
-    axiosReq.interceptors.request.use(async (config) => {
-      console.log("inside req interceptor");
-      try {
-        await axios.post("/dj-rest-auth/token/refresh/");
-      } catch (err) {
-        console.log(err.request);
-        setCurrentUser((prevCurrentUser) => {
-          if (prevCurrentUser) {
-            history.push("/signin");
-          }
-          return null;
-        });
-        console.log("ERR1!");
+    axiosReq.interceptors.request.use(
+      async (config) => {
+        console.log("inside req interceptor");
+        try {
+          await axios.post("/dj-rest-auth/token/refresh/");
+          console.log("refreshed the token successfully");
+        } catch (err) {
+          console.log(err.request);
+          setCurrentUser((prevCurrentUser) => {
+            if (prevCurrentUser) {
+              history.push("/signin");
+            }
+            return null;
+          });
+          console.log("ERR1!");
+          return config;
+        }
+        console.log("ERR2?");
         return config;
+      },
+      (err) => {
+        console.log("REQ interceptor error:");
+        return Promise.reject(err);
       }
-      console.log("ERR2?");
-      return config;
-    });
+    );
     axiosRes.interceptors.response.use(
       (response) => response,
       async (error) => {
         console.log(
+          error,
+          error?.request,
           "inside interceptor, ERROR STATUS:",
-          error.response.status,
+          error?.response?.status,
           "ERROR CONFIG:",
-          error.config
+          error?.config
         );
-        if (error.response.status === 401) {
+        if (error?.response?.status === 401) {
           console.log("ACCESS TOKEN EXPIRED");
           try {
             await axios.post("/dj-rest-auth/token/refresh/");
