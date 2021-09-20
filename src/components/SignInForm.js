@@ -34,7 +34,11 @@ function SignInForm() {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
       setCurrentUser(data.user);
 
-      if (lastLocation.pathname === "/signup") {
+      if (
+        lastLocation.pathname === "/signup" ||
+        lastLocation.pathname === "/signin" ||
+        !lastLocation
+      ) {
         history.push("/");
       } else {
         history.goBack();
