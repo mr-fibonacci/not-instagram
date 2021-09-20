@@ -2,13 +2,13 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Media from "react-bootstrap/Media";
 import Image from "react-bootstrap/Image";
-import Avatar from "./Avatar";
+import Avatar from "../../components/Avatar";
 import { Link } from "react-router-dom";
-import styles from "./Post.module.css";
-import MoreDropdown from "./MoreDropdown";
-import { useCurrentUser } from "../CurrentUserContext";
+import styles from "../../styles/Post.module.css";
+import MoreDropdown from "../../components/MoreDropdown";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { axiosRes } from "../axiosDefaults";
+import { axiosRes } from "../../api/axiosDefaults";
 
 function Post(props) {
   const {

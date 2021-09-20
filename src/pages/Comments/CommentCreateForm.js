@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import styles from "./CommentCreateEditForm.module.css";
-import Avatar from "./Avatar";
+import styles from "../../styles/CommentCreateEditForm.module.css";
+import Avatar from "../../components/Avatar";
 import { Link } from "react-router-dom";
-import { axiosRes } from "../axiosDefaults";
+import { axiosRes } from "../../api/axiosDefaults";
 
 function CommentCreateForm(props) {
   const { post, setPost, setComments, profileImage, profile_id } = props;

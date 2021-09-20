@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Asset.module.css";
+import styles from "../styles/Asset.module.css";
 
 const Asset = ({ children, message }) => {
   return (

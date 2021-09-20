@@ -5,16 +5,16 @@ import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useHistory } from "react-router";
-import { ReactComponent as Upload } from "../assets/upload.svg";
-import btnStyles from "./Button.module.css";
-import Asset from "./Asset";
-import FilterSlider from "./FilterSlider";
+import { ReactComponent as Upload } from "../../assets/upload.svg";
+import btnStyles from "../../styles/Button.module.css";
+import Asset from "../../components/Asset";
+import FilterSlider from "../../components/FilterSlider";
 import Container from "react-bootstrap/Container";
-import appStyles from "../App.module.css";
+import appStyles from "../../App.module.css";
 import Alert from "react-bootstrap/Alert";
-import styles from "./PostCreateEditForm.module.css";
-import { axiosReq } from "../axiosDefaults";
-import { useRedirect } from "../hooks";
+import styles from "../../styles/PostCreateEditForm.module.css";
+import { axiosReq } from "../../api/axiosDefaults";
+import { useRedirect } from "../../hooks/useRedirect";
 
 function PostCreateForm() {
   useRedirect();

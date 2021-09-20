@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "react-bootstrap/Image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { IMAGE_FILTERS } from "../utils";
+import { IMAGE_FILTERS } from "../utils/utils";
 import "swiper/swiper.min.css";
 
 const FilterSlider = ({ image, image_filter, handleClick }) => {

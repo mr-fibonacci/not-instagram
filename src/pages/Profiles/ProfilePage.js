@@ -1,26 +1,28 @@
 import React, { useState, useEffect } from "react";
+
+import { useParams } from "react-router";
+import Post from "../Posts/Post";
+import Profile from "./Profile";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { fetchMoreData, fetchMoreDataState } from "../../utils/utils";
+import "../../styles/ProfilePage.css";
+import Asset from "../../components/Asset";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
-import { useParams } from "react-router";
-import Post from "../components/Post";
-import Profile from "../components/Profile";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchMoreData, fetchMoreDataState } from "../utils";
-import "./ProfilePage.css";
-import Asset from "../components/Asset";
 import Spinner from "react-bootstrap/Spinner";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-import appStyles from "../App.module.css";
-import { ReactComponent as NoResults } from "../assets/no-results.svg";
-import { useCurrentUser } from "../CurrentUserContext";
-import { Image, Button } from "react-bootstrap";
-import { ProfileEditDropdown } from "../components/MoreDropdown";
-import btnStyles from "../components/Button.module.css";
-import styles from "../App.module.css";
-import PopularProfiles from "../components/PopularProfiles";
-import { axiosReq, axiosRes } from "../axiosDefaults";
+import Image from "react-bootstrap/Image";
+import Button from "react-bootstrap/Button";
+import appStyles from "../../App.module.css";
+import { ReactComponent as NoResults } from "../../assets/no-results.svg";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+
+import { ProfileEditDropdown } from "../../components/MoreDropdown";
+import btnStyles from "../../styles/Button.module.css";
+import PopularProfiles from "../Profiles/PopularProfiles";
+import { axiosReq, axiosRes } from "../../api/axiosDefaults";
 
 function ProfilePage() {
   console.log("render");
@@ -396,7 +398,7 @@ function ProfilePage() {
         </Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
-        <Container className={styles.Content}>
+        <Container className={appStyles.Content}>
           {hasLoaded ? (
             <>
               <p>Most followed profiles.</p>

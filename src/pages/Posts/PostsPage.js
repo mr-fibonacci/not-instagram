@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { useLocation } from "react-router";
-import Post from "../components/Post";
-import { fetchMoreData } from "../utils";
-import { ReactComponent as NoResults } from "../assets/no-results.svg";
-
-import styles from "./PostsPage.module.css";
-import Asset from "../components/Asset";
 import Spinner from "react-bootstrap/Spinner";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-import appStyles from "../App.module.css";
-import PopularProfiles from "../components/PopularProfiles";
-import { axiosReq } from "../axiosDefaults";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useLocation } from "react-router";
+import Post from "./Post";
+import { fetchMoreData } from "../../utils/utils";
+import { ReactComponent as NoResults } from "../../assets/no-results.svg";
+
+import styles from "../../styles/PostsPage.module.css";
+import Asset from "../../components/Asset";
+import appStyles from "../../App.module.css";
+import PopularProfiles from "../Profiles/PopularProfiles";
+import { axiosReq } from "../../api/axiosDefaults";
 
 function PostsPage({ filter = "", message }) {
   const { pathname } = useLocation();

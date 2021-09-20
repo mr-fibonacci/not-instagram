@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Icon.module.css";
+import styles from "../styles/Icon.module.css";
 
 function Icon(props) {
   // Short explanation/graphic on how this is working

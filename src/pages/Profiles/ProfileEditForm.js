@@ -1,28 +1,30 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useParams } from "react-router-dom";
+import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
+import btnStyles from "../../styles/Button.module.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import btnStyles from "./Button.module.css";
-import FilterSlider from "./FilterSlider";
-import appStyles from "../App.module.css";
+import appStyles from "../../App.module.css";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
-import { axiosReq, axiosRes } from "../axiosDefaults";
+import { axiosReq, axiosRes } from "../../api/axiosDefaults";
+import { useProfileRedirect } from "../../hooks/useProfileRedirect";
 
-function PostEditForm() {
+function ProfileForm() {
+  useProfileRedirect();
+  const setCurrentUser = useSetCurrentUser();
   const { id } = useParams();
   const history = useHistory();
-  const [postData, setPostData] = useState({
-    title: "",
+  const [profileData, setProfileData] = useState({
+    name: "",
     content: "",
     image: "",
-    image_filter: "normal",
   });
-  const { title, content, image, image_filter } = postData;
   const [errors, setErrors] = useState({});
+  const { name, content, image } = profileData;
   const imageFile = useRef();
   useEffect(() => {
     handleMount();
@@ -30,83 +32,61 @@ function PostEditForm() {
 
   const handleMount = async () => {
     try {
-      const { data } = await axiosReq.get(`/posts/${id}/`);
-      const { title, content, image, image_filter, is_owner } = data;
-      if (!is_owner) {
-        history.goBack();
-      }
-      setPostData({
-        title,
-        content,
-        image,
-        image_filter,
-      });
+      const { data } = await axiosReq.get(`/profiles/${id}/`);
+      const { name, content, image } = data;
+      setProfileData({ name, content, image });
     } catch (err) {
-      console.log(err.response);
+      console.log(err.request);
     }
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
-    formData.append("title", title);
+    formData.append("name", name);
     formData.append("content", content);
     if (imageFile?.current?.files[0]) {
       formData.append("image", imageFile?.current?.files[0]);
     }
-    formData.append("image_filter", image_filter);
     try {
-      await axiosRes.put(`/posts/${id}/`, formData);
+      const { data } = await axiosRes.put(`/profiles/${id}/`, formData);
+      console.log(data);
+      setCurrentUser((currentUser) => ({
+        ...currentUser,
+        profile_image: data.image,
+      }));
       history.goBack();
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
       setErrors(err.response?.data);
     }
   };
+
   const handleChange = (event) => {
-    setPostData({
-      ...postData,
+    setProfileData({
+      ...profileData,
       [event.target.name]: event.target.value,
     });
   };
 
-  const handleClick = (newFilter) => {
-    setPostData((prevState) => ({
-      ...prevState,
-      image_filter: newFilter,
-    }));
-  };
-
   const textFields = (
-    <div className="text-center">
+    <>
       <Form.Group>
-        <Form.Label>Title</Form.Label>
+        <Form.Label>Bio</Form.Label>
         <Form.Control
-          type="text"
-          name="title"
-          value={title}
+          as="textarea"
+          value={content}
           onChange={handleChange}
+          name="content"
+          rows={7}
         />
       </Form.Group>
-      {errors?.title?.map((message, idx) => (
+
+      {errors?.content?.map((message, idx) => (
         <Alert variant="warning" key={idx}>
           {message}
         </Alert>
       ))}
-      <Form.Group>
-        <Form.Label>Content</Form.Label>
-        <Form.Control
-          as="textarea"
-          name="content"
-          rows={6}
-          value={content}
-          onChange={handleChange}
-        />
-        {errors?.content?.map((message, idx) => (
-          <Alert variant="warning" key={idx}>
-            {message}
-          </Alert>
-        ))}
-      </Form.Group>
       <Button
         className={`${btnStyles.Button} ${btnStyles.Blue}`}
         onClick={() => history.goBack()}
@@ -116,18 +96,18 @@ function PostEditForm() {
       <Button className={`${btnStyles.Button} ${btnStyles.Blue}`} type="submit">
         save
       </Button>
-    </div>
+    </>
   );
 
   return (
     <Form onSubmit={handleSubmit}>
       <Row>
-        <Col className="py-2 p-0 p-md-2" md={7} lg={8}>
+        <Col className="py-2 p-0 p-md-2 text-center" md={7} lg={6}>
           <Container className={appStyles.Content}>
-            <Form.Group className="text-center">
+            <Form.Group>
               {image && (
-                <figure className={image_filter}>
-                  <Image className={appStyles.Image} src={image} />
+                <figure>
+                  <Image src={image} fluid />
                 </figure>
               )}
               {errors?.image?.map((message, idx) => (
@@ -137,36 +117,36 @@ function PostEditForm() {
               ))}
               <div>
                 <Form.Label
-                  className={`${btnStyles.Button} ${btnStyles.Blue} btn`}
+                  className={`${btnStyles.Button} ${btnStyles.Blue} btn my-auto`}
                   htmlFor="image-upload"
                 >
                   Change the image
                 </Form.Label>
               </div>
-              <FilterSlider
-                image={image}
-                image_filter={image_filter}
-                handleClick={handleClick}
-              />
               <Form.File
                 id="image-upload"
                 ref={imageFile}
                 accept="image/*"
                 onChange={(e) => {
                   if (e.target.files.length) {
-                    setPostData({
-                      ...postData,
-                      image_filter: "normal",
+                    setProfileData({
+                      ...profileData,
                       image: URL.createObjectURL(e.target.files[0]),
                     });
                   }
                 }}
               />
             </Form.Group>
+            {/* {errors?.name?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))} */}
+
             <div className="d-md-none">{textFields}</div>
           </Container>
         </Col>
-        <Col md={5} lg={4} className="d-none d-md-block p-0 p-md-2">
+        <Col md={5} lg={6} className="d-none d-md-block p-0 p-md-2 text-center">
           <Container className={appStyles.Content}>{textFields}</Container>
         </Col>
       </Row>
@@ -174,4 +154,4 @@ function PostEditForm() {
   );
 }
 
-export default PostEditForm;
+export default ProfileForm;

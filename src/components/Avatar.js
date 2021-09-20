@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Avatar.module.css";
+import styles from "../styles/Avatar.module.css";
 
 function Avatar({ src, height = 45, text }) {
   return (

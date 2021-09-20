@@ -4,15 +4,15 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
-import styles from "./SignInUpForm.module.css";
-import btnStyles from "./Button.module.css";
+import styles from "../../styles/SignInUpForm.module.css";
+import btnStyles from "../../styles/Button.module.css";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-import appStyles from "../App.module.css";
+import appStyles from "../../App.module.css";
 import { Image } from "react-bootstrap";
-import { useRedirect } from "../hooks";
+import { useRedirect } from "../../hooks/useRedirect";
 
 function SignUpForm() {
   useRedirect(false);

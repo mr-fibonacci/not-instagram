@@ -1,20 +1,20 @@
 import React from "react";
-import SignInForm from "./components/SignInForm";
-import SignUpForm from "./components/SignUpForm";
+import SignInForm from "./pages/Auth/SignInForm";
+import SignUpForm from "./pages/Auth/SignUpForm";
 import NavBar from "./components/NavBar";
-import "./axiosDefaults";
+import "./api/axiosDefaults";
 import { Route, Switch } from "react-router-dom";
-import PostPage from "./pages/PostPage";
-import PostCreateForm from "./components/PostCreateForm";
-import ProfilePage from "./pages/ProfilePage";
-import ProfileEditForm from "./components/ProfileEditForm";
-import PostEditForm from "./components/PostEditForm";
+import PostPage from "./pages/Posts/PostPage";
+import PostCreateForm from "./pages/Posts/PostCreateForm";
+import ProfilePage from "./pages/Profiles/ProfilePage";
+import ProfileEditForm from "./pages/Profiles/ProfileEditForm";
+import PostEditForm from "./pages/Posts/PostEditForm";
 import Container from "react-bootstrap/Container";
-import PostsPage from "./pages/PostsPage";
+import PostsPage from "./pages/Posts/PostsPage";
 import styles from "./App.module.css";
-import { useCurrentUser } from "./CurrentUserContext";
-import UsernameForm from "./components/UsernameForm";
-import UserPasswordForm from "./components/UserPasswordForm";
+import { useCurrentUser } from "./contexts/CurrentUserContext";
+import UsernameForm from "./pages/Profiles/UsernameForm";
+import UserPasswordForm from "./pages/Profiles/UserPasswordForm";
 
 function App() {
   const currentUser = useCurrentUser();

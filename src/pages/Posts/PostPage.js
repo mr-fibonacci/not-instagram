@@ -1,20 +1,20 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Comment from "../components/Comment";
-import CommentCreateForm from "../components/CommentCreateForm";
+import Comment from "../Comments/Comment";
+import CommentCreateForm from "../Comments/CommentCreateForm";
 import { useHistory, useParams } from "react-router";
-import Post from "../components/Post";
+import Post from "./Post";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchMoreData } from "../utils";
-import { useCurrentUser } from "../CurrentUserContext";
-import Asset from "../components/Asset";
+import { fetchMoreData } from "../../utils/utils";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import Asset from "../../components/Asset";
 import Spinner from "react-bootstrap/Spinner";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-import appStyles from "../App.module.css";
-import PopularProfiles from "../components/PopularProfiles";
-import { axiosReq, axiosRes } from "../axiosDefaults";
+import appStyles from "../../App.module.css";
+import PopularProfiles from "../Profiles/PopularProfiles";
+import { axiosReq, axiosRes } from "../../api/axiosDefaults";
 
 function PostPage() {
   const currentUser = useCurrentUser();

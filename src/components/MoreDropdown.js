@@ -1,11 +1,11 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import Dropdown from "react-bootstrap/Dropdown";
+import Icon from "./Icon";
 import dots from "../assets/dots.svg";
 import { ReactComponent as Edit } from "../assets/edit.svg";
 import { ReactComponent as Delete } from "../assets/delete.svg";
-import Dropdown from "react-bootstrap/Dropdown";
-import Icon from "./Icon";
-import styles from "./MoreDropdown.module.css";
-import { useHistory } from "react-router-dom";
+import styles from "../styles/MoreDropdown.module.css";
 
 const ThreeDots = React.forwardRef(({ onClick }, ref) => (
   <img

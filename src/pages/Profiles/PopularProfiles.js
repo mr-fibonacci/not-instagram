@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Profile from "./Profile";
-import styles from "../App.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-import appStyles from "../App.module.css";
+import appStyles from "../../App.module.css";
 import Image from "react-bootstrap/Image";
 import { Link } from "react-router-dom";
-import Asset from "./Asset";
+import Asset from "../../components/Asset";
 import { Spinner } from "react-bootstrap";
-import { axiosReq, axiosRes } from "../axiosDefaults";
+import { axiosReq, axiosRes } from "../../api/axiosDefaults";
 
 const PopularProfiles = ({ mobile }) => {
   const [popularProfiles, setPopularProfiles] = useState({ results: [] });
@@ -115,7 +114,7 @@ const PopularProfiles = ({ mobile }) => {
       )}
     </Container>
   ) : (
-    <Container className={styles.Content}>
+    <Container className={appStyles.Content}>
       {!hasLoaded ? (
         <Asset children={<Spinner animation="border" />} />
       ) : (

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Media from "react-bootstrap/Media";
 import { Link } from "react-router-dom";
 import CommentEditForm from "./CommentEditForm";
-import Avatar from "./Avatar";
-import MoreDropdown from "./MoreDropdown";
-import { useCurrentUser } from "../CurrentUserContext";
-import { axiosRes } from "../axiosDefaults";
+import Avatar from "../../components/Avatar";
+import MoreDropdown from "../../components/MoreDropdown";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import { axiosRes } from "../../api/axiosDefaults";
 
 function Comment(props) {
   const {

@@ -6,9 +6,8 @@ import React, {
   useMemo,
 } from "react";
 import axios from "axios";
-import { axiosReq, axiosRes } from "./axiosDefaults";
+import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { useHistory } from "react-router-dom";
-// import "./axiosDefaults";
 
 const CurrentUserContext = createContext();
 const SetCurrentUserContext = createContext();

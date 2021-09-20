@@ -1,10 +1,10 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import { useCurrentUser } from "../CurrentUserContext";
-import Avatar from "./Avatar";
-import btnStyles from "./Button.module.css";
-import styles from "./Profile.module.css";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import Avatar from "../../components/Avatar";
+import btnStyles from "../../styles/Button.module.css";
+import styles from "../../styles/Profile.module.css";
 
 function Profile(props) {
   const {

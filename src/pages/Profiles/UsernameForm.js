@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
-import btnStyles from "./Button.module.css";
-import appStyles from "../App.module.css";
+import btnStyles from "../../styles/Button.module.css";
+import appStyles from "../../App.module.css";
 import { useHistory } from "react-router-dom";
-import { axiosRes } from "../axiosDefaults";
-import { useProfileRedirect } from "../hooks";
+import { axiosRes } from "../../api/axiosDefaults";
+import { useProfileRedirect } from "../../hooks/useProfileRedirect";
 
 const UsernameForm = () => {
   useProfileRedirect();
