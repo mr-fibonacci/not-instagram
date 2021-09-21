@@ -308,7 +308,7 @@ function ProfilePage() {
                     dataLength={profilePosts?.results.length}
                     next={() => fetchMoreData(profilePosts, setProfilePosts)}
                     hasMore={!!profilePosts.next}
-                    loader={<Asset children={<Spinner animation="border" />} />}
+                    loader={<Asset spinner />}
                   >
                     {profilePosts?.results.length ? (
                       profilePosts?.results.map((post) => (
@@ -320,7 +320,7 @@ function ProfilePage() {
                       ))
                     ) : (
                       <Asset
-                        children={<img alt="no results" src={NoResults} />}
+                        src={NoResults}
                         message={`No results found, ${profile?.owner} hasn't posted yet.`}
                       />
                     )}
@@ -337,7 +337,7 @@ function ProfilePage() {
                       )
                     }
                     hasMore={!!followedProfiles.next}
-                    loader={<Asset children={<Spinner animation="border" />} />}
+                    loader={<Asset spinner />}
                   >
                     <Container fluid>
                       {followedProfiles?.results.length ? (
@@ -351,7 +351,7 @@ function ProfilePage() {
                         ))
                       ) : (
                         <Asset
-                          children={<img alt="no results" src={NoResults} />}
+                          src={NoResults}
                           message={`No profiles found, no users are following ${profile?.owner} yet.`}
                         />
                       )}
@@ -369,7 +369,7 @@ function ProfilePage() {
                       )
                     }
                     hasMore={!!followingProfiles.next}
-                    loader={<Asset children={<Spinner animation="border" />} />}
+                    loader={<Asset spinner />}
                   >
                     <Container fluid>
                       {followingProfiles?.results.length ? (
@@ -383,7 +383,7 @@ function ProfilePage() {
                         ))
                       ) : (
                         <Asset
-                          children={<img alt="no results" src={NoResults} />}
+                          src={NoResults}
                           message={`No profiles found, ${profile?.owner} isn't following anyone yet.`}
                         />
                       )}
@@ -393,7 +393,7 @@ function ProfilePage() {
               </Tabs>
             </>
           ) : (
-            <Asset children={<Spinner animation="border" />} />
+            <Asset spinner />
           )}
         </Container>
       </Col>
@@ -413,7 +413,7 @@ function ProfilePage() {
               ))}
             </>
           ) : (
-            <Asset children={<Spinner animation="border" />} />
+            <Asset spinner />
           )}
         </Container>
       </Col>

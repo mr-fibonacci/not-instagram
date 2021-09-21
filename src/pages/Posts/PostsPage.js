@@ -69,23 +69,20 @@ function PostsPage({ filter = "", message }) {
                 dataLength={posts.results.length}
                 next={() => fetchMoreData(posts, setPosts)}
                 hasMore={!!posts.next}
-                loader={<Asset children={<Spinner animation="border" />} />}
+                loader={<Asset spinner />}
                 children={posts.results.map((post) => (
                   <Post key={post.id} {...post} setPosts={setPosts} />
                 ))}
               />
             ) : (
               <Container className={appStyles.Content}>
-                <Asset
-                  children={<img alt="no results" src={NoResults} />}
-                  message={message}
-                />
+                <Asset src={NoResults} message={message} />
               </Container>
             )}
           </>
         ) : (
           <Container className={appStyles.Content}>
-            <Asset children={<Spinner animation="border" />} />
+            <Asset spinner />
           </Container>
         )}
       </Col>

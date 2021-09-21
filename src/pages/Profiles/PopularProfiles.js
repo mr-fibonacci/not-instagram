@@ -77,7 +77,7 @@ const PopularProfiles = ({ mobile }) => {
       className={`${appStyles.Content} d-block d-lg-none text-center mb-3`}
     >
       {!hasLoaded ? (
-        <Asset children={<Spinner animation="border" />} />
+        <Asset spinner />
       ) : (
         <>
           <div className="my-1">Most followed profiles.</div>
@@ -116,7 +116,7 @@ const PopularProfiles = ({ mobile }) => {
   ) : (
     <Container className={appStyles.Content}>
       {!hasLoaded ? (
-        <Asset children={<Spinner animation="border" />} />
+        <Asset spinner />
       ) : (
         <>
           <p>Most followed profiles.</p>

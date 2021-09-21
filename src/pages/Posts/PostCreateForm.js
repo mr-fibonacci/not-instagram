@@ -135,7 +135,7 @@ function PostCreateForm() {
                   htmlFor="image-upload"
                 >
                   <Asset
-                    children={<img src={Upload} alt="upload" />}
+                    src={Upload}
                     message="Click or tap to upload an image"
                   />
                 </Form.Label>

@@ -84,7 +84,7 @@ function PostPage() {
               dataLength={comments.results.length}
               next={() => fetchMoreData(comments, setComments)}
               hasMore={!!comments.next}
-              loader={<Asset children={<Spinner animation="border" />} />}
+              loader={<Asset spinner />}
               children={comments.results.map((comment) => (
                 <Comment
                   key={comment.id}
