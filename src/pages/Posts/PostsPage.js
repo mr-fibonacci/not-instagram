@@ -9,7 +9,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useLocation } from "react-router";
 import Post from "./Post";
 import { fetchMoreData } from "../../utils/utils";
-import { ReactComponent as NoResults } from "../../assets/no-results.svg";
+import NoResults from "../../assets/no-results.png";
 
 import styles from "../../styles/PostsPage.module.css";
 import Asset from "../../components/Asset";
@@ -50,6 +50,7 @@ function PostsPage({ filter = "", message }) {
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <PopularProfiles mobile />
+        <i className={`fas fa-search ${styles.SearchIcon}`} />
         <Form
           className={styles.SearchBar}
           onSubmit={(event) => event.preventDefault()}
@@ -75,7 +76,10 @@ function PostsPage({ filter = "", message }) {
               />
             ) : (
               <Container className={appStyles.Content}>
-                <Asset children={<NoResults />} message={message} />
+                <Asset
+                  children={<img alt="no results" src={NoResults} />}
+                  message={message}
+                />
               </Container>
             )}
           </>

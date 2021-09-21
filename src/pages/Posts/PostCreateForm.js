@@ -5,7 +5,6 @@ import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useHistory } from "react-router";
-import { ReactComponent as Upload } from "../../assets/upload.svg";
 import btnStyles from "../../styles/Button.module.css";
 import Asset from "../../components/Asset";
 import FilterSlider from "../../components/FilterSlider";
@@ -15,6 +14,7 @@ import Alert from "react-bootstrap/Alert";
 import styles from "../../styles/PostCreateEditForm.module.css";
 import { axiosReq } from "../../api/axiosDefaults";
 import { useRedirect } from "../../hooks/useRedirect";
+import Upload from "../../assets/upload.png";
 
 function PostCreateForm() {
   useRedirect();
@@ -134,7 +134,10 @@ function PostCreateForm() {
                   className="d-flex justify-content-center"
                   htmlFor="image-upload"
                 >
-                  <Asset children={<Upload />} />
+                  <Asset
+                    children={<img src={Upload} alt="upload" />}
+                    message="Click or tap to upload an image"
+                  />
                 </Form.Label>
               )}
               {errors?.image?.map((message, idx) => (

@@ -16,7 +16,7 @@ import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import appStyles from "../../App.module.css";
-import { ReactComponent as NoResults } from "../../assets/no-results.svg";
+import NoResults from "../../assets/no-results.png";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
 import { ProfileEditDropdown } from "../../components/MoreDropdown";
@@ -320,7 +320,7 @@ function ProfilePage() {
                       ))
                     ) : (
                       <Asset
-                        children={<NoResults />}
+                        children={<img alt="no results" src={NoResults} />}
                         message={`No results found, ${profile?.owner} hasn't posted yet.`}
                       />
                     )}
@@ -351,7 +351,7 @@ function ProfilePage() {
                         ))
                       ) : (
                         <Asset
-                          children={<NoResults />}
+                          children={<img alt="no results" src={NoResults} />}
                           message={`No profiles found, no users are following ${profile?.owner} yet.`}
                         />
                       )}
@@ -383,7 +383,7 @@ function ProfilePage() {
                         ))
                       ) : (
                         <Asset
-                          children={<NoResults />}
+                          children={<img alt="no results" src={NoResults} />}
                           message={`No profiles found, ${profile?.owner} isn't following anyone yet.`}
                         />
                       )}
