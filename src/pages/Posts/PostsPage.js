@@ -33,8 +33,6 @@ function PostsPage({ filter = "", message }) {
 
   const fetchPosts = async () => {
     console.log("fetching data");
-    // refreshToken
-    // await refreshToken();
     try {
       const { data: posts } = await axiosReq.get(
         `/posts/?${filter}search=${query}`

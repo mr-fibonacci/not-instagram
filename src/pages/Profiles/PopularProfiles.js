@@ -56,7 +56,6 @@ const PopularProfiles = ({ mobile }) => {
       setPopularProfiles((prevProfiles) => ({
         ...prevProfiles,
         results: prevProfiles.results.map((profile) => {
-          // const is_owner = currentUser?.username === profile.owner;
           return profile.id === clickedProfile.id
             ? {
                 ...profile,

@@ -57,7 +57,6 @@ function ProfilePage() {
         { data: followedProfiles },
         { data: popularProfiles },
       ] = await Promise.all([
-        // all axiosReq
         axiosReq.get(`/profiles/${id}/`),
         axiosReq.get(`/posts/?owner__profile=${id}`),
         axiosReq.get(`/profiles/?owner__followed__owner__profile=${id}`),
@@ -69,7 +68,6 @@ function ProfilePage() {
       setProfileState((prevState) => ({
         ...prevState,
         profile,
-        // profilePosts,
         followingProfiles,
         followedProfiles,
         popularProfiles,
