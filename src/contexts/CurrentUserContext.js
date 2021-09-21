@@ -39,7 +39,6 @@ export const CurrentUserProvider = ({ children }) => {
         return config;
       },
       (err) => {
-        console.log("request interceptor error:");
         return Promise.reject(err);
       }
     );
