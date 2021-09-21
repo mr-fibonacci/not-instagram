@@ -32,7 +32,7 @@ function Profile(props) {
           <Avatar src={image} height={imageSize} />
         </Link>
       </div>
-      <div className="ml-3" style={{ wordBreak: "break-all" }}>
+      <div className={`ml-3 ${styles.WordBreak}`}>
         <div>
           <b>{owner}</b>
         </div>

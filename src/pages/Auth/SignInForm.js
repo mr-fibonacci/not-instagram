@@ -21,7 +21,6 @@ function SignInForm() {
   const history = useHistory();
   const lastLocation = useLastLocation();
   useRedirect(false);
-  console.log("last location:", lastLocation);
   const [errors, setErrors] = useState({});
   const [signInData, setSignInData] = useState({
     username: "",
@@ -57,10 +56,7 @@ function SignInForm() {
   return (
     <Row className={styles.Row}>
       <Col className="my-auto py-2 p-0 p-md-2" md={6}>
-        <Container
-          className={appStyles.Content}
-          style={{ padding: "30px 10px" }}
-        >
+        <Container className={`${appStyles.Content} p-4`}>
           <h1 className={styles.Header}>sign in</h1>
           <Form onSubmit={(e) => handleSubmit(e)}>
             <Form.Group>
@@ -114,8 +110,7 @@ function SignInForm() {
       </Col>
       <Col
         md={6}
-        className={`my-auto d-none d-md-block p-0 p-md-2`}
-        style={{ height: "320px" }}
+        className={`my-auto d-none d-md-block p-0 p-md-2 ${styles.SignInCol}`}
       >
         <Image
           className={`${appStyles.FillerImage}`}

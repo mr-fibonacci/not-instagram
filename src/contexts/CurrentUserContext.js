@@ -22,10 +22,9 @@ export const CurrentUserProvider = ({ children }) => {
   useMemo(() => {
     axiosReq.interceptors.request.use(
       async (config) => {
-        console.log("inside req interceptor");
         try {
           await axios.post("/dj-rest-auth/token/refresh/");
-          console.log("refreshed the token successfully");
+          console.log("refreshed the access token successfully");
         } catch (err) {
           console.log(err.request);
           setCurrentUser((prevCurrentUser) => {
@@ -34,35 +33,27 @@ export const CurrentUserProvider = ({ children }) => {
             }
             return null;
           });
-          console.log("ERR1!");
+          console.log("refresh token expired");
           return config;
         }
-        console.log("ERR2?");
         return config;
       },
       (err) => {
-        console.log("REQ interceptor error:");
+        console.log("request interceptor error:");
         return Promise.reject(err);
       }
     );
     axiosRes.interceptors.response.use(
       (response) => response,
       async (error) => {
-        console.log(
-          error,
-          error?.request,
-          "inside interceptor, ERROR STATUS:",
-          error?.response?.status,
-          "ERROR CONFIG:",
-          error?.config
-        );
+        console.log(error?.request);
         if (error?.response?.status === 401) {
-          console.log("ACCESS TOKEN EXPIRED");
+          console.log("access token expired");
           try {
             await axios.post("/dj-rest-auth/token/refresh/");
-            console.log("ACCESS TOKEN REFRESHED");
+            console.log("access token refreshed");
           } catch (err) {
-            console.log("REFRESH TOKEN EXPIRED", err.request);
+            console.log("refresh token expired", err.request);
             setCurrentUser((prevCurrentUser) => {
               if (prevCurrentUser) {
                 history.push("/signin");

@@ -3,11 +3,11 @@ import Container from "react-bootstrap/Container";
 import Profile from "./Profile";
 import { Swiper, SwiperSlide } from "swiper/react";
 import appStyles from "../../App.module.css";
-import Image from "react-bootstrap/Image";
+import styles from "../../styles/FilterSlider.module.css";
 import { Link } from "react-router-dom";
 import Asset from "../../components/Asset";
-import { Spinner } from "react-bootstrap";
 import { axiosReq, axiosRes } from "../../api/axiosDefaults";
+import Avatar from "../../components/Avatar";
 
 const PopularProfiles = ({ mobile }) => {
   const [popularProfiles, setPopularProfiles] = useState({ results: [] });
@@ -82,7 +82,7 @@ const PopularProfiles = ({ mobile }) => {
         <>
           <div className="my-1">Most followed profiles.</div>
           <Swiper
-            style={{ marginLeft: "-10px", marginRight: "-10px" }}
+            className={styles.Swiper}
             breakpoints={{
               200: { slidesPerView: 2.5 },
               320: { slidesPerView: 3.5 },
@@ -95,15 +95,7 @@ const PopularProfiles = ({ mobile }) => {
               <SwiperSlide key={profile.id}>
                 <Link to={`/profiles/${profile.id}`}>
                   <div className="d-flex flex-column align-items-center">
-                    <Image
-                      roundedCircle
-                      style={{
-                        width: "64px",
-                        height: "64px",
-                        objectFit: "cover",
-                      }}
-                      src={profile.image}
-                    />
+                    <Avatar height={64} src={profile.image} />
                     {profile.owner}
                   </div>
                 </Link>

@@ -6,6 +6,7 @@ import Avatar from "../../components/Avatar";
 import MoreDropdown from "../../components/MoreDropdown";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { axiosRes } from "../../api/axiosDefaults";
+import styles from "../../styles/Comment.module.css";
 
 function Comment(props) {
   const {
@@ -58,10 +59,8 @@ function Comment(props) {
           <Avatar src={profile_image} />
         </Link>
         <Media.Body className="align-self-center ml-2">
-          <b style={{ color: "#2142b2" }}>{owner}</b>{" "}
-          <span style={{ fontWeight: "lighter", color: "#c1c1c5" }}>
-            {updated_at}
-          </span>
+          <span className={styles.Owner}>{owner}</span>{" "}
+          <span className={styles.Date}>{updated_at}</span>
           <p>{content}</p>
         </Media.Body>
         {is_owner && !showEditForm && (

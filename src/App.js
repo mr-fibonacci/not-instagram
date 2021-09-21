@@ -22,7 +22,7 @@ function App() {
   return (
     <div className={styles.App}>
       <NavBar />
-      <Container style={{ paddingTop: "81px" }}>
+      <Container className={styles.Main}>
         <Switch>
           <Route
             exact
