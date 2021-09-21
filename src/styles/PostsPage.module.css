@@ -7,6 +7,8 @@
 .SearchIcon {
   position: absolute;
   font-size: 1.2rem;
+  padding: 9px;
+  padding-left: 15px;
 }
 
 .SearchIcon:hover {

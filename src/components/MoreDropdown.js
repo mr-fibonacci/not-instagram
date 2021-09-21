@@ -14,7 +14,7 @@ const ThreeDots = React.forwardRef(({ onClick }, ref) => (
   />
 ));
 
-function MoreDropdown({ handleAdd, handleEdit, handleDelete }) {
+function MoreDropdown({ handleEdit, handleDelete }) {
   return (
     <Dropdown className="ml-auto" drop="left">
       <Dropdown.Toggle as={ThreeDots} />
@@ -37,24 +37,22 @@ export default MoreDropdown;
 export function ProfileEditDropdown({ id }) {
   const history = useHistory();
   return (
-    <Dropdown
-      style={{ position: "absolute", right: "0px", zIndex: 99 }}
-      className="ml-auto px-3"
-      drop="left"
-    >
+    <Dropdown className={`ml-auto px-3 ${styles.Absolute}`} drop="left">
       <Dropdown.Toggle as={ThreeDots} />
       <Dropdown.Menu>
         <Dropdown.Item onClick={() => history.push(`/profiles/${id}/edit`)}>
-          edit profile
+          <i className="fas fa-edit" /> edit profile
         </Dropdown.Item>
         <Dropdown.Item
           onClick={() => history.push(`/profiles/${id}/edit/username`)}
         >
+          <i className="far fa-id-card" />
           change username
         </Dropdown.Item>
         <Dropdown.Item
           onClick={() => history.push(`/profiles/${id}/edit/password`)}
         >
+          <i className="fas fa-key" />
           change password
         </Dropdown.Item>
       </Dropdown.Menu>

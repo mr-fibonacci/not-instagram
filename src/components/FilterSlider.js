@@ -3,6 +3,7 @@ import Image from "react-bootstrap/Image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { IMAGE_FILTERS } from "../utils/utils";
 import "swiper/swiper.min.css";
+import styles from "../styles/FilterSlider.module.css";
 
 const FilterSlider = ({ image, image_filter, handleClick }) => {
   return (
@@ -10,8 +11,7 @@ const FilterSlider = ({ image, image_filter, handleClick }) => {
       <p>Current filter: #{image_filter}</p>
       <p>Swipe to choose a filter.</p>
       <Swiper
-        className="text-center"
-        // slidesPerView={3}
+        className={`text-center ${styles.Swiper}`}
         breakpoints={{
           200: { slidesPerView: 2.5 },
           480: { slidesPerView: 3.3 },
@@ -20,7 +20,6 @@ const FilterSlider = ({ image, image_filter, handleClick }) => {
         }}
         spaceBetween={10}
         freeMode={true}
-        style={{ marginLeft: "-10px", marginRight: "-10px" }} // Inline styles needed for the library
       >
         {image &&
           IMAGE_FILTERS.map((imageFilter) => (

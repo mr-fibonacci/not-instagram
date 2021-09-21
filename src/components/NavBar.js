@@ -43,7 +43,12 @@ function NavBar() {
           </Navbar.Brand>
         </NavLink>
         {currentUser && (
-          <NavLink exact activeClassName={styles.Active} to={"/posts/create"}>
+          <NavLink
+            className={styles.NavLink}
+            exact
+            activeClassName={styles.Active}
+            to={"/posts/create"}
+          >
             <i className="far fa-plus-square" /> add post
           </NavLink>
         )}
@@ -56,23 +61,42 @@ function NavBar() {
           <Nav className="align-items-md-center">
             {currentUser ? (
               <>
-                <NavLink exact activeClassName={styles.Active} to={"/"}>
+                <NavLink
+                  className={styles.NavLink}
+                  exact
+                  activeClassName={styles.Active}
+                  to={"/"}
+                >
                   <i className="fas fa-home" />
                   home
                 </NavLink>
-                <NavLink activeClassName={styles.Active} to={"/feed"}>
+                <NavLink
+                  className={styles.NavLink}
+                  activeClassName={styles.Active}
+                  to={"/feed"}
+                >
                   <i className="fas fa-stream" />
                   feed
                 </NavLink>
-                <NavLink activeClassName={styles.Active} to={"/liked"}>
+                <NavLink
+                  className={styles.NavLink}
+                  activeClassName={styles.Active}
+                  to={"/liked"}
+                >
                   <i className="fas fa-heart" />
                   liked
                 </NavLink>
-                <NavLink exact to="/" onClick={handleSignOut}>
+                <NavLink
+                  className={styles.NavLink}
+                  exact
+                  to="/"
+                  onClick={handleSignOut}
+                >
                   <i className="fas fa-sign-out-alt" />
                   sign out
                 </NavLink>
                 <NavLink
+                  className={styles.NavLink}
                   activeClassName={styles.Active}
                   to={`/profiles/${currentUser?.profile_id}`}
                 >
@@ -81,15 +105,28 @@ function NavBar() {
               </>
             ) : (
               <>
-                <NavLink exact activeClassName={styles.Active} to={"/"}>
+                <NavLink
+                  className={styles.NavLink}
+                  exact
+                  activeClassName={styles.Active}
+                  to={"/"}
+                >
                   <i className="fas fa-home" />
                   home
                 </NavLink>
-                <NavLink activeClassName={styles.Active} to="/signin">
+                <NavLink
+                  className={styles.NavLink}
+                  activeClassName={styles.Active}
+                  to="/signin"
+                >
                   <i className="fas fa-sign-in-alt" />
                   sign in
                 </NavLink>
-                <NavLink activeClassName={styles.Active} to="/signup">
+                <NavLink
+                  className={styles.NavLink}
+                  activeClassName={styles.Active}
+                  to="/signup"
+                >
                   <i className="fas fa-user-plus" />
                   sign up
                 </NavLink>
