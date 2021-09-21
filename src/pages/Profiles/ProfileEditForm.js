@@ -36,7 +36,7 @@ function ProfileForm() {
       const { name, content, image } = data;
       setProfileData({ name, content, image });
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
 

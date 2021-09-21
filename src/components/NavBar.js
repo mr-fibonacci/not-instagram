@@ -26,7 +26,7 @@ function NavBar() {
       setCurrentUser(null);
       history.push("/");
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
   return (

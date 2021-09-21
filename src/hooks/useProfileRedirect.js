@@ -12,7 +12,7 @@ export const useProfileRedirect = () => {
         history.goBack();
       }
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
       history.goBack();
     }
   };

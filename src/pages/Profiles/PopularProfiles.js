@@ -24,7 +24,7 @@ const PopularProfiles = ({ mobile }) => {
       console.log("data", data);
       setHasLoaded(true);
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
   const handleFollow = async (clickedProfile) => {
@@ -47,7 +47,7 @@ const PopularProfiles = ({ mobile }) => {
         }),
       }));
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
   const handleUnfollow = async (clickedProfile) => {
@@ -68,7 +68,7 @@ const PopularProfiles = ({ mobile }) => {
         }),
       }));
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
   return mobile ? (

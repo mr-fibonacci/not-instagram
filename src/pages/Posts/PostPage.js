@@ -36,7 +36,7 @@ function PostPage() {
       setPost({ results: [post] });
       setComments(comments);
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
 
@@ -49,7 +49,7 @@ function PostPage() {
       await axiosRes.delete(`/posts/${id}/`);
       history.goBack();
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
 

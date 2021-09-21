@@ -74,7 +74,7 @@ function ProfilePage() {
       }));
       setProfilePosts(profilePosts);
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
 
@@ -92,7 +92,7 @@ function ProfilePage() {
         currentUserProfile,
       }));
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
   useEffect(() => {
@@ -164,7 +164,7 @@ function ProfilePage() {
         },
       }));
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
 
@@ -233,7 +233,7 @@ function ProfilePage() {
         };
       });
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
 

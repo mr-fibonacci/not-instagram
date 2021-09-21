@@ -26,7 +26,7 @@ export const CurrentUserProvider = ({ children }) => {
           await axios.post("/dj-rest-auth/token/refresh/");
           console.log("refreshed the access token successfully");
         } catch (err) {
-          console.log(err.request);
+          console.log(err);
           setCurrentUser((prevCurrentUser) => {
             if (prevCurrentUser) {
               history.push("/signin");
@@ -45,15 +45,15 @@ export const CurrentUserProvider = ({ children }) => {
     );
     axiosRes.interceptors.response.use(
       (response) => response,
-      async (error) => {
-        console.log(error?.request);
-        if (error?.response?.status === 401) {
+      async (err) => {
+        console.log(err);
+        if (err.response?.status === 401) {
           console.log("access token expired");
           try {
             await axios.post("/dj-rest-auth/token/refresh/");
             console.log("access token refreshed");
           } catch (err) {
-            console.log("refresh token expired", err.request);
+            console.log("refresh token expired", err);
             setCurrentUser((prevCurrentUser) => {
               if (prevCurrentUser) {
                 history.push("/signin");
@@ -61,9 +61,9 @@ export const CurrentUserProvider = ({ children }) => {
               return null;
             });
           }
-          return axios(error.config);
+          return axios(err.config);
         }
-        return Promise.reject(error);
+        return Promise.reject(err);
       }
     );
   }, []);
@@ -77,7 +77,7 @@ export const CurrentUserProvider = ({ children }) => {
       const { data } = await axiosRes.get("dj-rest-auth/user/");
       setCurrentUser(data);
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
   return (

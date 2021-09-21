@@ -11,7 +11,7 @@ export const useRedirect = (redirectUnauthenticated = true) => {
         history.goBack();
       }
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
       if (redirectUnauthenticated) {
         history.goBack();
       }

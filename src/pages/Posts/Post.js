@@ -44,7 +44,7 @@ function Post(props) {
         }),
       }));
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
 
@@ -60,7 +60,7 @@ function Post(props) {
         }),
       }));
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
 

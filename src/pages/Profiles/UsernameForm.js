@@ -32,7 +32,7 @@ const UsernameForm = () => {
       });
       console.log("change user name data", data);
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
       setErrors(err.response?.data);
     }
   };

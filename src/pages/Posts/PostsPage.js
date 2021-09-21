@@ -40,7 +40,7 @@ function PostsPage({ filter = "", message }) {
       setPosts(posts);
       setHasLoaded(true);
     } catch (err) {
-      console.log(err.request);
+      console.log(err);
     }
   };
 

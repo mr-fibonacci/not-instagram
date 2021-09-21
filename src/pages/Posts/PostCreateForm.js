@@ -42,7 +42,7 @@ function PostCreateForm() {
       console.log("data", data);
       history.push("/");
     } catch (err) {
-      console.log("ERROR", err.request);
+      console.log("ERROR", err);
       setErrors(err.response?.data);
     }
   };

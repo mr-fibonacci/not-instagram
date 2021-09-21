@@ -11,7 +11,7 @@ export const fetchMoreData = async (resource, setResource) => {
       }, prevResource.results),
     }));
   } catch (err) {
-    console.log(err.request);
+    console.log(err);
   }
 };
 
@@ -32,7 +32,7 @@ export const fetchMoreDataState = async (url, attr, setState) => {
       },
     }));
   } catch (err) {
-    console.log(err.request);
+    console.log(err);
   }
 };
 
