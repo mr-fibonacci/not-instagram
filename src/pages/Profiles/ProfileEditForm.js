@@ -50,7 +50,6 @@ function ProfileForm() {
     }
     try {
       const { data } = await axiosRes.put(`/profiles/${id}/`, formData);
-      console.log(data);
       setCurrentUser((currentUser) => ({
         ...currentUser,
         profile_image: data.image,

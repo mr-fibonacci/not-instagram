@@ -36,7 +36,6 @@ const UserPasswordForm = () => {
         "/dj-rest-auth/password/change/",
         userData
       );
-      console.log("change user name data", data);
     } catch (err) {
       console.log(err);
       setErrors(err.response?.data);

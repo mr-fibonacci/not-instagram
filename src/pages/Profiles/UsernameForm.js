@@ -30,7 +30,6 @@ const UsernameForm = () => {
       const { data } = await axiosRes.put("/dj-rest-auth/user/", {
         username,
       });
-      console.log("change user name data", data);
     } catch (err) {
       console.log(err);
       setErrors(err.response?.data);

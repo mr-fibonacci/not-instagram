@@ -25,8 +25,6 @@ import PopularProfiles from "../Profiles/PopularProfiles";
 import { axiosReq, axiosRes } from "../../api/axiosDefaults";
 
 function ProfilePage() {
-  console.log("render");
-
   const { id } = useParams();
   const [hasLoaded, setHasLoaded] = useState(false);
 
@@ -86,7 +84,6 @@ function ProfilePage() {
       const { data: currentUserProfile } = await axiosReq.get(
         `/profiles/${currentUser.profile_id}/`
       );
-      console.log("currentUserProfile:", currentUserProfile);
       setProfileState((prevState) => ({
         ...prevState,
         currentUserProfile,

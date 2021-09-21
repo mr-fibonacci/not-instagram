@@ -32,10 +32,8 @@ function SignUpForm() {
         "/dj-rest-auth/registration/",
         signUpData
       );
-      console.log(data);
       history.push("/signin");
     } catch (err) {
-      console.log(err.response?.data);
       setErrors(err.response?.data);
     }
   };

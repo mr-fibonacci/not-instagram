@@ -18,7 +18,6 @@ export const fetchMoreData = async (resource, setResource) => {
 export const fetchMoreDataState = async (url, attr, setState) => {
   try {
     const { data } = await axiosReq.get(url);
-    console.log("more data", data);
     setState((prevState) => ({
       ...prevState,
       [attr]: {

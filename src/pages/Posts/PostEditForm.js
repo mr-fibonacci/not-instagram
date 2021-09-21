@@ -43,7 +43,7 @@ function PostEditForm() {
         image_filter,
       });
     } catch (err) {
-      console.log(err.response);
+      console.log(err);
     }
   };
   const handleSubmit = async (event) => {

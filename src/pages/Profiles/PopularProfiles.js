@@ -21,7 +21,6 @@ const PopularProfiles = ({ mobile }) => {
         "/profiles/?ordering=-followers_count"
       );
       setPopularProfiles(data);
-      console.log("data", data);
       setHasLoaded(true);
     } catch (err) {
       console.log(err);
