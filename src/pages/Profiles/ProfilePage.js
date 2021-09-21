@@ -9,7 +9,6 @@ import "../../styles/ProfilePage.css";
 import Asset from "../../components/Asset";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
-import Spinner from "react-bootstrap/Spinner";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";

@@ -27,7 +27,7 @@ const UsernameForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axiosRes.put("/dj-rest-auth/user/", {
+      await axiosRes.put("/dj-rest-auth/user/", {
         username,
       });
     } catch (err) {

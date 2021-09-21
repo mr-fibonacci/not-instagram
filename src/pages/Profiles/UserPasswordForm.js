@@ -32,10 +32,7 @@ const UserPasswordForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const { data } = await axiosRes.post(
-        "/dj-rest-auth/password/change/",
-        userData
-      );
+      await axiosRes.post("/dj-rest-auth/password/change/", userData);
     } catch (err) {
       console.log(err);
       setErrors(err.response?.data);
