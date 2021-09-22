@@ -106,11 +106,11 @@ function Post(props) {
             </OverlayTrigger>
           ) : like_id ? (
             <span onClick={handleUnlike}>
-              <i className="fas fa-heart" />
+              <i className={`fas fa-heart ${styles.Heart}`} />
             </span>
           ) : currentUser ? (
             <span onClick={handleLike}>
-              <i className="far fa-heart" />
+              <i className={`far fa-heart`} />
             </span>
           ) : (
             <OverlayTrigger
