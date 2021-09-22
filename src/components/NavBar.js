@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -8,17 +8,15 @@ import {
   useCurrentUser,
   useSetCurrentUser,
 } from "../contexts/CurrentUserContext";
-import { useClickOutsideToggle } from "../hooks/useClickOutsideToggle";
 import Avatar from "./Avatar";
 import logo from "../assets/logo.png";
 import styles from "../styles/NavBar.module.css";
 
 function NavBar() {
+  const history = useHistory();
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
-
-  const { expanded, setExpanded, ref } = useClickOutsideToggle();
-  const history = useHistory();
+  const [expanded, setExpanded] = useState(false);
 
   const handleSignOut = async () => {
     try {
@@ -29,6 +27,17 @@ function NavBar() {
       console.log(err);
     }
   };
+
+  const addPostIcon = (
+    <NavLink
+      className={styles.NavLink}
+      exact
+      activeClassName={styles.Active}
+      to={"/posts/create"}
+    >
+      <i className="far fa-plus-square" /> add post
+    </NavLink>
+  );
 
   const loggedInIcons = (
     <>
@@ -114,22 +123,16 @@ function NavBar() {
             <img src={logo} alt="logo" height={45} />
           </Navbar.Brand>
         </NavLink>
-        {currentUser && (
-          <NavLink
-            className={styles.NavLink}
-            exact
-            activeClassName={styles.Active}
-            to={"/posts/create"}
-          >
-            <i className="far fa-plus-square" /> add post
-          </NavLink>
-        )}
+        {currentUser && addPostIcon}
         <Navbar.Toggle
-          ref={ref}
           aria-controls="navbar"
           onClick={() => setExpanded(!expanded)}
         />
-        <Navbar.Collapse className="justify-content-end" id="navbar">
+        <Navbar.Collapse
+          className="justify-content-end"
+          id="navbar"
+          onClick={() => setExpanded(false)}
+        >
           <Nav className="align-items-md-center">
             {currentUser ? loggedInIcons : loggedOutIcons}
           </Nav>
