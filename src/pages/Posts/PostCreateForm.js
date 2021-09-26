@@ -1,24 +1,30 @@
 import React, { useRef, useState } from "react";
+import { useHistory } from "react-router";
+
+import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useHistory } from "react-router";
-import btnStyles from "../../styles/Button.module.css";
+import Container from "react-bootstrap/Container";
+
 import Asset from "../../components/Asset";
 import FilterSlider from "../../components/FilterSlider";
-import Container from "react-bootstrap/Container";
-import appStyles from "../../App.module.css";
-import Alert from "react-bootstrap/Alert";
-import styles from "../../styles/PostCreateEditForm.module.css";
+
 import { axiosReq } from "../../api/axiosDefaults";
 import { useRedirect } from "../../hooks/useRedirect";
 import Upload from "../../assets/upload.png";
 
+import styles from "../../styles/PostCreateEditForm.module.css";
+import appStyles from "../../App.module.css";
+import btnStyles from "../../styles/Button.module.css";
+
 function PostCreateForm() {
   useRedirect();
   const history = useHistory();
+  const imageFile = useRef();
+
   const [postData, setPostData] = useState({
     title: "",
     content: "",
@@ -26,8 +32,8 @@ function PostCreateForm() {
     image_filter: "normal",
   });
   const { title, content, image, image_filter } = postData;
+
   const [errors, setErrors] = useState({});
-  const imageFile = useRef();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -45,12 +51,14 @@ function PostCreateForm() {
       setErrors(err.response?.data);
     }
   };
+
   const handleChange = (event) => {
     setPostData({
       ...postData,
       [event.target.name]: event.target.value,
     });
   };
+
   const handleClick = (newFilter) => {
     setPostData((prevState) => ({
       ...prevState,

@@ -1,30 +1,37 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Comment from "../Comments/Comment";
-import CommentCreateForm from "../Comments/CommentCreateForm";
 import { useHistory, useParams } from "react-router";
-import Post from "./Post";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { fetchMoreData } from "../../utils/utils";
-import { useCurrentUser } from "../../contexts/CurrentUserContext";
+
 import Asset from "../../components/Asset";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
-import appStyles from "../../App.module.css";
+
+import Comment from "../Comments/Comment";
+import CommentCreateForm from "../Comments/CommentCreateForm";
+import Post from "./Post";
 import PopularProfiles from "../Profiles/PopularProfiles";
+
 import { axiosReq, axiosRes } from "../../api/axiosDefaults";
+import { fetchMoreData } from "../../utils/utils";
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+
+import appStyles from "../../App.module.css";
 
 function PostPage() {
   const currentUser = useCurrentUser();
   const profile_image = currentUser?.profile_image;
   const { id } = useParams();
   const history = useHistory();
+
   const [post, setPost] = useState({ results: [] });
   const [comments, setComments] = useState({ results: [] });
+
   useEffect(() => {
     handleMount();
   }, []);
+
   const handleMount = async () => {
     try {
       const [{ data: post }, { data: comments }] = await Promise.all([

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router";
+
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
 import Form from "react-bootstrap/Form";
@@ -7,15 +8,18 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import btnStyles from "../../styles/Button.module.css";
-import FilterSlider from "../../components/FilterSlider";
-import appStyles from "../../App.module.css";
 
+import FilterSlider from "../../components/FilterSlider";
 import { axiosReq, axiosRes } from "../../api/axiosDefaults";
+
+import btnStyles from "../../styles/Button.module.css";
+import appStyles from "../../App.module.css";
 
 function PostEditForm() {
   const { id } = useParams();
   const history = useHistory();
+  const imageFile = useRef();
+
   const [postData, setPostData] = useState({
     title: "",
     content: "",
@@ -23,8 +27,9 @@ function PostEditForm() {
     image_filter: "normal",
   });
   const { title, content, image, image_filter } = postData;
+
   const [errors, setErrors] = useState({});
-  const imageFile = useRef();
+
   useEffect(() => {
     handleMount();
   }, []);
@@ -46,15 +51,18 @@ function PostEditForm() {
       console.log(err);
     }
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
+    formData.append("image_filter", image_filter);
+
     if (imageFile?.current?.files[0]) {
       formData.append("image", imageFile?.current?.files[0]);
     }
-    formData.append("image_filter", image_filter);
+
     try {
       await axiosRes.put(`/posts/${id}/`, formData);
       history.goBack();
@@ -63,6 +71,7 @@ function PostEditForm() {
       setErrors(err.response?.data);
     }
   };
+
   const handleChange = (event) => {
     setPostData({
       ...postData,

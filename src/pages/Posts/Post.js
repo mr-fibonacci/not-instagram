@@ -1,14 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import Card from "react-bootstrap/Card";
 import Media from "react-bootstrap/Media";
 import Image from "react-bootstrap/Image";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+
 import Avatar from "../../components/Avatar";
-import { Link } from "react-router-dom";
-import styles from "../../styles/Post.module.css";
 import MoreDropdown from "../../components/MoreDropdown";
+
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { axiosRes } from "../../api/axiosDefaults";
+
+import styles from "../../styles/Post.module.css";
 
 function Post(props) {
   const {
@@ -29,6 +34,7 @@ function Post(props) {
     postPage,
     updated_at,
   } = props;
+
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
 
