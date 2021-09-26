@@ -27,7 +27,6 @@ function Post(props) {
     title,
     content,
     image,
-    image_filter,
     setPosts,
     handleEdit,
     handleDelete,
@@ -90,13 +89,7 @@ function Post(props) {
         </Media>
       </Card.Body>
       <Link to={`/posts/${id}`}>
-        {image_filter === "normal" ? (
-          <Card.Img alt={title} src={image} />
-        ) : (
-          <figure className={image_filter}>
-            <Image alt={title} className={styles.PostImage} src={image} />
-          </figure>
-        )}
+        <Card.Img alt={title} src={image} />
       </Link>
 
       <Card.Body>
@@ -131,7 +124,6 @@ function Post(props) {
             <i className="far fa-comments" />
           </Link>
           {comments_count}
-          <span className="mx-2">{`#${image_filter}`}</span>
         </div>
       </Card.Body>
     </Card>

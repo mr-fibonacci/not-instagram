@@ -38,20 +38,3 @@ export const unfollowHelper = (profile, clickedProfile) => {
     ? { ...profile, following_count: profile.following_count - 1 }
     : profile;
 };
-
-export const IMAGE_FILTERS = [
-  { name: "1977", value: "_1977" },
-  { name: "Brannan", value: "brannan" },
-  { name: "Earlybird", value: "earlybird" },
-  { name: "Hudson", value: "hudson" },
-  { name: "Inkwell", value: "inkwell" },
-  { name: "Lo-Fi", value: "lofi" },
-  { name: "Kelvin", value: "kelvin" },
-  { name: "no-filter", value: "normal" },
-  { name: "Nashville", value: "nashville" },
-  { name: "Rise", value: "rise" },
-  { name: "Toaster", value: "toaster" },
-  { name: "Valencia", value: "valencia" },
-  { name: "Walden", value: "walden" },
-  { name: "X-pro II", value: "xpro2" },
-];

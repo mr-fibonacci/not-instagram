@@ -23,9 +23,8 @@ function PostEditForm() {
     title: "",
     content: "",
     image: "",
-    image_filter: "normal",
   });
-  const { title, content, image, image_filter } = postData;
+  const { title, content, image } = postData;
 
   const [errors, setErrors] = useState({});
 
@@ -33,7 +32,7 @@ function PostEditForm() {
     const handleMount = async () => {
       try {
         const { data } = await axiosReq.get(`/posts/${id}/`);
-        const { title, content, image, image_filter, is_owner } = data;
+        const { title, content, image, is_owner } = data;
         if (!is_owner) {
           history.goBack();
         }
@@ -41,7 +40,6 @@ function PostEditForm() {
           title,
           content,
           image,
-          image_filter,
         });
       } catch (err) {
         console.log(err);
@@ -56,7 +54,6 @@ function PostEditForm() {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
-    formData.append("image_filter", image_filter);
 
     if (imageFile?.current?.files[0]) {
       formData.append("image", imageFile?.current?.files[0]);
@@ -128,7 +125,7 @@ function PostEditForm() {
           <Container className={appStyles.Content}>
             <Form.Group className="text-center">
               {image && (
-                <figure className={image_filter}>
+                <figure>
                   <Image className={appStyles.Image} src={image} />
                 </figure>
               )}
@@ -153,7 +150,6 @@ function PostEditForm() {
                   if (e.target.files.length) {
                     setPostData({
                       ...postData,
-                      image_filter: "normal",
                       image: URL.createObjectURL(e.target.files[0]),
                     });
                   }

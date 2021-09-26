@@ -28,9 +28,8 @@ function PostCreateForm() {
     title: "",
     content: "",
     image: "",
-    image_filter: "normal",
   });
-  const { title, content, image, image_filter } = postData;
+  const { title, content, image } = postData;
 
   const [errors, setErrors] = useState({});
 
@@ -40,7 +39,6 @@ function PostCreateForm() {
     formData.append("title", title);
     formData.append("content", content);
     formData.append("image", imageFile.current.files[0]);
-    formData.append("image_filter", image_filter);
 
     try {
       const { data } = await axiosReq.post("/posts/", formData);
@@ -111,7 +109,7 @@ function PostCreateForm() {
             <Form.Group className="text-center">
               {image ? (
                 <>
-                  <figure className={image_filter}>
+                  <figure>
                     <Image className={appStyles.Image} src={image} rounded />
                   </figure>
                   <div>
@@ -147,7 +145,6 @@ function PostCreateForm() {
                   if (e.target.files.length) {
                     setPostData({
                       ...postData,
-                      image_filter: "normal",
                       image: URL.createObjectURL(e.target.files[0]),
                     });
                   }
