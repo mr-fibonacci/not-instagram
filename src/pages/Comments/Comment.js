@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import Media from "react-bootstrap/Media";
 import { Link } from "react-router-dom";
+
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+import { axiosRes } from "../../api/axiosDefaults";
+
 import CommentEditForm from "./CommentEditForm";
 import Avatar from "../../components/Avatar";
 import MoreDropdown from "../../components/MoreDropdown";
-import { useCurrentUser } from "../../contexts/CurrentUserContext";
-import { axiosRes } from "../../api/axiosDefaults";
+
 import styles from "../../styles/Comment.module.css";
 
 function Comment(props) {
@@ -22,6 +25,7 @@ function Comment(props) {
   const [showEditForm, setShowEditForm] = useState(false);
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
+
   const handleDelete = async () => {
     try {
       await axiosRes.delete(`/comments/${id}/`);

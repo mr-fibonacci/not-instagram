@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+
 import styles from "../../styles/CommentCreateEditForm.module.css";
 import Avatar from "../../components/Avatar";
-import { Link } from "react-router-dom";
 import { axiosRes } from "../../api/axiosDefaults";
 
 function CommentCreateForm(props) {
@@ -13,6 +15,7 @@ function CommentCreateForm(props) {
   const handleChange = (event) => {
     setContent(event.target.value);
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -37,6 +40,7 @@ function CommentCreateForm(props) {
       console.log(err);
     }
   };
+
   return (
     <Form className="mt-2" onSubmit={handleSubmit}>
       <Form.Group>
