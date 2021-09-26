@@ -15,24 +15,28 @@ export const fetchMoreData = async (resource, setResource) => {
   }
 };
 
-export const fetchMoreDataState = async (url, attr, setState) => {
-  try {
-    const { data } = await axiosReq.get(url);
-    setState((prevState) => ({
-      ...prevState,
-      [attr]: {
-        ...prevState[attr],
-        next: data.next,
-        results: data?.results.reduce((acc, cur) => {
-          return acc.some((result) => result.id === cur.id)
-            ? acc
-            : [...acc, cur];
-        }, prevState[attr].results),
-      },
-    }));
-  } catch (err) {
-    console.log(err);
-  }
+export const followHelper = (profile, clickedProfile, following_id) => {
+  return profile.id === clickedProfile.id
+    ? {
+        ...profile,
+        followers_count: profile.followers_count + 1,
+        following_id,
+      }
+    : profile.is_owner
+    ? { ...profile, following_count: profile.following_count + 1 }
+    : profile;
+};
+
+export const unfollowHelper = (profile, clickedProfile) => {
+  return profile.id === clickedProfile.id
+    ? {
+        ...profile,
+        followers_count: profile.followers_count - 1,
+        following_id: null,
+      }
+    : profile.is_owner
+    ? { ...profile, following_count: profile.following_count - 1 }
+    : profile;
 };
 
 export const IMAGE_FILTERS = [

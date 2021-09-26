@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import Avatar from "../../components/Avatar";
 import Container from "react-bootstrap/Container";
 import Profile from "./Profile";
 
@@ -11,9 +7,8 @@ import Asset from "../../components/Asset";
 import { axiosReq, axiosRes } from "../../api/axiosDefaults";
 
 import appStyles from "../../App.module.css";
-import styles from "../../styles/FilterSlider.module.css";
 
-const PopularProfiles = ({ mobile }) => {
+const PopularProfiles = ({ mobile, profiles, follow, unfollow }) => {
   const [popularProfiles, setPopularProfiles] = useState({ results: [] });
   const [hasLoaded, setHasLoaded] = useState(false);
 
@@ -79,6 +74,8 @@ const PopularProfiles = ({ mobile }) => {
     }
   };
 
+  const array = profiles ? profiles : popularProfiles;
+
   return mobile ? (
     <Container
       className={`${appStyles.Content} d-block d-lg-none text-center mb-3`}
@@ -87,28 +84,19 @@ const PopularProfiles = ({ mobile }) => {
         <Asset spinner />
       ) : (
         <>
-          <div className="my-1">Most followed profiles.</div>
-          <Swiper
-            className={styles.Swiper}
-            breakpoints={{
-              200: { slidesPerView: 2.5 },
-              320: { slidesPerView: 3.5 },
-              480: { slidesPerView: 4.5 },
-              576: { slidesPerView: 4.5 },
-              768: { slidesPerView: 5.5 },
-            }}
-          >
-            {popularProfiles?.results?.map((profile) => (
-              <SwiperSlide key={profile.id}>
-                <Link to={`/profiles/${profile.id}`}>
-                  <div className="d-flex flex-column align-items-center">
-                    <Avatar height={64} src={profile.image} />
-                    {profile.owner}
-                  </div>
-                </Link>
-              </SwiperSlide>
+          <div className="my-1">Most followed profiles.</div>{" "}
+          <div className={`d-flex ${mobile ? "justify-content-around" : ""}`}>
+            {array?.results?.slice(0, 4).map((profile) => (
+              <Profile
+                key={profile.id}
+                profile={profile}
+                stats={false}
+                handleFollow={follow ? follow : handleFollow}
+                handleUnfollow={unfollow ? unfollow : handleUnfollow}
+                mobile={mobile}
+              />
             ))}
-          </Swiper>
+          </div>
         </>
       )}
     </Container>
@@ -119,13 +107,13 @@ const PopularProfiles = ({ mobile }) => {
       ) : (
         <>
           <p>Most followed profiles.</p>
-          {popularProfiles.results?.map((profile) => (
+          {array?.results?.map((profile) => (
             <Profile
               key={profile.id}
               profile={profile}
               stats={false}
-              handleFollow={handleFollow}
-              handleUnfollow={handleUnfollow}
+              handleFollow={follow ? follow : handleFollow}
+              handleUnfollow={unfollow ? unfollow : handleUnfollow}
             />
           ))}
         </>
