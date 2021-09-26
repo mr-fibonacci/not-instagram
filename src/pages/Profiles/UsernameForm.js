@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
-import Form from "react-bootstrap/Form";
-import Alert from "react-bootstrap/Alert";
-import btnStyles from "../../styles/Button.module.css";
-import appStyles from "../../App.module.css";
+
+import { Button, Col, Container, Row, Form, Alert } from "react-bootstrap";
+
 import { useHistory } from "react-router-dom";
 import { axiosRes } from "../../api/axiosDefaults";
 import { useProfileRedirect } from "../../hooks/useProfileRedirect";
+
+import btnStyles from "../../styles/Button.module.css";
+import appStyles from "../../App.module.css";
 
 const UsernameForm = () => {
   useProfileRedirect();
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [errors, setErrors] = useState({});
+
   useEffect(() => {
     handleMount();
   }, []);
+
   const handleMount = async () => {
     try {
       const { data } = await axiosRes.get("/dj-rest-auth/user/");
@@ -24,6 +27,7 @@ const UsernameForm = () => {
       console.log(err);
     }
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -35,6 +39,7 @@ const UsernameForm = () => {
       setErrors(err.response?.data);
     }
   };
+
   return (
     <Row>
       <Col className="py-2 mx-auto text-center" md={6}>

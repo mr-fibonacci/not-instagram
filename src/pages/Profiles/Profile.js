@@ -1,8 +1,11 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import { useCurrentUser } from "../../contexts/CurrentUserContext";
+
+import Button from "react-bootstrap/Button";
 import Avatar from "../../components/Avatar";
+
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+
 import btnStyles from "../../styles/Button.module.css";
 import styles from "../../styles/Profile.module.css";
 
@@ -14,6 +17,7 @@ function Profile(props) {
     imageSize = 55,
     stats = true,
   } = props;
+
   const {
     id,
     posts_count,
@@ -23,8 +27,10 @@ function Profile(props) {
     image,
     owner,
   } = profile;
+
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
+
   return (
     <div className="my-3 d-flex align-items-center">
       <div>

@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import Avatar from "../../components/Avatar";
 import Container from "react-bootstrap/Container";
 import Profile from "./Profile";
-import { Swiper, SwiperSlide } from "swiper/react";
-import appStyles from "../../App.module.css";
-import styles from "../../styles/FilterSlider.module.css";
-import { Link } from "react-router-dom";
+
 import Asset from "../../components/Asset";
 import { axiosReq, axiosRes } from "../../api/axiosDefaults";
-import Avatar from "../../components/Avatar";
+
+import appStyles from "../../App.module.css";
+import styles from "../../styles/FilterSlider.module.css";
 
 const PopularProfiles = ({ mobile }) => {
   const [popularProfiles, setPopularProfiles] = useState({ results: [] });
   const [hasLoaded, setHasLoaded] = useState(false);
+
   useEffect(() => {
     handleMount();
   }, []);
+
   const handleMount = async () => {
     try {
       const { data } = await axiosReq.get(
@@ -26,6 +32,7 @@ const PopularProfiles = ({ mobile }) => {
       console.log(err);
     }
   };
+
   const handleFollow = async (clickedProfile) => {
     try {
       const { data } = await axiosRes.post("/followers/", {
@@ -49,6 +56,7 @@ const PopularProfiles = ({ mobile }) => {
       console.log(err);
     }
   };
+
   const handleUnfollow = async (clickedProfile) => {
     try {
       await axiosRes.delete(`/followers/${clickedProfile.following_id}/`);
@@ -70,6 +78,7 @@ const PopularProfiles = ({ mobile }) => {
       console.log(err);
     }
   };
+
   return mobile ? (
     <Container
       className={`${appStyles.Content} d-block d-lg-none text-center mb-3`}

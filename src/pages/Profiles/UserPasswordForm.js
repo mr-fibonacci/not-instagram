@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
+
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 
@@ -15,12 +17,14 @@ import { useProfileRedirect } from "../../hooks/useProfileRedirect";
 const UserPasswordForm = () => {
   useProfileRedirect();
   const history = useHistory();
+
   const [userData, setUserData] = useState({
     new_password1: "",
     new_password2: "",
     old_password: "",
   });
   const { new_password1, new_password2, old_password } = userData;
+
   const [errors, setErrors] = useState({});
 
   const handleChange = (event) => {
@@ -29,6 +33,7 @@ const UserPasswordForm = () => {
       [event.target.name]: event.target.value,
     });
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -38,6 +43,7 @@ const UserPasswordForm = () => {
       setErrors(err.response?.data);
     }
   };
+
   return (
     <Row>
       <Col className="py-2 mx-auto text-center" md={6}>

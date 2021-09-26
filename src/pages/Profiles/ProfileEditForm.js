@@ -1,31 +1,37 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useHistory, useParams } from "react-router-dom";
+
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
-import { useHistory, useParams } from "react-router-dom";
-import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
-import btnStyles from "../../styles/Button.module.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import appStyles from "../../App.module.css";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
+
+import btnStyles from "../../styles/Button.module.css";
+import appStyles from "../../App.module.css";
+
 import { axiosReq, axiosRes } from "../../api/axiosDefaults";
 import { useProfileRedirect } from "../../hooks/useProfileRedirect";
+import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 
 function ProfileForm() {
   useProfileRedirect();
   const setCurrentUser = useSetCurrentUser();
   const { id } = useParams();
   const history = useHistory();
+  const imageFile = useRef();
+
   const [profileData, setProfileData] = useState({
     name: "",
     content: "",
     image: "",
   });
-  const [errors, setErrors] = useState({});
   const { name, content, image } = profileData;
-  const imageFile = useRef();
+
+  const [errors, setErrors] = useState({});
+
   useEffect(() => {
     handleMount();
   }, []);
@@ -45,9 +51,11 @@ function ProfileForm() {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("content", content);
+
     if (imageFile?.current?.files[0]) {
       formData.append("image", imageFile?.current?.files[0]);
     }
+
     try {
       const { data } = await axiosRes.put(`/profiles/${id}/`, formData);
       setCurrentUser((currentUser) => ({
