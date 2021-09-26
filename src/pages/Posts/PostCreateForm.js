@@ -10,7 +10,6 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 
 import Asset from "../../components/Asset";
-import FilterSlider from "../../components/FilterSlider";
 
 import { axiosReq } from "../../api/axiosDefaults";
 import { useRedirect } from "../../hooks/useRedirect";
@@ -57,13 +56,6 @@ function PostCreateForm() {
       ...postData,
       [event.target.name]: event.target.value,
     });
-  };
-
-  const handleClick = (newFilter) => {
-    setPostData((prevState) => ({
-      ...prevState,
-      image_filter: newFilter,
-    }));
   };
 
   const textFields = (
@@ -130,11 +122,6 @@ function PostCreateForm() {
                       Change the image
                     </Form.Label>
                   </div>
-                  <FilterSlider
-                    image={image}
-                    image_filter={image_filter}
-                    handleClick={handleClick}
-                  />
                 </>
               ) : (
                 <Form.Label

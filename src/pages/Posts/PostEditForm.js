@@ -9,7 +9,6 @@ import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import FilterSlider from "../../components/FilterSlider";
 import { axiosReq, axiosRes } from "../../api/axiosDefaults";
 
 import btnStyles from "../../styles/Button.module.css";
@@ -79,13 +78,6 @@ function PostEditForm() {
     });
   };
 
-  const handleClick = (newFilter) => {
-    setPostData((prevState) => ({
-      ...prevState,
-      image_filter: newFilter,
-    }));
-  };
-
   const textFields = (
     <div className="text-center">
       <Form.Group>
@@ -153,11 +145,6 @@ function PostEditForm() {
                   Change the image
                 </Form.Label>
               </div>
-              <FilterSlider
-                image={image}
-                image_filter={image_filter}
-                handleClick={handleClick}
-              />
               <Form.File
                 id="image-upload"
                 ref={imageFile}
