@@ -1,38 +1,44 @@
 import React, { useState } from "react";
 import axios from "axios";
+
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
-import { useHistory } from "react-router";
-import styles from "../../styles/SignInUpForm.module.css";
-import btnStyles from "../../styles/Button.module.css";
-import { NavLink } from "react-router-dom";
-import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
-import appStyles from "../../App.module.css";
+
+import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router";
 import { useLastLocation } from "react-router-last-location";
+
+import styles from "../../styles/SignInUpForm.module.css";
+import btnStyles from "../../styles/Button.module.css";
+import appStyles from "../../App.module.css";
+
+import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 import { useRedirect } from "../../hooks/useRedirect";
 
 function SignInForm() {
-  const setCurrentUser = useSetCurrentUser();
   const history = useHistory();
   const lastLocation = useLastLocation();
+  const setCurrentUser = useSetCurrentUser();
+
   useRedirect(false);
+
   const [errors, setErrors] = useState({});
   const [signInData, setSignInData] = useState({
     username: "",
     password: "",
   });
   const { username, password } = signInData;
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
       setCurrentUser(data.user);
-
       if (
         lastLocation.pathname === "/signup" ||
         lastLocation.pathname === "/signin" ||
@@ -46,6 +52,7 @@ function SignInForm() {
       setErrors(err.response?.data);
     }
   };
+
   const handleChange = (event) => {
     setSignInData({
       ...signInData,

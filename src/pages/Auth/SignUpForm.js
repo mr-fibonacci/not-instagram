@@ -1,29 +1,35 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Form from "react-bootstrap/Form";
-import Alert from "react-bootstrap/Alert";
+
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
-import styles from "../../styles/SignInUpForm.module.css";
-import btnStyles from "../../styles/Button.module.css";
+
+import { useRedirect } from "../../hooks/useRedirect";
+
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Image from "react-bootstrap/Image";
+import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
+
+import styles from "../../styles/SignInUpForm.module.css";
 import appStyles from "../../App.module.css";
-import { Image } from "react-bootstrap";
-import { useRedirect } from "../../hooks/useRedirect";
+import btnStyles from "../../styles/Button.module.css";
 
 function SignUpForm() {
   useRedirect(false);
   const history = useHistory();
+
   const [signUpData, setSignUpData] = useState({
     username: "",
     password1: "",
     password2: "",
   });
-  const [errors, setErrors] = useState({});
   const { username, password1, password2 } = signUpData;
+
+  const [errors, setErrors] = useState({});
 
   const handleSubmit = async (event) => {
     event.preventDefault();
