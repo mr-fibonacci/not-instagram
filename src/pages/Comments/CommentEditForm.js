@@ -18,11 +18,13 @@ function CommentEditForm(props) {
     setComments,
     profileImage,
   } = props;
+
   const [formContent, setFormContent] = useState(content);
 
   const handleChange = (event) => {
     setFormContent(event.target.value);
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -42,6 +44,7 @@ function CommentEditForm(props) {
       console.log(err);
     }
   };
+
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group>
