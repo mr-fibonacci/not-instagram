@@ -7,6 +7,7 @@ import Asset from "../../components/Asset";
 import { axiosReq, axiosRes } from "../../api/axiosDefaults";
 
 import appStyles from "../../App.module.css";
+import { followHelper, unfollowHelper } from "../../utils/utils";
 
 const PopularProfiles = ({ mobile, profiles, follow, unfollow }) => {
   const [popularProfiles, setPopularProfiles] = useState({ results: [] });
@@ -35,17 +36,9 @@ const PopularProfiles = ({ mobile, profiles, follow, unfollow }) => {
       });
       setPopularProfiles((prevProfiles) => ({
         ...prevProfiles,
-        results: prevProfiles.results.map((profile) => {
-          return profile.id === clickedProfile.id
-            ? {
-                ...profile,
-                followers_count: profile.followers_count + 1,
-                following_id: data.id,
-              }
-            : profile.is_owner
-            ? { ...profile, following_count: profile.following_count + 1 }
-            : profile;
-        }),
+        results: prevProfiles.results.map((profile) =>
+          followHelper(profile, clickedProfile, data.id)
+        ),
       }));
     } catch (err) {
       console.log(err);
@@ -57,17 +50,9 @@ const PopularProfiles = ({ mobile, profiles, follow, unfollow }) => {
       await axiosRes.delete(`/followers/${clickedProfile.following_id}/`);
       setPopularProfiles((prevProfiles) => ({
         ...prevProfiles,
-        results: prevProfiles.results.map((profile) => {
-          return profile.id === clickedProfile.id
-            ? {
-                ...profile,
-                followers_count: profile.followers_count - 1,
-                following_id: null,
-              }
-            : profile.is_owner
-            ? { ...profile, following_count: profile.following_count - 1 }
-            : profile;
-        }),
+        results: prevProfiles.results.map((profile) =>
+          unfollowHelper(profile, clickedProfile)
+        ),
       }));
     } catch (err) {
       console.log(err);
@@ -84,13 +69,12 @@ const PopularProfiles = ({ mobile, profiles, follow, unfollow }) => {
         <Asset spinner />
       ) : (
         <>
-          <div className="my-1">Most followed profiles.</div>{" "}
+          <div className="my-1">Most followed profiles.</div>
           <div className={`d-flex ${mobile ? "justify-content-around" : ""}`}>
             {array?.results?.slice(0, 4).map((profile) => (
               <Profile
                 key={profile.id}
                 profile={profile}
-                stats={false}
                 handleFollow={follow ? follow : handleFollow}
                 handleUnfollow={unfollow ? unfollow : handleUnfollow}
                 mobile={mobile}
@@ -111,7 +95,6 @@ const PopularProfiles = ({ mobile, profiles, follow, unfollow }) => {
             <Profile
               key={profile.id}
               profile={profile}
-              stats={false}
               handleFollow={follow ? follow : handleFollow}
               handleUnfollow={unfollow ? unfollow : handleUnfollow}
             />

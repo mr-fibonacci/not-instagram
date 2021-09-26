@@ -15,19 +15,10 @@ function Profile(props) {
     handleFollow,
     handleUnfollow,
     imageSize = 55,
-    stats = true,
     mobile,
   } = props;
 
-  const {
-    id,
-    posts_count,
-    followers_count,
-    following_count,
-    following_id,
-    image,
-    owner,
-  } = profile;
+  const { id, following_id, image, owner } = profile;
 
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
@@ -47,15 +38,10 @@ function Profile(props) {
         <div>
           <b>{owner}</b>
         </div>
-        {stats && (
-          <div className={styles.Stats}>
-            posts: {posts_count} followers: {followers_count} following:{" "}
-            {following_count}
-          </div>
-        )}
       </div>
       <div className="text-right ml-auto">
-        {currentUser &&
+        {!mobile &&
+          currentUser &&
           (following_id ? (
             <Button
               className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
