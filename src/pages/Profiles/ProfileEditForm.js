@@ -33,18 +33,18 @@ function ProfileForm() {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    handleMount();
-  }, []);
+    const handleMount = async () => {
+      try {
+        const { data } = await axiosReq.get(`/profiles/${id}/`);
+        const { name, content, image } = data;
+        setProfileData({ name, content, image });
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-  const handleMount = async () => {
-    try {
-      const { data } = await axiosReq.get(`/profiles/${id}/`);
-      const { name, content, image } = data;
-      setProfileData({ name, content, image });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    handleMount();
+  }, [id]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

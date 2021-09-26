@@ -81,7 +81,7 @@ function ProfilePage() {
   const fetchCurrentUserProfile = async () => {
     try {
       const { data: currentUserProfile } = await axiosReq.get(
-        `/profiles/${currentUser.profile_id}/`
+        `/profiles/${currentUser?.profile_id}/`
       );
       setProfileState((prevState) => ({
         ...prevState,

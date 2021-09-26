@@ -29,21 +29,21 @@ function PostPage() {
   const [comments, setComments] = useState({ results: [] });
 
   useEffect(() => {
-    handleMount();
-  }, []);
+    const handleMount = async () => {
+      try {
+        const [{ data: post }, { data: comments }] = await Promise.all([
+          axiosReq.get(`/posts/${id}`),
+          axios.get(`/comments/?post=${id}`),
+        ]);
+        setPost({ results: [post] });
+        setComments(comments);
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-  const handleMount = async () => {
-    try {
-      const [{ data: post }, { data: comments }] = await Promise.all([
-        axiosReq.get(`/posts/${id}`),
-        axios.get(`/comments/?post=${id}`),
-      ]);
-      setPost({ results: [post] });
-      setComments(comments);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    handleMount();
+  }, [id]);
 
   const handleEdit = () => {
     history.push(`/posts/${id}/edit`);
