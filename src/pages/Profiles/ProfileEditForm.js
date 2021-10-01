@@ -12,7 +12,7 @@ import Alert from "react-bootstrap/Alert";
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 
-import { axiosReq, axiosRes } from "../../api/axiosDefaults";
+import { axiosReq } from "../../api/axiosDefaults";
 import { useProfileRedirect } from "../../hooks/useProfileRedirect";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 
@@ -57,7 +57,7 @@ function ProfileForm() {
     }
 
     try {
-      const { data } = await axiosRes.put(`/profiles/${id}/`, formData);
+      const { data } = await axiosReq.put(`/profiles/${id}/`, formData);
       setCurrentUser((currentUser) => ({
         ...currentUser,
         profile_image: data.image,
