@@ -50,7 +50,7 @@ function SignUpForm() {
 
   return (
     <Row className={styles.Row}>
-      <Col className="my-auto py-2 p-0 p-md-2" md={6}>
+      <Col className="my-auto p-0 p-md-2" md={6}>
         <Container className={`${appStyles.Content} p-4 `}>
           <h1 className={styles.Header}>sign up</h1>
           <Form onSubmit={(e) => handleSubmit(e)}>
@@ -120,7 +120,7 @@ function SignUpForm() {
       </Col>
       <Col
         md={6}
-        className={`my-auto d-none d-md-block p-0 p-md-2 ${styles.SignUpCol}`}
+        className={`my-auto d-none d-md-block p-2 ${styles.SignUpCol}`}
       >
         <Image
           className={`${appStyles.FillerImage}`}

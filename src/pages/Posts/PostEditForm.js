@@ -9,7 +9,7 @@ import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import { axiosReq, axiosRes } from "../../api/axiosDefaults";
+import { axiosReq } from "../../api/axiosDefaults";
 
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
@@ -60,7 +60,7 @@ function PostEditForm() {
     }
 
     try {
-      await axiosRes.put(`/posts/${id}/`, formData);
+      await axiosReq.put(`/posts/${id}/`, formData);
       history.goBack();
     } catch (err) {
       console.log(err);
