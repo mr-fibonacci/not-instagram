@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   useCurrentUser,
   useSetCurrentUser,
@@ -13,7 +13,6 @@ import logo from "../assets/logo.png";
 import styles from "../styles/NavBar.module.css";
 
 function NavBar() {
-  const history = useHistory();
   const currentUser = useCurrentUser();
   const setCurrentUser = useSetCurrentUser();
   const [expanded, setExpanded] = useState(false);
@@ -22,7 +21,6 @@ function NavBar() {
     try {
       await axios.post("dj-rest-auth/logout/");
       setCurrentUser(null);
-      history.push("/");
     } catch (err) {
       console.log(err);
     }
@@ -66,7 +64,7 @@ function NavBar() {
         <i className="fas fa-heart" />
         liked
       </NavLink>
-      <NavLink className={styles.NavLink} exact to="/" onClick={handleSignOut}>
+      <NavLink className={styles.NavLink} to="/" onClick={handleSignOut}>
         <i className="fas fa-sign-out-alt" />
         sign out
       </NavLink>
