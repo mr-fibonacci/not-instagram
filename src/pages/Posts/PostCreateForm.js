@@ -22,7 +22,7 @@ import btnStyles from "../../styles/Button.module.css";
 function PostCreateForm() {
   useRedirect();
   const history = useHistory();
-  const imageFile = useRef();
+  const imageInput = useRef();
 
   const [postData, setPostData] = useState({
     title: "",
@@ -33,12 +33,29 @@ function PostCreateForm() {
 
   const [errors, setErrors] = useState({});
 
+  const handleChange = (event) => {
+    setPostData({
+      ...postData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleChangeImage = (event) => {
+    if (event.target.files.length) {
+      URL.revokeObjectURL(image);
+      setPostData({
+        ...postData,
+        image: URL.createObjectURL(event.target.files[0]),
+      });
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
-    formData.append("image", imageFile.current.files[0]);
+    formData.append("image", imageInput.current.files[0]);
 
     try {
       const { data } = await axiosReq.post("/posts/", formData);
@@ -47,13 +64,6 @@ function PostCreateForm() {
       console.log(err);
       setErrors(err.response?.data);
     }
-  };
-
-  const handleChange = (event) => {
-    setPostData({
-      ...postData,
-      [event.target.name]: event.target.value,
-    });
   };
 
   const textFields = (
@@ -72,6 +82,7 @@ function PostCreateForm() {
           {message}
         </Alert>
       ))}
+      {/* ERRORS */}
       <Form.Group>
         <Form.Label>Content</Form.Label>
         <Form.Control
@@ -132,25 +143,19 @@ function PostCreateForm() {
                   />
                 </Form.Label>
               )}
-              {errors?.image?.map((message, idx) => (
-                <Alert variant="warning" key={idx}>
-                  {message}
-                </Alert>
-              ))}
+
               <Form.File
                 id="image-upload"
-                ref={imageFile}
+                ref={imageInput}
                 accept="image/*"
-                onChange={(e) => {
-                  if (e.target.files.length) {
-                    setPostData({
-                      ...postData,
-                      image: URL.createObjectURL(e.target.files[0]),
-                    });
-                  }
-                }}
+                onChange={handleChangeImage}
               />
             </Form.Group>
+            {errors?.image?.map((message, idx) => (
+              <Alert variant="warning" key={idx}>
+                {message}
+              </Alert>
+            ))}
             <div className="d-md-none">{textFields}</div>
           </Container>
         </Col>

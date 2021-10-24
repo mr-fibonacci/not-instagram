@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import Card from "react-bootstrap/Card";
 import Media from "react-bootstrap/Media";
@@ -27,14 +27,13 @@ function Post(props) {
     content,
     image,
     setPosts,
-    handleEdit,
-    handleDelete,
     postPage,
     updated_at,
   } = props;
 
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
+  const history = useHistory();
 
   const handleLike = async () => {
     try {
@@ -63,6 +62,19 @@ function Post(props) {
             : post;
         }),
       }));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleEdit = () => {
+    history.push(`/posts/${id}/edit`);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axiosRes.delete(`/posts/${id}/`);
+      history.goBack();
     } catch (err) {
       console.log(err);
     }

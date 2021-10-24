@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import Asset from "../../components/Asset";
@@ -13,7 +13,7 @@ import CommentCreateForm from "../Comments/CommentCreateForm";
 import Post from "./Post";
 import PopularProfiles from "../Profiles/PopularProfiles";
 
-import { axiosReq, axiosRes } from "../../api/axiosDefaults";
+import { axiosReq } from "../../api/axiosDefaults";
 import { fetchMoreData } from "../../utils/utils";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
@@ -23,7 +23,6 @@ function PostPage() {
   const currentUser = useCurrentUser();
   const profile_image = currentUser?.profile_image;
   const { id } = useParams();
-  const history = useHistory();
 
   const [post, setPost] = useState({ results: [] });
   const [comments, setComments] = useState({ results: [] });
@@ -45,30 +44,11 @@ function PostPage() {
     handleMount();
   }, [id]);
 
-  const handleEdit = () => {
-    history.push(`/posts/${id}/edit`);
-  };
-
-  const handleDelete = async () => {
-    try {
-      await axiosRes.delete(`/posts/${id}/`);
-      history.goBack();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
         <PopularProfiles mobile />
-        <Post
-          {...post.results[0]}
-          setPosts={setPost}
-          handleEdit={handleEdit}
-          handleDelete={handleDelete}
-          postPage
-        />
+        <Post {...post.results[0]} setPosts={setPost} postPage />
         <Container className={appStyles.Content}>
           {currentUser ? (
             <>
