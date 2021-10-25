@@ -8,20 +8,17 @@ import { useCurrentUser } from "../../contexts/CurrentUserContext";
 
 import btnStyles from "../../styles/Button.module.css";
 import styles from "../../styles/Profile.module.css";
+import { useSetProfileData } from "../../contexts/ProfileDataContext";
 
 function Profile(props) {
-  const {
-    profile,
-    handleFollow,
-    handleUnfollow,
-    imageSize = 55,
-    mobile,
-  } = props;
+  const { profile, imageSize = 55, mobile } = props;
 
   const { id, following_id, image, owner } = profile;
 
   const currentUser = useCurrentUser();
   const is_owner = currentUser?.username === owner;
+
+  const { handleFollow, handleUnfollow } = useSetProfileData();
 
   return (
     <div
@@ -39,26 +36,29 @@ function Profile(props) {
           <b>{owner}</b>
         </div>
       </div>
-      <div className="text-right ml-auto">
-        {!mobile &&
+      <div className={`${!mobile && "ml-auto"} text-right`}>
+        {/* ml-auto only on desktop */}
+        {
+          // !mobile && // show or hide the follow button for mobile
           currentUser &&
-          (following_id ? (
-            <Button
-              className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
-              onClick={() => handleUnfollow(profile)}
-            >
-              unfollow
-            </Button>
-          ) : (
-            !is_owner && (
+            (following_id ? (
               <Button
-                className={`${btnStyles.Button} ${btnStyles.Black}`}
-                onClick={() => handleFollow(profile)}
+                className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
+                onClick={() => handleUnfollow(profile)}
               >
-                follow
+                unfollow
               </Button>
-            )
-          ))}
+            ) : (
+              !is_owner && (
+                <Button
+                  className={`${btnStyles.Button} ${btnStyles.Black}`}
+                  onClick={() => handleFollow(profile)}
+                >
+                  follow
+                </Button>
+              )
+            ))
+        }
       </div>
     </div>
   );

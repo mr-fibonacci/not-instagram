@@ -14,8 +14,8 @@ import Post from "../Posts/Post";
 import { ProfileEditDropdown } from "../../components/MoreDropdown";
 
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
-import { fetchMoreData, followHelper, unfollowHelper } from "../../utils/utils";
-import { axiosReq, axiosRes } from "../../api/axiosDefaults";
+import { fetchMoreData } from "../../utils/utils";
+import { axiosReq } from "../../api/axiosDefaults";
 
 import "../../styles/ProfilePage.css";
 import appStyles from "../../App.module.css";
@@ -23,6 +23,10 @@ import btnStyles from "../../styles/Button.module.css";
 
 import NoResults from "../../assets/no-results.png";
 import PopularProfiles from "./PopularProfiles";
+import {
+  useProfileData,
+  useSetProfileData,
+} from "../../contexts/ProfileDataContext";
 
 function ProfilePage() {
   const { id } = useParams();
@@ -30,29 +34,22 @@ function ProfilePage() {
 
   const currentUser = useCurrentUser();
 
-  const [profileState, setProfileState] = useState({
-    profile: null,
-    popularProfiles: { results: [] },
-  });
   const [profilePosts, setProfilePosts] = useState({ results: [] });
-  const { profile, popularProfiles } = profileState;
+  const { pageProfile } = useProfileData();
+  const [profile] = pageProfile.results;
+  const { setProfileData, handleFollow, handleUnfollow } = useSetProfileData();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [
-          { data: profile },
-          { data: profilePosts },
-          { data: popularProfiles },
-        ] = await Promise.all([
-          axiosReq.get(`/profiles/${id}/`),
-          axiosReq.get(`/posts/?owner__profile=${id}`),
-          axiosReq.get("/profiles/?ordering=-followers_count"),
-        ]);
-        setProfileState((prevState) => ({
+        const [{ data: pageProfile }, { data: profilePosts }] =
+          await Promise.all([
+            axiosReq.get(`/profiles/${id}/`),
+            axiosReq.get(`/posts/?owner__profile=${id}`),
+          ]);
+        setProfileData((prevState) => ({
           ...prevState,
-          profile,
-          popularProfiles,
+          pageProfile: { results: [pageProfile] },
         }));
         setProfilePosts(profilePosts);
         setHasLoaded(true);
@@ -62,49 +59,7 @@ function ProfilePage() {
     };
 
     fetchData();
-  }, [id]);
-
-  const handleFollow = async (clickedProfile) => {
-    try {
-      const { data } = await axiosRes.post("/followers/", {
-        followed: clickedProfile.id,
-      });
-
-      setProfileState((prevState) => ({
-        ...prevState,
-        profile: followHelper(profile, clickedProfile, data.id),
-        popularProfiles: {
-          ...prevState.popularProfiles,
-          results: prevState.popularProfiles.results.map((profile) =>
-            followHelper(profile, clickedProfile, data.id)
-          ),
-        },
-      }));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleUnfollow = async (clickedProfile) => {
-    try {
-      await axiosRes.delete(`/followers/${clickedProfile.following_id}/`);
-
-      setProfileState((prevState) => {
-        return {
-          ...prevState,
-          profile: unfollowHelper(profile, clickedProfile),
-          popularProfiles: {
-            ...prevState.popularProfiles,
-            results: prevState.popularProfiles.results.map((profile) =>
-              unfollowHelper(profile, clickedProfile)
-            ),
-          },
-        };
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  }, [id, setProfileData]);
 
   const mainProfile = (
     <>
@@ -189,12 +144,7 @@ function ProfilePage() {
   return (
     <Row>
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        <PopularProfiles
-          mobile
-          profiles={popularProfiles}
-          follow={handleFollow}
-          unfollow={handleUnfollow}
-        />
+        <PopularProfiles mobile />
         <Container className={appStyles.Content}>
           {hasLoaded ? (
             <>
@@ -207,11 +157,7 @@ function ProfilePage() {
         </Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
-        <PopularProfiles
-          profiles={popularProfiles}
-          follow={handleFollow}
-          unfollow={handleUnfollow}
-        />
+        <PopularProfiles />
       </Col>
     </Row>
   );
