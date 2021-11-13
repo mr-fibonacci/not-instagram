@@ -22,9 +22,7 @@ function Profile(props) {
 
   return (
     <div
-      className={`my-3 d-flex align-items-center ${
-        mobile ? "flex-column" : ""
-      }`}
+      className={`my-3 d-flex align-items-center ${mobile && "flex-column"}`}
     >
       <div>
         <Link className="align-self-center" to={`/profiles/${id}`}>
@@ -40,7 +38,9 @@ function Profile(props) {
         {/* ml-auto only on desktop */}
         {
           // !mobile && // show or hide the follow button for mobile
-          currentUser &&
+          !mobile &&
+            currentUser &&
+            !is_owner &&
             (following_id ? (
               <Button
                 className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
@@ -49,14 +49,12 @@ function Profile(props) {
                 unfollow
               </Button>
             ) : (
-              !is_owner && (
-                <Button
-                  className={`${btnStyles.Button} ${btnStyles.Black}`}
-                  onClick={() => handleFollow(profile)}
-                >
-                  follow
-                </Button>
-              )
+              <Button
+                className={`${btnStyles.Button} ${btnStyles.Black}`}
+                onClick={() => handleFollow(profile)}
+              >
+                follow
+              </Button>
             ))
         }
       </div>

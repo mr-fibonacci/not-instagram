@@ -17,7 +17,7 @@ import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import { fetchMoreData } from "../../utils/utils";
 import { axiosReq } from "../../api/axiosDefaults";
 
-import "../../styles/ProfilePage.css";
+import styles from "../../styles/ProfilePage.module.css";
 import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 
@@ -66,7 +66,11 @@ function ProfilePage() {
       {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
       <Row noGutters className="px-3">
         <Col lg={3} className="text-center text-lg-left">
-          <Image className="ProfileImage" roundedCircle src={profile?.image} />
+          <Image
+            className={styles.ProfileImage}
+            roundedCircle
+            src={profile?.image}
+          />
         </Col>
         <Col lg={6} className="text-center">
           <h3 className="m-2">{profile?.owner}</h3>
@@ -86,28 +90,24 @@ function ProfilePage() {
           </Row>
         </Col>
         <Col lg={3} className="text-center text-lg-right">
-          {!profile?.is_owner && (
-            <>
-              {currentUser &&
-                (profile?.following_id ? (
-                  <Button
-                    className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
-                    onClick={() => handleUnfollow(profile)}
-                  >
-                    unfollow
-                  </Button>
-                ) : (
-                  !profile?.is_owner && (
-                    <Button
-                      className={`${btnStyles.Button} ${btnStyles.Black}`}
-                      onClick={() => handleFollow(profile)}
-                    >
-                      follow
-                    </Button>
-                  )
-                ))}
-            </>
-          )}
+          {currentUser &&
+            (profile?.following_id ? (
+              <Button
+                className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
+                onClick={() => handleUnfollow(profile)}
+              >
+                unfollow
+              </Button>
+            ) : (
+              !profile?.is_owner && (
+                <Button
+                  className={`${btnStyles.Button} ${btnStyles.Black}`}
+                  onClick={() => handleFollow(profile)}
+                >
+                  follow
+                </Button>
+              )
+            ))}
         </Col>
         {profile?.content && (
           <Col className="text-center p-3">{profile.content}</Col>
@@ -121,23 +121,22 @@ function ProfilePage() {
       <hr />
       <p className="text-center">{profile?.owner}'s posts</p>
       <hr />
-      <InfiniteScroll
-        dataLength={profilePosts?.results.length}
-        next={() => fetchMoreData(profilePosts, setProfilePosts)}
-        hasMore={!!profilePosts.next}
-        loader={<Asset spinner />}
-      >
-        {profilePosts?.results.length ? (
-          profilePosts?.results.map((post) => (
+      {profilePosts.results.length ? (
+        <InfiniteScroll
+          children={profilePosts?.results.map((post) => (
             <Post key={post.id} {...post} setPosts={setProfilePosts} />
-          ))
-        ) : (
-          <Asset
-            src={NoResults}
-            message={`No results found, ${profile?.owner} hasn't posted yet.`}
-          />
-        )}
-      </InfiniteScroll>
+          ))}
+          dataLength={profilePosts?.results.length}
+          loader={<Asset spinner />}
+          hasMore={!!profilePosts.next}
+          next={() => fetchMoreData(profilePosts, setProfilePosts)}
+        />
+      ) : (
+        <Asset
+          src={NoResults}
+          message={`No results found, ${profile?.owner} hasn't posted yet.`}
+        />
+      )}
     </>
   );
 

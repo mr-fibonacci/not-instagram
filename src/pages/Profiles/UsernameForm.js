@@ -8,12 +8,14 @@ import { useProfileRedirect } from "../../hooks/useProfileRedirect";
 
 import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
+import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 
 const UsernameForm = () => {
   useProfileRedirect();
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [errors, setErrors] = useState({});
+  const setCurrentUser = useSetCurrentUser();
 
   useEffect(() => {
     handleMount();
@@ -34,6 +36,11 @@ const UsernameForm = () => {
       await axiosRes.put("/dj-rest-auth/user/", {
         username,
       });
+      setCurrentUser((prevUser) => ({
+        ...prevUser,
+        username,
+      }));
+      history.goBack();
     } catch (err) {
       console.log(err);
       setErrors(err.response?.data);

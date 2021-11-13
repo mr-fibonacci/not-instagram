@@ -21,9 +21,8 @@ const UserPasswordForm = () => {
   const [userData, setUserData] = useState({
     new_password1: "",
     new_password2: "",
-    old_password: "",
   });
-  const { new_password1, new_password2, old_password } = userData;
+  const { new_password1, new_password2 } = userData;
 
   const [errors, setErrors] = useState({});
 
@@ -38,6 +37,7 @@ const UserPasswordForm = () => {
     event.preventDefault();
     try {
       await axiosRes.post("/dj-rest-auth/password/change/", userData);
+      history.goBack();
     } catch (err) {
       console.log(err);
       setErrors(err.response?.data);
@@ -53,7 +53,7 @@ const UserPasswordForm = () => {
               <Form.Label>New password</Form.Label>
               <Form.Control
                 placeholder="new password"
-                type="text"
+                type="password"
                 value={new_password1}
                 onChange={handleChange}
                 name="new_password1"
@@ -68,28 +68,13 @@ const UserPasswordForm = () => {
               <Form.Label>Confirm password</Form.Label>
               <Form.Control
                 placeholder="confirm new password"
-                type="text"
+                type="password"
                 value={new_password2}
                 onChange={handleChange}
                 name="new_password2"
               />
             </Form.Group>
             {errors?.new_password2?.map((message, idx) => (
-              <Alert key={idx} variant="warning">
-                {message}
-              </Alert>
-            ))}
-            <Form.Group>
-              <Form.Label>Old password</Form.Label>
-              <Form.Control
-                placeholder="old password"
-                type="text"
-                value={old_password}
-                onChange={handleChange}
-                name="old_password"
-              />
-            </Form.Group>
-            {errors?.old_password?.map((message, idx) => (
               <Alert key={idx} variant="warning">
                 {message}
               </Alert>

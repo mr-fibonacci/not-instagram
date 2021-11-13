@@ -16,7 +16,7 @@ import { axiosReq } from "../../api/axiosDefaults";
 import { useProfileRedirect } from "../../hooks/useProfileRedirect";
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
 
-function ProfileForm() {
+const ProfileEditForm = () => {
   useProfileRedirect();
   const setCurrentUser = useSetCurrentUser();
   const { id } = useParams();
@@ -155,4 +155,4 @@ function ProfileForm() {
   );
 }
 
-export default ProfileForm;
+export default ProfileEditForm;

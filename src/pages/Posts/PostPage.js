@@ -20,11 +20,11 @@ import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import appStyles from "../../App.module.css";
 
 function PostPage() {
+  const { id } = useParams();
+  const [post, setPost] = useState({ results: [] });
+
   const currentUser = useCurrentUser();
   const profile_image = currentUser?.profile_image;
-  const { id } = useParams();
-
-  const [post, setPost] = useState({ results: [] });
   const [comments, setComments] = useState({ results: [] });
 
   useEffect(() => {
@@ -51,15 +51,13 @@ function PostPage() {
         <Post {...post.results[0]} setPosts={setPost} postPage />
         <Container className={appStyles.Content}>
           {currentUser ? (
-            <>
-              <CommentCreateForm
-                profile_id={currentUser.profile_id}
-                profileImage={profile_image}
-                post={id}
-                setPost={setPost}
-                setComments={setComments}
-              />
-            </>
+            <CommentCreateForm
+              profile_id={currentUser.profile_id}
+              profileImage={profile_image}
+              post={id}
+              setPost={setPost}
+              setComments={setComments}
+            />
           ) : comments.results.length ? (
             "Comments"
           ) : null}
@@ -73,14 +71,14 @@ function PostPage() {
               children={comments.results.map((comment) => (
                 <Comment
                   key={comment.id}
-                  setPost={setPost}
                   {...comment}
+                  setPost={setPost}
                   setComments={setComments}
                 />
               ))}
             />
           ) : currentUser ? (
-            "No comments yet, be the first one to comment!"
+            <span>No comments yet, be the first one to comment!</span>
           ) : (
             <span>No comments...</span>
           )}

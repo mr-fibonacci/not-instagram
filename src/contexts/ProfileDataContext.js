@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 import { axiosReq, axiosRes } from "../api/axiosDefaults";
 import { followHelper, unfollowHelper } from "../utils/utils";
+import { useCurrentUser } from "./CurrentUserContext";
 
 const ProfileDataContext = createContext();
 const SetProfileDataContext = createContext();
@@ -14,6 +15,8 @@ export const ProfileDataProvider = ({ children }) => {
     pageProfile: { results: [] },
     popularProfiles: { results: [] },
   });
+
+  const currentUser = useCurrentUser();
 
   const handleFollow = async (clickedProfile) => {
     try {
@@ -65,7 +68,7 @@ export const ProfileDataProvider = ({ children }) => {
 
   useEffect(() => {
     handleMount();
-  }, []);
+  }, [currentUser]);
 
   const handleMount = async () => {
     try {

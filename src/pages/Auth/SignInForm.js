@@ -18,14 +18,14 @@ import btnStyles from "../../styles/Button.module.css";
 import appStyles from "../../App.module.css";
 
 import { useSetCurrentUser } from "../../contexts/CurrentUserContext";
-import { useRedirect } from "../../hooks/useRedirect";
+import { useRedirectAuthenticated } from "../../hooks/useRedirectAuthenticated";
 
 function SignInForm() {
   const history = useHistory();
   const lastLocation = useLastLocation();
   const setCurrentUser = useSetCurrentUser();
 
-  useRedirect(false);
+  useRedirectAuthenticated(true);
 
   const [errors, setErrors] = useState({});
   const [signInData, setSignInData] = useState({
@@ -40,8 +40,8 @@ function SignInForm() {
       const { data } = await axios.post("/dj-rest-auth/login/", signInData);
       setCurrentUser(data.user);
       if (
-        lastLocation.pathname === "/signup" ||
-        lastLocation.pathname === "/signin" ||
+        lastLocation?.pathname === "/signup" ||
+        lastLocation?.pathname === "/signin" ||
         !lastLocation
       ) {
         history.push("/");

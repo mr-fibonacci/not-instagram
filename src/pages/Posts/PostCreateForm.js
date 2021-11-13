@@ -12,7 +12,7 @@ import Container from "react-bootstrap/Container";
 import Asset from "../../components/Asset";
 
 import { axiosReq } from "../../api/axiosDefaults";
-import { useRedirect } from "../../hooks/useRedirect";
+import { useRedirectAuthenticated } from "../../hooks/useRedirectAuthenticated";
 import Upload from "../../assets/upload.png";
 
 import styles from "../../styles/PostCreateEditForm.module.css";
@@ -20,7 +20,7 @@ import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 
 function PostCreateForm() {
-  useRedirect();
+  useRedirectAuthenticated(false);
   const history = useHistory();
   const imageInput = useRef();
 

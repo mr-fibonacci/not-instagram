@@ -4,7 +4,7 @@ import axios from "axios";
 import { useHistory } from "react-router";
 import { NavLink } from "react-router-dom";
 
-import { useRedirect } from "../../hooks/useRedirect";
+import { useRedirectAuthenticated } from "../../hooks/useRedirectAuthenticated";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -19,7 +19,7 @@ import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 
 function SignUpForm() {
-  useRedirect(false);
+  useRedirectAuthenticated(true);
   const history = useHistory();
 
   const [signUpData, setSignUpData] = useState({
